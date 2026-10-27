@@ -15,6 +15,29 @@ const CONF_NOTE = { "Semi conforme": "Absence de bâtis pour valider la conformi
 const APPRO_LABEL = { "Normale": "Approbation par voie normale", "Régularisation": "Approbation par voie de régularisation", "Neutre": "Neutre" };
 const LOTS_MINZOOM = 14;
 
+/* Projet 4 — combinaisons d'enjeux.
+   Conforme = « Conforme » ; Non conforme = « Non conforme » + « Modifié » ; « Semi conforme » reste à part (à valider).
+   Approuvé = arrêté par voie normale ou de régularisation ; Non approuvé = « Neutre » dans le projet QGIS.
+   Chevauchement = le plan figure dans au moins une zone de la couche Chevauchement. */
+const COMBOS = [
+  { n: 1, conf: "C", chev: false, app: true, enjeu: "Situation régulière", color: "#1B7F4B" },
+  { n: 2, conf: "C", chev: false, app: false, enjeu: "Régularisation administrative", color: "#86C77F" },
+  { n: 3, conf: "C", chev: true, app: true, enjeu: "Conflit de limites entre plans", color: "#E9C93F" },
+  { n: 4, conf: "C", chev: true, app: false, enjeu: "Conflit de limites, plan non approuvé", color: "#F2A541" },
+  { n: 5, conf: "NC", chev: false, app: true, enjeu: "Écart terrain / plan approuvé", color: "#E8743B" },
+  { n: 6, conf: "NC", chev: false, app: false, enjeu: "Écart terrain, plan non approuvé", color: "#D1492B" },
+  { n: 7, conf: "NC", chev: true, app: true, enjeu: "Écart terrain et conflit de limites", color: "#B0202E" },
+  { n: 8, conf: "NC", chev: true, app: false, enjeu: "Enjeu critique", color: "#6B0D22" }
+];
+const SEMI_COLOR = "#A8A39A";
+const comboLabel = c => `${c.conf === "C" ? "Conforme" : "Non conforme"} · ${c.chev ? "chevauchement" : "sans chevauchement"} · ${c.app ? "approuvé" : "non approuvé"}`;
+function comboOf(l) {
+  if (l.conformite === "Semi conforme") return 0;
+  const conf = l.conformite === "Conforme" ? "C" : "NC", chev = l.chevauchements.length > 0, app = l.appro !== "Neutre";
+  return COMBOS.find(c => c.conf === conf && c.chev === chev && c.app === app).n;
+}
+const comboColor = n => n ? COMBOS[n - 1].color : SEMI_COLOR;
+
 const BASEMAPS = {
   light: { tiles: ["https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png", "https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png"], attribution: "© OpenStreetMap © CARTO", maxzoom: 20 },
   sat: { tiles: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"], attribution: "Imagerie © Esri, Maxar, Earthstar Geographics", maxzoom: 19 },
@@ -50,7 +73,7 @@ async function load() {
   BY_ID = Object.fromEntries(META.lotissements.map(l => [l.id, l]));
   META.lotissements.forEach((l, i) => l.num = i + 1);
   NOGEO.lotissements = (NOGEO.lotissements || []).map(x => typeof x === "string" ? { nom: x } : x);
-  EMPRISES.features.forEach(f => { const l = BY_ID[f.properties.id]; f.properties.nchev = l.chevauchements.length; });
+  EMPRISES.features.forEach(f => { const l = BY_ID[f.properties.id]; f.properties.nchev = l.chevauchements.length; l.combo = comboOf(l); f.properties.combo = l.combo; });
   CHEV.features.forEach(f => {
     let ids = f.properties.ids; if (typeof ids === "string") try { ids = JSON.parse(ids); } catch { ids = []; }
     f.properties.idsArr = ids || [];
@@ -221,6 +244,7 @@ function lotColor(l) {
 function planColor(l) {
   if (S.mode === "p2") return COL.appro[l.appro];
   if (S.mode === "p3") return l.chevauchements.length ? "#5B6B73" : COL.muted;
+  if (S.mode === "p4") return comboColor(l.combo);
   return COL.conf[l.conformite];
 }
 function applyLotVisibility(id) {
@@ -236,6 +260,7 @@ function styleEmprises() {
   let color;
   if (S.mode === "p2") color = ["match", ["get", "appro"], ...APPRO_ORDER.flatMap(k => [k, COL.appro[k]]), COL.muted];
   else if (S.mode === "p3") color = ["case", [">", ["get", "nchev"], 0], "#5B6B73", "#B9C2C6"];
+  else if (S.mode === "p4") color = ["match", ["get", "combo"], ...COMBOS.flatMap(c => [c.n, c.color]), SEMI_COLOR];
   else color = ["match", ["get", "conformite"], ...CONF_ORDER.flatMap(k => [k, COL.conf[k]]), COL.muted];
   map.setPaintProperty("emp-fill", "fill-color", color);
   map.setPaintProperty("emp-line", "line-color", color);
@@ -260,9 +285,9 @@ function setMode(mode) {
   $$(".tabs button").forEach(b => b.classList.toggle("active", b.dataset.mode === mode));
   S.visible = new Set(META.lotissements.map(l => l.id));
   S.showChev = mode !== "p2";
-  S.showPromo = mode !== "p3";
+  S.showPromo = mode !== "p3" && mode !== "p4";
   S.selChev = null; if (map.getLayer("chev-sel")) map.setFilter("chev-sel", ["==", ["get", "id"], ""]);
-  ({ overview: renderOverview, p1: renderP1, p2: renderP2, p3: renderP3 })[mode]();
+  ({ overview: renderOverview, p1: renderP1, p2: renderP2, p3: renderP3, p4: renderP4 })[mode]();
   styleEmprises();
   renderLegend();
   if (S.selected) renderFiche(S.selected);
@@ -312,6 +337,7 @@ function renderOverview() {
       <button class="btn" data-goto="p1" style="text-align:left"><b>1.</b> Présentation générale des lotissements uniques →</button>
       <button class="btn" data-goto="p2" style="text-align:left"><b>2.</b> Catégorisation par arrêté d'approbation →</button>
       <button class="btn" data-goto="p3" style="text-align:left"><b>3.</b> Lotissements ayant des chevauchements →</button>
+      <button class="btn" data-goto="p4" style="text-align:left"><b>4.</b> Combinaisons et enjeux fonciers →</button>
     </div>
     ${qualityNote()}`;
   bindPanelCommon();
@@ -443,6 +469,50 @@ function renderP3() {
   bindPanelCommon(); bindTree();
 }
 
+function renderP4() {
+  const of = n => META.lotissements.filter(l => l.combo === n);
+  const ha = list => list.reduce((a, l) => a + l.superficie_lots_ha, 0);
+  const lots = list => list.reduce((a, l) => a + l.nb_lots, 0);
+  const tick = b => b ? "✔" : "✖";
+  const semi = of(0);
+  $("#panel").innerHTML = `
+    <div class="section-title">Projet 4</div>
+    <h2 style="font-size:18px;margin-bottom:6px">Combinaisons et enjeux fonciers</h2>
+    <p class="lead">Chaque lotissement est classé selon trois critères — <strong>conformité</strong>, <strong>chevauchement</strong> et <strong>approbation</strong> — ce qui donne 8 situations, de la plus régulière (1) à la plus critique (8). Cliquez une situation pour l'isoler sur la carte.</p>
+    <div class="card" style="padding:4px 6px">
+      <table class="matrix combo-table"><thead><tr><th>N°</th><th>Conf.</th><th>Chev.</th><th>Appr.</th><th style="text-align:left">Enjeu</th><th>Plans</th></tr></thead><tbody>
+      ${COMBOS.map(c => { const L = of(c.n); return `<tr class="combo-row" data-combo="${c.n}" title="${comboLabel(c)} — ${fmt(lots(L))} lots, ${fmt(ha(L), 1)} ha">
+        <td><span class="cnum" style="background:${c.color}">${c.n}</span></td>
+        <td class="${c.conf === "C" ? "ok" : "ko"}">${c.conf === "C" ? "C" : "NC"}</td>
+        <td class="${c.chev ? "ko" : "ok"}">${c.chev ? "Oui" : "Non"}</td>
+        <td class="${c.app ? "ok" : "ko"}">${tick(c.app)}</td>
+        <td style="text-align:left">${c.enjeu}</td>
+        <td><b>${L.length}</b></td></tr>`; }).join("")}
+      <tr class="combo-row" data-combo="0" title="Absence de bâtis pour valider la conformité"><td><span class="cnum" style="background:${SEMI_COLOR}">—</span></td><td colspan="3" style="text-align:center">Semi conf.</td><td style="text-align:left">Conformité à valider</td><td><b>${semi.length}</b></td></tr>
+      </tbody><tfoot><tr><td colspan="5">Total</td><td>${META.lotissements.length}</td></tr></tfoot></table>
+    </div>
+    <div class="combo-bar">${[...COMBOS.map(c => [c.color, of(c.n).length, c.n]), [SEMI_COLOR, semi.length, "—"]].map(([col, n, lab]) => n ? `<span style="flex:${n};background:${col}" title="${lab} : ${n}">${n}</span>` : "").join("")}</div>
+    <details class="note" style="margin-top:10px"><summary><b>Règles de classement</b></summary>
+      <ul><li><b>Conforme (C)</b> : plan classé « Conforme ». <b>Non conforme (NC)</b> : « Non conforme » ou « Modifié ».</li>
+      <li><b>Chevauchement</b> : le plan est cité dans au moins une des ${CHEV.features.length} zones de la couche Chevauchement.</li>
+      <li><b>Approuvé</b> : arrêté par voie normale ou de régularisation. <b>Non approuvé</b> : plan classé « Neutre ».</li>
+      <li>Les ${semi.length} plans <b>semi conformes</b> (absence de bâtis) ne peuvent pas être tranchés et sont présentés à part.</li></ul></details>
+    <div class="section-title">Couches par situation</div>
+    ${treeTools()}
+    <div id="tree">
+      ${COMBOS.map(c => groupHTML(`${c.n}. ${comboLabel(c)}`, c.color, of(c.n), { note: c.enjeu, open: false })).join("")}
+      ${groupHTML("Semi conforme (à valider)", SEMI_COLOR, semi, { note: CONF_NOTE["Semi conforme"] })}
+    </div>`;
+  $$(".combo-row").forEach(r => r.onclick = () => {
+    const n = +r.dataset.combo, only = of(n).map(l => l.id);
+    const same = only.length === S.visible.size && only.every(id => S.visible.has(id));
+    S.visible = new Set(same || !only.length ? META.lotissements.map(l => l.id) : only);
+    $$(".combo-row").forEach(x => x.classList.toggle("sel", !same && only.length && x === r));
+    applyFilters(); syncTree(); if (!same && only.length) fitTo(only);
+  });
+  bindPanelCommon(); bindTree();
+}
+
 /* --------------------------- interactions panneau */
 function bindPanelCommon() {
   $$("[data-goto]").forEach(b => b.onclick = () => setMode(b.dataset.goto));
@@ -570,6 +640,7 @@ function renderFiche(id) {
       <div class="badges">
         <span class="badge" style="background:${COL.conf[l.conformite]}">${esc(l.conformite)}</span>
         <span class="badge" style="background:${COL.appro[l.appro]}">${l.appro === "Neutre" ? "Approbation : neutre" : "Voie " + (l.appro === "Normale" ? "normale" : "de régularisation")}</span>
+        <span class="badge" style="background:${comboColor(l.combo)}" title="${l.combo ? comboLabel(COMBOS[l.combo - 1]) : ""}">${l.combo ? "Situation " + l.combo + " · " + COMBOS[l.combo - 1].enjeu : "Conformité à valider"}</span>
         ${l.chevauchements.length ? `<span class="badge" style="background:${COL.chev}">${l.chevauchements.length} chevauchement${l.chevauchements.length > 1 ? "s" : ""}</span>` : ""}
       </div>
       <button class="fiche-close" aria-label="Fermer">×</button>
@@ -619,6 +690,7 @@ function renderFiche(id) {
 function renderLegend() {
   const rows = [];
   if (S.mode === "p2") { rows.push("<h4>Arrêté d'approbation</h4>"); APPRO_ORDER.forEach(a => rows.push(`<div class="row"><span class="sw" style="background:${COL.appro[a]}"></span>${APPRO_LABEL[a]}</div>`)); }
+  else if (S.mode === "p4") { rows.push("<h4>Combinaisons d'enjeux</h4>"); COMBOS.forEach(c => rows.push(`<div class="row"><span class="sw" style="background:${c.color}"></span>${c.n}. ${c.enjeu}</div>`)); rows.push(`<div class="row"><span class="sw" style="background:${SEMI_COLOR}"></span>Semi conforme (à valider)</div>`); }
   else if (S.mode === "p3") rows.push("<h4>Lotissements</h4>", `<div class="row"><span class="sw" style="background:#5B6B73"></span>Avec chevauchement</div>`, `<div class="row"><span class="sw" style="background:#B9C2C6"></span>Sans chevauchement</div>`);
   else { rows.push("<h4>Conformité du plan</h4>"); CONF_ORDER.forEach(c => rows.push(`<div class="row"><span class="sw" style="background:${COL.conf[c]}"></span>${c}</div>`)); }
   if (S.lotClasse) { rows.push(`<div class="sep"></div><h4>Lots (zoom ≥ ${LOTS_MINZOOM})</h4>`); ["Conforme", "Modifié", "Non conforme"].forEach(c => rows.push(`<div class="row"><span class="sw" style="background:${COL.lot[c]}"></span>Lot ${c.toLowerCase()}</div>`)); }
@@ -657,7 +729,7 @@ function initSearch() {
 const COLS = [
   ["num", "N°", true], ["nom", "Lotissement"], ["appro", "Approbation"], ["conformite", "Conformité"],
   ["nb_ilots", "Îlots", true], ["nb_lots", "Lots", true], ["superficie_lots_ha", "Surf. lots (ha)", true],
-  ["superficie_ha", "Emprise (ha)", true], ["nchev", "Chevauch.", true]];
+  ["superficie_ha", "Emprise (ha)", true], ["nchev", "Chevauch.", true], ["combo", "Combinaison", true]];
 let sortKey = "num", sortDir = 1;
 function renderTable() {
   const q = norm($("#table-filter").value);
@@ -666,23 +738,24 @@ function renderTable() {
     .sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : a[sortKey] < b[sortKey] ? -1 : 0) * sortDir);
   const cell = (l, k) => k === "conformite" ? `<span class="pill"><span class="dot" style="background:${COL.conf[l.conformite]}"></span>${l.conformite}</span>`
     : k === "appro" ? `<span class="pill"><span class="dot" style="background:${COL.appro[l.appro]}"></span>${l.appro}</span>`
+    : k === "combo" ? `<span class="pill" title="${l.combo ? comboLabel(COMBOS[l.combo - 1]) : "Semi conforme"}"><span class="dot" style="background:${comboColor(l.combo)}"></span>${l.combo || "—"}</span>`
     : k.startsWith("superficie") ? fmt(l[k], 2) : typeof l[k] === "number" ? fmt(l[k]) : esc(l[k]);
   const ng = q ? [] : NOGEO.lotissements;
   $("#table").innerHTML = `<thead><tr>${COLS.map(([k, t, n]) => `<th data-k="${k}" class="${n ? "num" : ""}">${t}${sortKey === k ? (sortDir > 0 ? " ▲" : " ▼") : ""}</th>`).join("")}</tr></thead>
   <tbody>${rows.map(l => `<tr data-id="${l.id}">${COLS.map(([k, , n]) => `<td class="${n ? "num" : ""}">${cell(l, k)}</td>`).join("")}</tr>`).join("")}
-  ${ng.map(x => `<tr style="color:#73838A"><td class="num">—</td><td>${esc(x.nom)}</td><td>${esc(x.appro || "")}</td><td colspan="6">Non géolocalisé</td></tr>`).join("")}</tbody>
+  ${ng.map(x => `<tr style="color:#73838A"><td class="num">—</td><td>${esc(x.nom)}</td><td>${esc(x.appro || "")}</td><td colspan="7">Non géolocalisé</td></tr>`).join("")}</tbody>
   <tfoot><tr style="font-weight:700"><td></td><td>${rows.length} lotissements${ng.length ? ` + ${ng.length} non géolocalisés` : ""}</td><td></td><td></td>
   <td class="num">${fmt(rows.reduce((a, l) => a + l.nb_ilots, 0))}</td><td class="num">${fmt(rows.reduce((a, l) => a + l.nb_lots, 0))}</td>
-  <td class="num">${fmt(rows.reduce((a, l) => a + l.superficie_lots_ha, 0), 2)}</td><td></td><td></td></tr></tfoot>`;
+  <td class="num">${fmt(rows.reduce((a, l) => a + l.superficie_lots_ha, 0), 2)}</td><td></td><td></td><td></td></tr></tfoot>`;
   $$("#table th").forEach(th => th.onclick = () => { const k = th.dataset.k; sortDir = sortKey === k ? -sortDir : 1; sortKey = k; renderTable(); });
   $$("#table tbody tr[data-id]").forEach(tr => tr.onclick = () => { $("#table-dialog").close(); select(tr.dataset.id, true); });
 }
 function exportCSV() {
-  const head = ["N°", "Lotissement", "Approbation", "Conformité", "Groupe QGIS", "Îlots", "Lots", "Surface lots (ha)", "Emprise (ha)", "Chevauchements", "Couche"];
+  const head = ["N°", "Lotissement", "Approbation", "Conformité", "Groupe QGIS", "Îlots", "Lots", "Surface lots (ha)", "Emprise (ha)", "Chevauchements", "Combinaison", "Enjeu", "Couche"];
   const q = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
   const lines = META.lotissements.map(l => [l.num, l.nom, l.appro, l.conformite, l.groupe_qgis, l.nb_ilots, l.nb_lots,
-    String(l.superficie_lots_ha).replace(".", ","), String(l.superficie_ha).replace(".", ","), l.chevauchements.join(" "), l.fichier].map(q).join(";"));
-  NOGEO.lotissements.forEach(x => lines.push(["", x.nom, x.appro || "", "Non géolocalisé", "", "", "", "", "", "", ""].map(q).join(";")));
+    String(l.superficie_lots_ha).replace(".", ","), String(l.superficie_ha).replace(".", ","), l.chevauchements.join(" "), l.combo ? l.combo + ". " + comboLabel(COMBOS[l.combo - 1]) : "Semi conforme (à valider)", l.combo ? COMBOS[l.combo - 1].enjeu : "", l.fichier].map(q).join(";"));
+  NOGEO.lotissements.forEach(x => lines.push(["", x.nom, x.appro || "", "Non géolocalisé", "", "", "", "", "", "", "", "", ""].map(q).join(";")));
   const blob = new Blob(["﻿" + [head.map(q).join(";"), ...lines].join("\r\n")], { type: "text/csv;charset=utf-8" });
   const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: "lotissements_bingerville.csv" });
   a.click(); URL.revokeObjectURL(a.href);

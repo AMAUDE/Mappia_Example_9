@@ -12,6 +12,7 @@ Plateforme SIG web de présentation des lotissements de la localité de Bingervi
 | Projet 1 — Présentation générale | Les lotissements uniques, **un plan = une couche**, classés Conforme / Non conforme (dont Modifié) / Semi conforme ; groupe des lotissements non géolocalisés ; points des promotions immobilières |
 | Projet 2 — Arrêtés d'approbation | Lotissements approuvés par voie normale et par voie de régularisation (et plans « Neutre »), croisés avec la conformité |
 | Projet 3 — Chevauchements | Les zones où des plans se superposent, avec les lotissements concernés et les superficies |
+| Projet 4 — Enjeux | 8 combinaisons conformité × chevauchement × approbation, de « situation régulière » (1) à « enjeu critique » (8) ; semi conformes à part |
 
 Interactions : arbre de couches (afficher / masquer chaque plan ou groupe), recherche, fiche détaillée par lotissement (lots, îlots, superficies, usages, conformité lot par lot, chevauchements), affichage des lots au zoom ≥ 14, conformité lot par lot, fonds Plan / Satellite / OSM, tableau triable et export CSV, téléchargement GeoJSON de chaque plan.
 
