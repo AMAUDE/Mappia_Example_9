@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cartographie foncière : lotissements de Bingerville</title>
+<meta name="description" content="Plateforme SIG de présentation des lotissements de Bingerville : conformité, arrêtés d'approbation, chevauchements et promotions immobilières.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230E3B43'/><path d='M7 9h8v6H7zM17 9h8v10h-8zM7 17h8v6H7zM17 21h8v2h-8z' fill='%23E9C46A'/></svg>">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 7h10v8H5zM17 7h10v13H17zM5 17h10v8H5zM17 22h10v3H17z"/></svg></div>
+    <div>
+      <h1>Cartographie foncière : lotissements de Bingerville</h1>
+      <p class="subtitle">Présentation des travaux SIG — conformité, arrêtés d'approbation, chevauchements</p>
+    </div>
+  </div>
+  <nav class="tabs" role="tablist" aria-label="Projets">
+    <button role="tab" data-mode="overview" class="active">Vue d'ensemble</button>
+    <button role="tab" data-mode="p1"><span class="num">1</span>Présentation générale</button>
+    <button role="tab" data-mode="p2"><span class="num">2</span>Arrêtés d'approbation</button>
+    <button role="tab" data-mode="p3"><span class="num">3</span>Chevauchements</button>
+  </nav>
+  <div class="top-actions">
+    <div class="search">
+      <input id="search" type="search" placeholder="Rechercher un lotissement…" autocomplete="off" aria-label="Rechercher un lotissement">
+      <ul id="search-results" class="search-results" hidden></ul>
+    </div>
+    <button id="btn-table" class="btn ghost" title="Tableau des lotissements">Tableau</button>
+  </div>
+</header>
+
+<main class="layout">
+  <aside id="sidebar" class="sidebar">
+    <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Afficher / masquer le panneau">▾</button>
+    <div id="panel" class="panel"></div>
+  </aside>
+
+  <section class="map-wrap">
+    <div id="map"></div>
+    <div class="map-tools">
+      <div class="basemaps" role="group" aria-label="Fond de carte">
+        <button data-bm="light" class="active">Plan</button>
+        <button data-bm="sat">Satellite</button>
+        <button data-bm="osm">OSM</button>
+      </div>
+      <label class="switch" title="Colorer chaque lot selon sa conformité (lot par lot)">
+        <input type="checkbox" id="lot-classe"> <span>Conformité lot par lot</span>
+      </label>
+      <label class="switch">
+        <input type="checkbox" id="labels" checked> <span>Noms</span>
+      </label>
+    </div>
+    <div id="legend" class="legend"></div>
+    <div id="zoom-hint" class="zoom-hint">Zoomez pour afficher les lots de chaque plan</div>
+    <div id="loading" class="loading"><div class="spinner"></div><span>Chargement des données…</span></div>
+  </section>
+
+  <aside id="fiche" class="fiche" hidden aria-live="polite"></aside>
+</main>
+
+<dialog id="table-dialog" class="table-dialog">
+  <div class="dlg-head">
+    <h2>Liste des lotissements</h2>
+    <div class="dlg-actions">
+      <input id="table-filter" type="search" placeholder="Filtrer…">
+      <button id="btn-csv" class="btn">Exporter CSV</button>
+      <button class="btn ghost" data-close>Fermer</button>
+    </div>
+  </div>
+  <div class="table-scroll"><table id="table"></table></div>
+</dialog>
+
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

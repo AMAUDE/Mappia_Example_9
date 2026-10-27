@@ -1,0 +1,3776 @@
+{
+ "titre": "Cartographie foncière : lotissements de Bingerville",
+ "source": "Projet QGIS BINGERVILLE_20261027.qgz",
+ "genere_le": "2026-10-27",
+ "bbox": [
+  -3.933973,
+  5.27589,
+  -3.727925,
+  5.406104
+ ],
+ "totaux": {
+  "lotissements_geolocalises": 104,
+  "lots": 63329,
+  "superficie_ha": 5387.7,
+  "chevauchements": 19,
+  "superficie_chevauchements_ha": 185.79,
+  "promotions": 33,
+  "promoteurs": 4
+ },
+ "lotissements": [
+  {
+   "id": "achokoi",
+   "nom": "ACHOKOI",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_ACHOKOI.shp",
+   "barcode": "a86-00000052",
+   "origine": "Reprise",
+   "nb_lots": 89,
+   "nb_ilots": 15,
+   "superficie_ha": 13.51,
+   "superficie_lots_ha": 10.68,
+   "usages": {
+    "RESIDENTIEL": 64,
+    "MIXTE": 18,
+    "AUTRE": 3,
+    "LIEU DE CULTE": 1,
+    "ESPACE VERT": 1,
+    "MARCHE": 1,
+    "CIMETIERE": 1
+   },
+   "classes_lots": {
+    "Conforme": 89
+   },
+   "centre": [
+    -3.835416,
+    5.37524
+   ],
+   "bbox": [
+    -3.838527,
+    5.373221,
+    -3.833326,
+    5.377644
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "achokoi-palmeraie-modifie",
+   "nom": "ACHOKOI PALMERAIE MODIFIE",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_ACHOKOI PALMERAIE MODIFIE.shp",
+   "barcode": "a86-00000092",
+   "origine": "Reprise",
+   "nb_lots": 1020,
+   "nb_ilots": 124,
+   "superficie_ha": 87.65,
+   "superficie_lots_ha": 63.8,
+   "usages": {
+    "RESIDENTIEL": 998,
+    "ESPACE VERT": 7,
+    "AUTRE": 3,
+    "R.A.P.": 3,
+    "MARCHE": 2,
+    "RESERVE ADMINISTRATIVE": 2,
+    "FOYER": 1,
+    "ECOLE": 1,
+    "LIEU DE CULTE": 1,
+    "GARE ROUTIERE": 1,
+    "SPORT": 1
+   },
+   "classes_lots": {
+    "Conforme": 1020
+   },
+   "centre": [
+    -3.834531,
+    5.363588
+   ],
+   "bbox": [
+    -3.839337,
+    5.356898,
+    -3.825503,
+    5.369179
+   ],
+   "chevauchements": [
+    "CH-04",
+    "CH-09"
+   ]
+  },
+  {
+   "id": "adjame",
+   "nom": "ADJAME",
+   "appro": "Neutre",
+   "conformite": "Modifié",
+   "groupe_qgis": "NEUTRE / MODIFIE",
+   "fichier": "lotissement_ADJAME.shp",
+   "barcode": "a86-00000058",
+   "origine": "Reprise",
+   "nb_lots": 332,
+   "nb_ilots": 46,
+   "superficie_ha": 44.65,
+   "superficie_lots_ha": 35.8,
+   "usages": {
+    "RESIDENTIEL": 296,
+    "MIXTE": 27,
+    "AUTRE": 5,
+    "MARCHE": 1,
+    "CENTRE CULTUREL": 1,
+    "RESERVE ADMINISTRATIVE": 1,
+    "PLACE PUBLIQUE": 1
+   },
+   "classes_lots": {
+    "Conforme": 312,
+    "Modifié": 10,
+    "Non conforme": 10
+   },
+   "centre": [
+    -3.871955,
+    5.350189
+   ],
+   "bbox": [
+    -3.882091,
+    5.342605,
+    -3.870245,
+    5.354458
+   ],
+   "chevauchements": [
+    "CH-03"
+   ]
+  },
+  {
+   "id": "adjame-bingerville",
+   "nom": "ADJAME BINGERVILLE",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_ADJAME BINGERVILLE.shp",
+   "barcode": "a86-00000001",
+   "origine": "Reprise",
+   "nb_lots": 270,
+   "nb_ilots": 31,
+   "superficie_ha": 33.09,
+   "superficie_lots_ha": 25.07,
+   "usages": {
+    "RESIDENTIEL": 264,
+    "LIEU DE CULTE": 3,
+    "ESPACE VERT": 1,
+    "ECOLE": 1,
+    "AUTRE": 1
+   },
+   "classes_lots": {
+    "Conforme": 269,
+    "Modifié": 1
+   },
+   "centre": [
+    -3.869093,
+    5.354395
+   ],
+   "bbox": [
+    -3.873321,
+    5.35099,
+    -3.864787,
+    5.357798
+   ],
+   "chevauchements": [
+    "CH-10",
+    "CH-11"
+   ]
+  },
+  {
+   "id": "adjame-bingerville-quartier-akwe-djemin",
+   "nom": "ADJAME BINGERVILLE QUARTIER AKWE-DJEMIN",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_ADJAME BINGERVILLE QUARTIER AKWE-DJEMIN.shp",
+   "barcode": "a86-00000006",
+   "origine": "Reprise",
+   "nb_lots": 840,
+   "nb_ilots": 86,
+   "superficie_ha": 83.75,
+   "superficie_lots_ha": 61.59,
+   "usages": {
+    "RESIDENTIEL": 823,
+    "ESPACE VERT": 5,
+    "LIEU DE CULTE": 4,
+    "RESERVE ADMINISTRATIVE": 3,
+    "MIXTE": 2,
+    "CENTRE DE SANTE": 1,
+    "ECOLE": 1,
+    "MARCHE": 1
+   },
+   "classes_lots": {
+    "Conforme": 532,
+    "Modifié": 308
+   },
+   "centre": [
+    -3.859356,
+    5.346214
+   ],
+   "bbox": [
+    -3.864015,
+    5.33924,
+    -3.851846,
+    5.348937
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "adjame-bingerville-akwe-djemin-village",
+   "nom": "ADJAME-BINGERVILLE (AKWE-DJEMIN VILLAGE)",
+   "appro": "Régularisation",
+   "conformite": "Modifié",
+   "groupe_qgis": "REGULARISATION / MODIFIE",
+   "fichier": "lotissement_ADJAME-BINGERVILLE (AKWE-DJEMIN VILLAGE).shp",
+   "barcode": "885-00000371",
+   "origine": "Reprise",
+   "nb_lots": 1381,
+   "nb_ilots": 161,
+   "superficie_ha": 140.95,
+   "superficie_lots_ha": 113.67,
+   "usages": {
+    "RESIDENTIEL": 1341,
+    "DOMAINE PRIVE": 17,
+    "ESPACE VERT": 13,
+    "CIMETIERE": 7,
+    "RESERVE ADMINISTRATIVE": 3
+   },
+   "classes_lots": {
+    "Conforme": 993,
+    "Modifié": 262,
+    "Non conforme": 126
+   },
+   "centre": [
+    -3.876171,
+    5.33785
+   ],
+   "bbox": [
+    -3.881427,
+    5.333382,
+    -3.863598,
+    5.349312
+   ],
+   "chevauchements": [
+    "CH-03"
+   ]
+  },
+  {
+   "id": "adjame-bingerville-akwe-djemin-village-plan-de-declassement-et-de-morc",
+   "nom": "ADJAME-BINGERVILLE (AKWE-DJEMIN VILLAGE) PLAN DE DECLASSEMENT ET DE MORCELLEMENT DES ILOTS : 12-17-18-32-110-112-128 et 131",
+   "appro": "Neutre",
+   "conformite": "Conforme",
+   "groupe_qgis": "NEUTRE / CONFORME",
+   "fichier": "lotissement_ADJAME-BINGERVILLE (AKWE-DJEMIN VILLAGE) PLAN DE DECLASSEMENT ET DE MORCELLEMENT DES ILOTS _ 12-17-18-32-110-112-128 et 131.shp",
+   "barcode": "a86-00000046",
+   "origine": "Reprise",
+   "nb_lots": 118,
+   "nb_ilots": 13,
+   "superficie_ha": 6.53,
+   "superficie_lots_ha": 6.02,
+   "usages": {
+    "RESIDENTIEL": 118
+   },
+   "classes_lots": {
+    "Conforme": 86,
+    "Modifié": 32
+   },
+   "centre": [
+    -3.872953,
+    5.33757
+   ],
+   "bbox": [
+    -3.873688,
+    5.33696,
+    -3.863173,
+    5.347521
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "adjame-bingerville-ancien-nanmoue",
+   "nom": "ADJAME-BINGERVILLE (ANCIEN NANMOUE)",
+   "appro": "Régularisation",
+   "conformite": "Modifié",
+   "groupe_qgis": "REGULARISATION / MODIFIE",
+   "fichier": "lotissement_ADJAME-BINGERVILLE (ANCIEN NANMOUE).shp",
+   "barcode": "a86-00000105",
+   "origine": "Reprise",
+   "nb_lots": 26,
+   "nb_ilots": 5,
+   "superficie_ha": 1.57,
+   "superficie_lots_ha": 1.46,
+   "usages": {
+    "RESIDENTIEL": 24,
+    "ESPACE VERT": 2
+   },
+   "classes_lots": {
+    "Conforme": 21,
+    "Modifié": 5
+   },
+   "centre": [
+    -3.867461,
+    5.357517
+   ],
+   "bbox": [
+    -3.868835,
+    5.35518,
+    -3.864842,
+    5.357784
+   ],
+   "chevauchements": [
+    "CH-10"
+   ]
+  },
+  {
+   "id": "adjame-bingerville-palmeraie-djobissandret-1-plan-de-declassement-et-d",
+   "nom": "ADJAME-BINGERVILLE PALMERAIE DJOBISSANDRET 1 PLAN DE DECLASSEMENT ET DE MORCELLEMENT DES ILOTS n°s : 7-45-48-66-70 et 82",
+   "appro": "Neutre",
+   "conformite": "Conforme",
+   "groupe_qgis": "NEUTRE / CONFORME",
+   "fichier": "lotissement_ADJAME-BINGERVILLE PALMERAIE DJOBISSANDRET 1 PLAN DE DECLASSEMENT ET DE MORCELLEMENT DES ILOTS n°s _ 7-45-48-66-70 et 82.shp",
+   "barcode": "a86-00000096",
+   "origine": "Reprise",
+   "nb_lots": 77,
+   "nb_ilots": 13,
+   "superficie_ha": 6.9,
+   "superficie_lots_ha": 6.43,
+   "usages": {
+    "RESIDENTIEL": 71,
+    "ESPACE VERT": 3,
+    "RESERVE ADMINISTRATIVE": 2,
+    "FOYER": 1
+   },
+   "classes_lots": {
+    "Conforme": 77
+   },
+   "centre": [
+    -3.872211,
+    5.358499
+   ],
+   "bbox": [
+    -3.873382,
+    5.357278,
+    -3.863533,
+    5.373951
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "adjame-bingerville-palmeraie-djobissandret-2",
+   "nom": "ADJAME-BINGERVILLE PALMERAIE-DJOBISSANDRET 2",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_ADJAME-BINGERVILLE PALMERAIE-DJOBISSANDRET 2.shp",
+   "barcode": "a86-00000022",
+   "origine": "Reprise",
+   "nb_lots": 318,
+   "nb_ilots": 32,
+   "superficie_ha": 28.26,
+   "superficie_lots_ha": 21.64,
+   "usages": {
+    "RESIDENTIEL": 311,
+    "DOMAINE PRIVE": 3,
+    "RESERVE ADMINISTRATIVE": 2,
+    "ESPACE VERT": 2
+   },
+   "classes_lots": {
+    "Conforme": 318
+   },
+   "centre": [
+    -3.862683,
+    5.373322
+   ],
+   "bbox": [
+    -3.872026,
+    5.37091,
+    -3.859042,
+    5.37745
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "adjame-bingerville-quartier-allotcha-to",
+   "nom": "ADJAME-BINGERVILLE QUARTIER ALLOTCHA-TO",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_ADJAME-BINGERVILLE QUARTIER ALLOTCHA-TO.shp",
+   "barcode": "a86-00000035",
+   "origine": "Reprise",
+   "nb_lots": 211,
+   "nb_ilots": 20,
+   "superficie_ha": 17.43,
+   "superficie_lots_ha": 13.0,
+   "usages": {
+    "RESIDENTIEL": 209,
+    "LIEU DE CULTE": 1,
+    "ESPACE VERT": 1
+   },
+   "classes_lots": {
+    "Conforme": 211
+   },
+   "centre": [
+    -3.881734,
+    5.338149
+   ],
+   "bbox": [
+    -3.884049,
+    5.335754,
+    -3.879467,
+    5.341393
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "adjame-bingerville-quartier-n-gbessigue-tf-n209235",
+   "nom": "ADJAME-BINGERVILLE QUARTIER N'GBESSIGUE TF N°209235",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_ADJAME-BINGERVILLE QUARTIER N'GBESSIGUE TF N°209235.shp",
+   "barcode": "a86-00000854",
+   "origine": "Reprise",
+   "nb_lots": 52,
+   "nb_ilots": 7,
+   "superficie_ha": 2.62,
+   "superficie_lots_ha": 2.1,
+   "usages": {
+    "RESIDENTIEL": 50,
+    "ESPACE VERT": 1,
+    "ECOLE PRIMAIRE": 1
+   },
+   "classes_lots": {
+    "Conforme": 52
+   },
+   "centre": [
+    -3.847454,
+    5.356552
+   ],
+   "bbox": [
+    -3.848855,
+    5.35564,
+    -3.84682,
+    5.357479
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "adjame-bingerville-quartier-nmoket-residentiel",
+   "nom": "ADJAME-BINGERVILLE QUARTIER NMOKET-RESIDENTIEL",
+   "appro": "Normale",
+   "conformite": "Modifié",
+   "groupe_qgis": "NORMAL / MODIFE",
+   "fichier": "lotissement_ADJAME-BINGERVILLE QUARTIER NMOKET-RESIDENTIEL.shp",
+   "barcode": "",
+   "origine": "",
+   "nb_lots": 713,
+   "nb_ilots": 96,
+   "superficie_ha": 62.15,
+   "superficie_lots_ha": 48.33,
+   "usages": {
+    "NON RENSEIGNÉ": 713
+   },
+   "classes_lots": {
+    "Conforme": 579,
+    "Modifié": 134
+   },
+   "centre": [
+    -3.862607,
+    5.34142
+   ],
+   "bbox": [
+    -3.866557,
+    5.331952,
+    -3.856296,
+    5.343476
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "adjame-bingerville-residentiel-quartier-n-gotto",
+   "nom": "ADJAME-BINGERVILLE RESIDENTIEL QUARTIER N'GOTTO",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_ADJAME-BINGERVILLE RESIDENTIEL QUARTIER N'GOTTO.shp",
+   "barcode": "a86-00000012",
+   "origine": "Reprise",
+   "nb_lots": 667,
+   "nb_ilots": 64,
+   "superficie_ha": 60.66,
+   "superficie_lots_ha": 46.05,
+   "usages": {
+    "RESIDENTIEL": 662,
+    "ESPACE VERT": 2,
+    "LIEU DE CULTE": 1,
+    "ECOLE MATERNELLE": 1,
+    "AUTRE": 1
+   },
+   "classes_lots": {
+    "Conforme": 667
+   },
+   "centre": [
+    -3.871159,
+    5.36121
+   ],
+   "bbox": [
+    -3.876201,
+    5.356607,
+    -3.864709,
+    5.368327
+   ],
+   "chevauchements": [
+    "CH-13"
+   ]
+  },
+  {
+   "id": "adjame-bingerville-residentiel-quartier-n-gromin",
+   "nom": "ADJAME-BINGERVILLE RESIDENTIEL QUARTIER N'GROMIN",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_ADJAME-BINGERVILLE RESIDENTIEL QUARTIER N'GROMIN.shp",
+   "barcode": "a86-00000057",
+   "origine": "Reprise",
+   "nb_lots": 74,
+   "nb_ilots": 9,
+   "superficie_ha": 4.88,
+   "superficie_lots_ha": 4.23,
+   "usages": {
+    "RESIDENTIEL": 74
+   },
+   "classes_lots": {
+    "Conforme": 74
+   },
+   "centre": [
+    -3.881229,
+    5.366064
+   ],
+   "bbox": [
+    -3.88177,
+    5.363521,
+    -3.871855,
+    5.372594
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "adjin-ii",
+   "nom": "ADJIN II",
+   "appro": "Normale",
+   "conformite": "Modifié",
+   "groupe_qgis": "NORMAL / MODIFE",
+   "fichier": "lotissement_ADJIN II.shp",
+   "barcode": "",
+   "origine": "",
+   "nb_lots": 811,
+   "nb_ilots": 104,
+   "superficie_ha": 57.1,
+   "superficie_lots_ha": 43.73,
+   "usages": {
+    "NON RENSEIGNÉ": 811
+   },
+   "classes_lots": {
+    "Modifié": 811
+   },
+   "centre": [
+    -3.863245,
+    5.381916
+   ],
+   "bbox": [
+    -3.871309,
+    5.379116,
+    -3.856864,
+    5.391502
+   ],
+   "chevauchements": [
+    "CH-14"
+   ]
+  },
+  {
+   "id": "adjin-nord-est-extension",
+   "nom": "ADJIN NORD EST EXTENSION",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_ADJIN NORD EST EXTENSION.shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 350,
+   "nb_ilots": 29,
+   "superficie_ha": 21.72,
+   "superficie_lots_ha": 17.54,
+   "usages": {
+    "HABITATION": 349,
+    "EV": 1
+   },
+   "classes_lots": {
+    "Conforme": 350
+   },
+   "centre": [
+    -3.85814,
+    5.37805
+   ],
+   "bbox": [
+    -3.861281,
+    5.375584,
+    -3.856083,
+    5.382883
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "adjin-palmeraie",
+   "nom": "ADJIN PALMERAIE",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_ADJIN PALMERAIE.shp",
+   "barcode": "a86-00000020",
+   "origine": "Reprise",
+   "nb_lots": 709,
+   "nb_ilots": 70,
+   "superficie_ha": 62.35,
+   "superficie_lots_ha": 47.98,
+   "usages": {
+    "RESIDENTIEL": 697,
+    "MIXTE": 6,
+    "ESPACE VERT": 2,
+    "RESERVE ADMINISTRATIVE": 2,
+    "LIEU DE CULTE": 1,
+    "AUTRE": 1
+   },
+   "classes_lots": {
+    "Conforme": 709
+   },
+   "centre": [
+    -3.867401,
+    5.378619
+   ],
+   "bbox": [
+    -3.872089,
+    5.374044,
+    -3.856496,
+    5.381142
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "adjin-palmeraie-1ere-extension",
+   "nom": "ADJIN PALMERAIE 1ère EXTENSION",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_ADJIN PALMERAIE 1ère EXTENSION.shp",
+   "barcode": "a86-00000016",
+   "origine": "Reprise",
+   "nb_lots": 282,
+   "nb_ilots": 30,
+   "superficie_ha": 18.89,
+   "superficie_lots_ha": 13.3,
+   "usages": {
+    "RESIDENTIEL": 276,
+    "LIEU DE CULTE": 2,
+    "ESPACE VERT": 1,
+    "MARCHE": 1,
+    "TERRAIN DE SPORT": 1,
+    "ECOLE": 1
+   },
+   "classes_lots": {
+    "Conforme": 282
+   },
+   "centre": [
+    -3.876121,
+    5.382483
+   ],
+   "bbox": [
+    -3.878667,
+    5.379891,
+    -3.873059,
+    5.385081
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "adjin-palmeraie-1ere-extension-plan-modifie",
+   "nom": "ADJIN PALMERAIE 1ère EXTENSION (PLAN MODIFIE)",
+   "appro": "Normale",
+   "conformite": "Modifié",
+   "groupe_qgis": "NORMAL / MODIFE",
+   "fichier": "lotissement_ADJIN PALMERAIE 1ère EXTENSION (PLAN MODIFIE).shp",
+   "barcode": "a86-00000024",
+   "origine": "Reprise",
+   "nb_lots": 680,
+   "nb_ilots": 70,
+   "superficie_ha": 42.41,
+   "superficie_lots_ha": 32.61,
+   "usages": {
+    "RESIDENTIEL": 676,
+    "CENTRE DE SANTE": 1,
+    "MARCHE": 1,
+    "AUTRE": 1,
+    "ECOLE": 1
+   },
+   "classes_lots": {
+    "Modifié": 680
+   },
+   "centre": [
+    -3.873795,
+    5.388475
+   ],
+   "bbox": [
+    -3.880883,
+    5.377858,
+    -3.870391,
+    5.391571
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "adoumin-dje",
+   "nom": "ADOUMIN-DJE",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_ADOUMIN-DJE.shp",
+   "barcode": "a86-00000027",
+   "origine": "Reprise",
+   "nb_lots": 105,
+   "nb_ilots": 12,
+   "superficie_ha": 7.24,
+   "superficie_lots_ha": 5.63,
+   "usages": {
+    "RESIDENTIEL": 105
+   },
+   "classes_lots": {
+    "Conforme": 105
+   },
+   "centre": [
+    -3.879015,
+    5.339093
+   ],
+   "bbox": [
+    -3.880082,
+    5.336576,
+    -3.877818,
+    5.340931
+   ],
+   "chevauchements": [
+    "CH-03"
+   ]
+  },
+  {
+   "id": "agbassi",
+   "nom": "AGBASSI",
+   "appro": "Normale",
+   "conformite": "Non conforme",
+   "groupe_qgis": "NORMAL / NON CONFORME",
+   "fichier": "lotissement_AGBASSI.shp",
+   "barcode": "a86-00000051",
+   "origine": "Reprise",
+   "nb_lots": 1256,
+   "nb_ilots": 147,
+   "superficie_ha": 83.76,
+   "superficie_lots_ha": 66.57,
+   "usages": {
+    "RESIDENTIEL": 1240,
+    "ECOLE": 4,
+    "AUTRE": 3,
+    "LIEU DE CULTE": 3,
+    "RESERVE ADMINISTRATIVE": 2,
+    "SPORT": 1,
+    "CENTRE DE SANTE": 1,
+    "COLLEGE": 1,
+    "MARCHE": 1
+   },
+   "classes_lots": {
+    "Non conforme": 1134,
+    "Conforme": 122
+   },
+   "centre": [
+    -3.916349,
+    5.384669
+   ],
+   "bbox": [
+    -3.922131,
+    5.374756,
+    -3.910526,
+    5.392574
+   ],
+   "chevauchements": [
+    "CH-01"
+   ]
+  },
+  {
+   "id": "agouapi-residentiel",
+   "nom": "AGOUAPI RESIDENTIEL",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_AGOUAPI RESIDENTIEL.shp",
+   "barcode": "a86-00000075",
+   "origine": "Reprise",
+   "nb_lots": 760,
+   "nb_ilots": 76,
+   "superficie_ha": 63.65,
+   "superficie_lots_ha": 47.92,
+   "usages": {
+    "RESIDENTIEL": 742,
+    "MIXTE": 7,
+    "ESPACE VERT": 4,
+    "AUTRE": 3,
+    "LIEU DE CULTE": 2,
+    "MARCHE": 1,
+    "CENTRE DE SANTE": 1
+   },
+   "classes_lots": {
+    "Conforme": 760
+   },
+   "centre": [
+    -3.852615,
+    5.353063
+   ],
+   "bbox": [
+    -3.854876,
+    5.347225,
+    -3.845262,
+    5.358041
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "akakro-residentiel",
+   "nom": "AKAKRO RESIDENTIEL",
+   "appro": "Neutre",
+   "conformite": "Semi conforme",
+   "groupe_qgis": "NEUTRE / SEMI CONFORME (ABSENCE DE BATIS POUR VALIDER LA CONFORMITE)",
+   "fichier": "lotissement_AKAKRO RESIDENTIEL.shp",
+   "barcode": "",
+   "origine": "",
+   "nb_lots": 398,
+   "nb_ilots": 54,
+   "superficie_ha": 28.16,
+   "superficie_lots_ha": 20.01,
+   "usages": {
+    "NON RENSEIGNÉ": 398
+   },
+   "classes_lots": {
+    "Modifié": 398
+   },
+   "centre": [
+    -3.824097,
+    5.366573
+   ],
+   "bbox": [
+    -3.826434,
+    5.363101,
+    -3.820861,
+    5.370435
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "akandje-akandje-village-rajout",
+   "nom": "AKANDJE AKANDJE VILLAGE RAJOUT",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_AKANDJE AKANDJE VILLAGE RAJOUT.shp",
+   "barcode": "a86-00000072",
+   "origine": "Reprise",
+   "nb_lots": 108,
+   "nb_ilots": 20,
+   "superficie_ha": 6.48,
+   "superficie_lots_ha": 5.85,
+   "usages": {
+    "RESIDENTIEL": 107,
+    "ECOLE": 1
+   },
+   "classes_lots": {
+    "Conforme": 108
+   },
+   "centre": [
+    -3.899995,
+    5.393742
+   ],
+   "bbox": [
+    -3.910475,
+    5.39134,
+    -3.898942,
+    5.402796
+   ],
+   "chevauchements": [
+    "CH-12"
+   ]
+  },
+  {
+   "id": "akandje-doum-complementaire",
+   "nom": "AKANDJE DOUM COMPLEMENTAIRE",
+   "appro": "Régularisation",
+   "conformite": "Non conforme",
+   "groupe_qgis": "REGULARISATION / NON CONFORME",
+   "fichier": "lotissement_AKANDJE DOUM COMPLEMENTAIRE.shp",
+   "barcode": "a86-00000108",
+   "origine": "Reprise",
+   "nb_lots": 281,
+   "nb_ilots": 43,
+   "superficie_ha": 18.58,
+   "superficie_lots_ha": 13.3,
+   "usages": {
+    "RESIDENTIEL": 276,
+    "ESPACE VERT": 2,
+    "ECOLE": 1,
+    "SPORT": 1,
+    "AUTRE": 1
+   },
+   "classes_lots": {
+    "Non conforme": 281
+   },
+   "centre": [
+    -3.891439,
+    5.378091
+   ],
+   "bbox": [
+    -3.893329,
+    5.374542,
+    -3.888637,
+    5.381602
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "akandje-extension",
+   "nom": "AKANDJE EXTENSION",
+   "appro": "Régularisation",
+   "conformite": "Modifié",
+   "groupe_qgis": "REGULARISATION / MODIFIE",
+   "fichier": "lotissement_AKANDJE EXTENSION.shp",
+   "barcode": "a86-00000585",
+   "origine": "Reprise",
+   "nb_lots": 303,
+   "nb_ilots": 42,
+   "superficie_ha": 20.49,
+   "superficie_lots_ha": 15.79,
+   "usages": {
+    "RESIDENTIEL": 299,
+    "ESPACE VERT": 2,
+    "AUTRE": 2
+   },
+   "classes_lots": {
+    "Conforme": 218,
+    "Modifié": 85
+   },
+   "centre": [
+    -3.916365,
+    5.39434
+   ],
+   "bbox": [
+    -3.918544,
+    5.391125,
+    -3.912405,
+    5.40238
+   ],
+   "chevauchements": [
+    "CH-01"
+   ]
+  },
+  {
+   "id": "akandje-ii-modifie",
+   "nom": "AKANDJE II MODIFIE",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_AKANDJE II MODIFIE.shp",
+   "barcode": "a86-00000032",
+   "origine": "Reprise",
+   "nb_lots": 1816,
+   "nb_ilots": 211,
+   "superficie_ha": 153.61,
+   "superficie_lots_ha": 117.34,
+   "usages": {
+    "RESIDENTIEL": 1798,
+    "ESPACE VERT": 9,
+    "RESERVE ADMINISTRATIVE": 2,
+    "LIEU DE CULTE": 2,
+    "SPORT": 1,
+    "CENTRE DE SANTE": 1,
+    "GARE ROUTIERE": 1,
+    "MARCHE": 1,
+    "ECOLE": 1
+   },
+   "classes_lots": {
+    "Conforme": 1816
+   },
+   "centre": [
+    -3.89679,
+    5.39296
+   ],
+   "bbox": [
+    -3.899969,
+    5.381951,
+    -3.885334,
+    5.401175
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "akandje-ii-modifie-2",
+   "nom": "AKANDJE II MODIFIE 2",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_AKANDJE II MODIFIE 2.shp",
+   "barcode": "a86-00000855",
+   "origine": "Reprise",
+   "nb_lots": 108,
+   "nb_ilots": 31,
+   "superficie_ha": 6.77,
+   "superficie_lots_ha": 6.42,
+   "usages": {
+    "RESIDENTIEL": 105,
+    "POSTE DE POLICE": 1,
+    "FERME": 1,
+    "GARE ROUTIERE": 1
+   },
+   "classes_lots": {
+    "Conforme": 108
+   },
+   "centre": [
+    -3.898693,
+    5.388883
+   ],
+   "bbox": [
+    -3.899196,
+    5.38255,
+    -3.885809,
+    5.400419
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "akouado-village-akouaissito",
+   "nom": "AKOUADO VILLAGE AKOUAISSITO",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_AKOUADO VILLAGE AKOUAISSITO.shp",
+   "barcode": "",
+   "origine": "",
+   "nb_lots": 109,
+   "nb_ilots": 14,
+   "superficie_ha": 6.51,
+   "superficie_lots_ha": 5.7,
+   "usages": {
+    "NON RENSEIGNÉ": 109
+   },
+   "classes_lots": {
+    "Conforme": 109
+   },
+   "centre": [
+    -3.933308,
+    5.356136
+   ],
+   "bbox": [
+    -3.933973,
+    5.353394,
+    -3.932513,
+    5.359855
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "akouai-agban-ndou-popoto",
+   "nom": "AKOUAI AGBAN NDOU POPOTO",
+   "appro": "Normale",
+   "conformite": "Non conforme",
+   "groupe_qgis": "NORMAL / NON CONFORME",
+   "fichier": "lotissement_AKOUAI AGBAN NDOU POPOTO.shp",
+   "barcode": "",
+   "origine": "",
+   "nb_lots": 1066,
+   "nb_ilots": 152,
+   "superficie_ha": 87.04,
+   "superficie_lots_ha": 64.68,
+   "usages": {
+    "NON RENSEIGNÉ": 1066
+   },
+   "classes_lots": {
+    "Non conforme": 1066
+   },
+   "centre": [
+    -3.837538,
+    5.319736
+   ],
+   "bbox": [
+    -3.842313,
+    5.313199,
+    -3.826873,
+    5.333997
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "akouai-agban-titre-foncier-n223523",
+   "nom": "AKOUAI AGBAN TITRE FONCIER N223523",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_AKOUAI AGBAN TITRE FONCIER N223523.shp",
+   "barcode": "",
+   "origine": "",
+   "nb_lots": 103,
+   "nb_ilots": 17,
+   "superficie_ha": 6.16,
+   "superficie_lots_ha": 4.77,
+   "usages": {
+    "NON RENSEIGNÉ": 103
+   },
+   "classes_lots": {
+    "Conforme": 103
+   },
+   "centre": [
+    -3.83524,
+    5.31549
+   ],
+   "bbox": [
+    -3.836553,
+    5.313948,
+    -3.833411,
+    5.317012
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "akouai-santai-famille-lokoman",
+   "nom": "AKOUAI SANTAI FAMILLE LOKOMAN",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_AKOUAI SANTAI FAMILLE LOKOMAN.shp",
+   "barcode": "",
+   "origine": "",
+   "nb_lots": 54,
+   "nb_ilots": 9,
+   "superficie_ha": 2.99,
+   "superficie_lots_ha": 2.27,
+   "usages": {
+    "NON RENSEIGNÉ": 54
+   },
+   "classes_lots": {
+    "Conforme": 54
+   },
+   "centre": [
+    -3.901666,
+    5.380402
+   ],
+   "bbox": [
+    -3.904559,
+    5.378775,
+    -3.90118,
+    5.38202
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "akouai-sante",
+   "nom": "AKOUAI SANTE",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_AKOUAI SANTE.shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 405,
+   "nb_ilots": 44,
+   "superficie_ha": 17.49,
+   "superficie_lots_ha": 13.64,
+   "usages": {
+    "HABITATION": 403,
+    "EV": 2
+   },
+   "classes_lots": {
+    "Conforme": 405
+   },
+   "centre": [
+    -3.907935,
+    5.379929
+   ],
+   "bbox": [
+    -3.910045,
+    5.378725,
+    -3.904541,
+    5.388198
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "akouai-santai-gbemouto",
+   "nom": "AKOUAI-SANTAI GBEMOUTO",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_AKOUAI-SANTAI GBEMOUTO.shp",
+   "barcode": "a86-00000025",
+   "origine": "Reprise",
+   "nb_lots": 148,
+   "nb_ilots": 29,
+   "superficie_ha": 11.02,
+   "superficie_lots_ha": 7.95,
+   "usages": {
+    "RESIDENTIEL": 141,
+    "ESPACE VERT": 3,
+    "LIEU DE CULTE": 1,
+    "ECOLE PRIMAIRE": 1,
+    "RESERVE FONCIERE": 1,
+    "CENTRE DE SANTE": 1
+   },
+   "classes_lots": {
+    "Conforme": 148
+   },
+   "centre": [
+    -3.899892,
+    5.374756
+   ],
+   "bbox": [
+    -3.90133,
+    5.373078,
+    -3.895941,
+    5.376416
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "akouai-santai-quartier-esie",
+   "nom": "AKOUAI-SANTAI QUARTIER ESIE",
+   "appro": "Normale",
+   "conformite": "Non conforme",
+   "groupe_qgis": "NORMAL / NON CONFORME",
+   "fichier": "lotissement_AKOUAI-SANTAI QUARTIER ESIE.shp",
+   "barcode": "a86-00000011",
+   "origine": "Reprise",
+   "nb_lots": 89,
+   "nb_ilots": 16,
+   "superficie_ha": 10.21,
+   "superficie_lots_ha": 8.35,
+   "usages": {
+    "RESIDENTIEL": 85,
+    "ECOLE": 1,
+    "CENTRE DE SANTE": 1,
+    "RESERVE ADMINISTRATIVE": 1,
+    "LIEU DE CULTE": 1
+   },
+   "classes_lots": {
+    "Non conforme": 89
+   },
+   "centre": [
+    -3.90606,
+    5.354902
+   ],
+   "bbox": [
+    -3.908018,
+    5.352699,
+    -3.903522,
+    5.356186
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "akouay-santay",
+   "nom": "AKOUAY - SANTAY",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_AKOUAY - SANTAY.shp",
+   "barcode": "a86-00000009",
+   "origine": "Reprise",
+   "nb_lots": 337,
+   "nb_ilots": 42,
+   "superficie_ha": 36.4,
+   "superficie_lots_ha": 29.25,
+   "usages": {
+    "RESIDENTIEL": 319,
+    "CENTRE COMMERCIAL": 8,
+    "RESERVE ADMINISTRATIVE": 2,
+    "LIEU DE CULTE": 2,
+    "SPORT": 1,
+    "CIMETIERE": 1,
+    "ECOLE": 1,
+    "MARCHE": 1,
+    "GARE ROUTIERE": 1,
+    "PARKING": 1
+   },
+   "classes_lots": {
+    "Conforme": 337
+   },
+   "centre": [
+    -3.896487,
+    5.366377
+   ],
+   "bbox": [
+    -3.901656,
+    5.362241,
+    -3.893689,
+    5.370821
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "akouay-agban",
+   "nom": "AKOUAY-AGBAN",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_AKOUAY-AGBAN.shp",
+   "barcode": "a86-00000015",
+   "origine": "Reprise",
+   "nb_lots": 479,
+   "nb_ilots": 56,
+   "superficie_ha": 61.24,
+   "superficie_lots_ha": 49.66,
+   "usages": {
+    "RESIDENTIEL": 460,
+    "CENTRE COMMERCIAL": 6,
+    "LIEU DE CULTE": 2,
+    "AUTRE": 2,
+    "ECOLE": 1,
+    "MARCHE": 1,
+    "RESERVE ADMINISTRATIVE": 1,
+    "CENTRE DE SANTE": 1,
+    "FOYER": 1,
+    "PLACE PUBLIQUE": 1,
+    "MISSION CATHOLIQUE": 1,
+    "CIMETIERE": 1,
+    "SPORT": 1
+   },
+   "classes_lots": {
+    "Conforme": 479
+   },
+   "centre": [
+    -3.849909,
+    5.310257
+   ],
+   "bbox": [
+    -3.857308,
+    5.305599,
+    -3.846704,
+    5.314895
+   ],
+   "chevauchements": [
+    "CH-06"
+   ]
+  },
+  {
+   "id": "akoue-santay-2eme-extension",
+   "nom": "AKOUE SANTAY 2EME EXTENSION",
+   "appro": "Régularisation",
+   "conformite": "Modifié",
+   "groupe_qgis": "REGULARISATION / MODIFIE",
+   "fichier": "lotissement_AKOUE SANTAY 2EME EXTENSION.shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 816,
+   "nb_ilots": 84,
+   "superficie_ha": 55.04,
+   "superficie_lots_ha": 44.13,
+   "usages": {
+    "RESIDENTIEL": 816
+   },
+   "classes_lots": {
+    "Conforme": 792,
+    "Modifié": 24
+   },
+   "centre": [
+    -3.890731,
+    5.375841
+   ],
+   "bbox": [
+    -3.902264,
+    5.369718,
+    -3.888638,
+    5.38182
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "akoue-santay-1ere-extension-regularisation",
+   "nom": "AKOUE-SANTAY 1ère EXTENSION REGULARISATION",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_AKOUE-SANTAY 1ère EXTENSION REGULARISATION.shp",
+   "barcode": "a86-00000641",
+   "origine": "Reprise",
+   "nb_lots": 704,
+   "nb_ilots": 94,
+   "superficie_ha": 51.29,
+   "superficie_lots_ha": 40.32,
+   "usages": {
+    "RESIDENTIEL": 690,
+    "MIXTE": 11,
+    "STATION SERVICE": 1,
+    "CIMETIERE": 1,
+    "AUTRE": 1
+   },
+   "classes_lots": {
+    "Conforme": 704
+   },
+   "centre": [
+    -3.898709,
+    5.361859
+   ],
+   "bbox": [
+    -3.902803,
+    5.360027,
+    -3.889341,
+    5.371992
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "akoyate",
+   "nom": "AKOYATE",
+   "appro": "Neutre",
+   "conformite": "Modifié",
+   "groupe_qgis": "NEUTRE / MODIFIE",
+   "fichier": "lotissement_AKOYATE.shp",
+   "barcode": "a86-00001681",
+   "origine": "Reprise",
+   "nb_lots": 107,
+   "nb_ilots": 22,
+   "superficie_ha": 13.75,
+   "superficie_lots_ha": 12.18,
+   "usages": {
+    "RESIDENTIEL": 85,
+    "MIXTE": 17,
+    "ECOLE": 1,
+    "LIEU DE CULTE": 1,
+    "CIMETIERE": 1,
+    "SPORT": 1,
+    "AUTRE": 1
+   },
+   "classes_lots": {
+    "Modifié": 107
+   },
+   "centre": [
+    -3.848112,
+    5.386244
+   ],
+   "bbox": [
+    -3.849294,
+    5.382911,
+    -3.843377,
+    5.389586
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "akoyate-belle-ville",
+   "nom": "AKOYATE BELLE-VILLE",
+   "appro": "Régularisation",
+   "conformite": "Semi conforme",
+   "groupe_qgis": "REGULARISATION / SEMI CONFORME (ABSENCE DE BATIS POUR VALIDER LA CONFORMITE)",
+   "fichier": "lotissement_AKOYATE BELLE-VILLE.shp",
+   "barcode": "a86-00000701",
+   "origine": "Reprise",
+   "nb_lots": 190,
+   "nb_ilots": 25,
+   "superficie_ha": 10.68,
+   "superficie_lots_ha": 7.91,
+   "usages": {
+    "RESIDENTIEL": 189,
+    "ESPACE VERT": 1
+   },
+   "classes_lots": {
+    "Modifié": 190
+   },
+   "centre": [
+    -3.828207,
+    5.363282
+   ],
+   "bbox": [
+    -3.829952,
+    5.361182,
+    -3.826771,
+    5.365413
+   ],
+   "chevauchements": [
+    "CH-09"
+   ]
+  },
+  {
+   "id": "akwe-djemin-complementaire-ii",
+   "nom": "AKWE DJEMIN COMPLEMENTAIRE II",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_AKWE DJEMIN COMPLEMENTAIRE II.shp",
+   "barcode": "a86-00000083",
+   "origine": "Reprise",
+   "nb_lots": 98,
+   "nb_ilots": 19,
+   "superficie_ha": 4.89,
+   "superficie_lots_ha": 3.02,
+   "usages": {
+    "RESIDENTIEL": 97,
+    "ESPACE VERT": 1
+   },
+   "classes_lots": {
+    "Conforme": 90,
+    "Modifié": 8
+   },
+   "centre": [
+    -3.848783,
+    5.335094
+   ],
+   "bbox": [
+    -3.849836,
+    5.33316,
+    -3.847559,
+    5.337002
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "ana-cite-apex",
+   "nom": "ANA CITE APEX",
+   "appro": "Régularisation",
+   "conformite": "Modifié",
+   "groupe_qgis": "REGULARISATION / MODIFIE",
+   "fichier": "lotissement_ANA CITE APEX.shp",
+   "barcode": "a86-00000069",
+   "origine": "Reprise",
+   "nb_lots": 239,
+   "nb_ilots": 36,
+   "superficie_ha": 13.48,
+   "superficie_lots_ha": 10.38,
+   "usages": {
+    "RESIDENTIEL": 232,
+    "ESPACE VERT": 3,
+    "MIXTE": 3,
+    "RESERVE ADMINISTRATIVE": 1
+   },
+   "classes_lots": {
+    "Modifié": 181,
+    "Conforme": 58
+   },
+   "centre": [
+    -3.868424,
+    5.334703
+   ],
+   "bbox": [
+    -3.871774,
+    5.332129,
+    -3.865102,
+    5.337252
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "ana-gbontchui-residentiel",
+   "nom": "ANA GBONTCHUI RESIDENTIEL",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_ANA GBONTCHUI RESIDENTIEL.shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 2581,
+   "nb_ilots": 237,
+   "superficie_ha": 229.01,
+   "superficie_lots_ha": 184.19,
+   "usages": {
+    "HABITATION": 2546,
+    "ESPACE VERT": 11,
+    "EV": 7,
+    "ECOLE": 4,
+    "MARCHE": 2,
+    "AUCUNE MENTION": 2,
+    "RA": 2,
+    "CIMETIERE": 1,
+    "RESERVE": 1,
+    "AIRE DE JEUX": 1,
+    "RESERVE ADMINISTRATIVE": 1,
+    "CENTRE DE SANTE": 1,
+    "POLICE": 1,
+    "CULTE": 1
+   },
+   "classes_lots": {
+    "Conforme": 2581
+   },
+   "centre": [
+    -3.869485,
+    5.319569
+   ],
+   "bbox": [
+    -3.878063,
+    5.312757,
+    -3.856805,
+    5.331533
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "ana-gbontchui-residentiel-modifie",
+   "nom": "ANA GBONTCHUI RESIDENTIEL MODIFIE",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_ANA GBONTCHUI RESIDENTIEL MODIFIE.shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 371,
+   "nb_ilots": 42,
+   "superficie_ha": 23.88,
+   "superficie_lots_ha": 21.82,
+   "usages": {
+    "HABITATION": 371
+   },
+   "classes_lots": {
+    "Conforme": 340,
+    "Modifié": 31
+   },
+   "centre": [
+    -3.862945,
+    5.324596
+   ],
+   "bbox": [
+    -3.876786,
+    5.316324,
+    -3.857743,
+    5.331237
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "apponian-residentiel",
+   "nom": "APPONIAN RESIDENTIEL",
+   "appro": "Régularisation",
+   "conformite": "Modifié",
+   "groupe_qgis": "REGULARISATION / MODIFIE",
+   "fichier": "lotissement_APPONIAN RESIDENTIEL.shp",
+   "barcode": "a86-00000081",
+   "origine": "Reprise",
+   "nb_lots": 1161,
+   "nb_ilots": 129,
+   "superficie_ha": 89.76,
+   "superficie_lots_ha": 65.79,
+   "usages": {
+    "RESIDENTIEL": 1143,
+    "AUTRE": 10,
+    "ESPACE VERT": 3,
+    "RESERVE ADMINISTRATIVE": 2,
+    "CENTRE DE SANTE": 1,
+    "MARCHE": 1,
+    "ECOLE": 1
+   },
+   "classes_lots": {
+    "Conforme": 1098,
+    "Modifié": 63
+   },
+   "centre": [
+    -3.812323,
+    5.354517
+   ],
+   "bbox": [
+    -3.827127,
+    5.348769,
+    -3.807758,
+    5.358088
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "ayopoumin-ex-mitterand",
+   "nom": "AYOPOUMIN (EX MITTERAND)",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_AYOPOUMIN (EX MITTERAND).shp",
+   "barcode": "a86-00000093",
+   "origine": "Reprise",
+   "nb_lots": 1011,
+   "nb_ilots": 103,
+   "superficie_ha": 65.0,
+   "superficie_lots_ha": 50.34,
+   "usages": {
+    "RESIDENTIEL": 1008,
+    "ESPACE VERT": 2,
+    "ECOLE": 1
+   },
+   "classes_lots": {
+    "Conforme": 988,
+    "Modifié": 23
+   },
+   "centre": [
+    -3.905601,
+    5.370339
+   ],
+   "bbox": [
+    -3.911838,
+    5.367399,
+    -3.902186,
+    5.379404
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "bagba-1er-extension-energie-solaire",
+   "nom": "BAGBA 1er EXTENSION(ENERGIE SOLAIRE)",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_BAGBA 1er EXTENSION(ENERGIE SOLAIRE).shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 443,
+   "nb_ilots": 46,
+   "superficie_ha": 30.77,
+   "superficie_lots_ha": 24.03,
+   "usages": {
+    "NON RENSEIGNÉ": 443
+   },
+   "classes_lots": {
+    "Conforme": 443
+   },
+   "centre": [
+    -3.8772,
+    5.346117
+   ],
+   "bbox": [
+    -3.880226,
+    5.342624,
+    -3.873933,
+    5.34948
+   ],
+   "chevauchements": [
+    "CH-03"
+   ]
+  },
+  {
+   "id": "bagba-1ere-extension",
+   "nom": "BAGBA 1ere Extension",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_BAGBA 1ere Extension.shp",
+   "barcode": "a86-00000772",
+   "origine": "Reprise",
+   "nb_lots": 1746,
+   "nb_ilots": 141,
+   "superficie_ha": 180.34,
+   "superficie_lots_ha": 144.48,
+   "usages": {
+    "RESIDENTIEL": 1721,
+    "RESERVE ADMINISTRATIVE": 8,
+    "AUTRE": 5,
+    "ESPACE VERT": 2,
+    "ECOLE PRIMAIRE": 2,
+    "ECOLE": 1,
+    "CENTRE COMMERCIAL": 1,
+    "POSTE DE POLICE": 1,
+    "LIEU DE CULTE": 1,
+    "DOMAINE PRIVE": 1,
+    "MARCHE": 1,
+    "COLLEGE": 1,
+    "TERRAIN DE SPORT": 1
+   },
+   "classes_lots": {
+    "Conforme": 1710,
+    "Non conforme": 36
+   },
+   "centre": [
+    -3.893603,
+    5.33882
+   ],
+   "bbox": [
+    -3.900477,
+    5.331533,
+    -3.879069,
+    5.3507
+   ],
+   "chevauchements": [
+    "CH-03"
+   ]
+  },
+  {
+   "id": "bagba-ex-palmci-allotchato",
+   "nom": "BAGBA EX PALMCI (ALLOTCHATO)",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_BAGBA EX PALMCI (ALLOTCHATO).shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 147,
+   "nb_ilots": 13,
+   "superficie_ha": 9.71,
+   "superficie_lots_ha": 7.97,
+   "usages": {
+    "HABITATION": 146,
+    "ESPACE VERT": 1
+   },
+   "classes_lots": {
+    "Conforme": 147
+   },
+   "centre": [
+    -3.883055,
+    5.336222
+   ],
+   "bbox": [
+    -3.886718,
+    5.333855,
+    -3.880731,
+    5.338006
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "baie-d-agbodji",
+   "nom": "BAIE D'AGBODJI",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_BAIE D'AGBODJI.shp",
+   "barcode": "a86-00000090",
+   "origine": "Reprise",
+   "nb_lots": 236,
+   "nb_ilots": 26,
+   "superficie_ha": 24.45,
+   "superficie_lots_ha": 19.28,
+   "usages": {
+    "RESIDENTIEL": 233,
+    "ESPACE VERT": 2,
+    "ECOLE": 1
+   },
+   "classes_lots": {
+    "Conforme": 236
+   },
+   "centre": [
+    -3.861884,
+    5.312214
+   ],
+   "bbox": [
+    -3.865163,
+    5.309165,
+    -3.85855,
+    5.315527
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "beau-rocher",
+   "nom": "BEAU ROCHER",
+   "appro": "Régularisation",
+   "conformite": "Semi conforme",
+   "groupe_qgis": "REGULARISATION / SEMI CONFORME (ABSENCE DE BATIS POUR VALIDER LA CONFORMITE)",
+   "fichier": "lotissement_BEAU ROCHER.shp",
+   "barcode": "a86-00000070",
+   "origine": "Reprise",
+   "nb_lots": 510,
+   "nb_ilots": 57,
+   "superficie_ha": 38.22,
+   "superficie_lots_ha": 29.14,
+   "usages": {
+    "RESIDENTIEL": 497,
+    "DOMAINE PRIVE": 4,
+    "ESPACE VERT": 3,
+    "LIEU DE CULTE": 2,
+    "ECOLE": 1,
+    "GROUPE SCOLAIRE": 1,
+    "POSTE DE POLICE": 1,
+    "CENTRE DE SANTE": 1
+   },
+   "classes_lots": {
+    "Modifié": 510
+   },
+   "centre": [
+    -3.815327,
+    5.337997
+   ],
+   "bbox": [
+    -3.818672,
+    5.3337,
+    -3.812094,
+    5.342409
+   ],
+   "chevauchements": [
+    "CH-05"
+   ]
+  },
+  {
+   "id": "bingerville",
+   "nom": "BINGERVILLE",
+   "appro": "Neutre",
+   "conformite": "Modifié",
+   "groupe_qgis": "NEUTRE / MODIFIE",
+   "fichier": "lotissement_BINGERVILLE.shp",
+   "barcode": "a86-00001241",
+   "origine": "Reprise",
+   "nb_lots": 659,
+   "nb_ilots": 74,
+   "superficie_ha": 128.02,
+   "superficie_lots_ha": 115.64,
+   "usages": {
+    "RESIDENTIEL": 599,
+    "MIXTE": 38,
+    "CENTRE COMMERCIAL": 9,
+    "AUTRE": 5,
+    "ECOLE PRIMAIRE": 3,
+    "SPORT": 2,
+    "MARCHE": 1,
+    "DISPENSAIRE": 1,
+    "FOYER": 1
+   },
+   "classes_lots": {
+    "Modifié": 659
+   },
+   "centre": [
+    -3.885915,
+    5.359328
+   ],
+   "bbox": [
+    -3.89473,
+    5.351808,
+    -3.875778,
+    5.36505
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "bingerville-2eme-extension",
+   "nom": "BINGERVILLE (2ème EXTENSION)",
+   "appro": "Neutre",
+   "conformite": "Modifié",
+   "groupe_qgis": "NEUTRE / MODIFIE",
+   "fichier": "lotissement_BINGERVILLE (2ème EXTENSION).shp",
+   "barcode": "a86-00001459",
+   "origine": "Reprise",
+   "nb_lots": 648,
+   "nb_ilots": 77,
+   "superficie_ha": 77.4,
+   "superficie_lots_ha": 61.15,
+   "usages": {
+    "RESIDENTIEL": 587,
+    "MIXTE": 35,
+    "AUTRE": 13,
+    "RESERVE ADMINISTRATIVE": 4,
+    "LIEU DE CULTE": 3,
+    "MARCHE": 1,
+    "ECOLE": 1,
+    "POSTE DE POLICE": 1,
+    "CENTRE COMMERCIAL": 1,
+    "CENTRE DE SANTE": 1,
+    "SPORT": 1
+   },
+   "classes_lots": {
+    "Modifié": 514,
+    "Conforme": 134
+   },
+   "centre": [
+    -3.894265,
+    5.353424
+   ],
+   "bbox": [
+    -3.899471,
+    5.349788,
+    -3.880501,
+    5.357396
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "bingerville-nord-est",
+   "nom": "BINGERVILLE NORD-EST",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_BINGERVILLE NORD-EST.shp",
+   "barcode": "a86-00000031",
+   "origine": "Reprise",
+   "nb_lots": 129,
+   "nb_ilots": 19,
+   "superficie_ha": 8.72,
+   "superficie_lots_ha": 8.06,
+   "usages": {
+    "RESIDENTIEL": 127,
+    "ESPACE VERT": 1,
+    "ECOLE PRIMAIRE": 1
+   },
+   "classes_lots": {
+    "Conforme": 129
+   },
+   "centre": [
+    -3.857575,
+    5.369247
+   ],
+   "bbox": [
+    -3.862528,
+    5.356776,
+    -3.846782,
+    5.381818
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "bingerville-nord-est-complementaire-modifie",
+   "nom": "BINGERVILLE NORD-EST COMPLEMENTAIRE - MODIFIE",
+   "appro": "Normale",
+   "conformite": "Modifié",
+   "groupe_qgis": "NORMAL / MODIFE",
+   "fichier": "lotissement_BINGERVILLE NORD-EST COMPLEMENTAIRE - MODIFIE.shp",
+   "barcode": "a86-00000047",
+   "origine": "Reprise",
+   "nb_lots": 2348,
+   "nb_ilots": 278,
+   "superficie_ha": 166.69,
+   "superficie_lots_ha": 125.09,
+   "usages": {
+    "RESIDENTIEL": 2334,
+    "MIXTE": 5,
+    "AUTRE": 4,
+    "ESPACE VERT": 4,
+    "RESERVE ADMINISTRATIVE": 1
+   },
+   "classes_lots": {
+    "Conforme": 1274,
+    "Modifié": 1074
+   },
+   "centre": [
+    -3.845039,
+    5.361941
+   ],
+   "bbox": [
+    -3.861027,
+    5.350415,
+    -3.834537,
+    5.375157
+   ],
+   "chevauchements": [
+    "CH-04",
+    "CH-18",
+    "CH-19"
+   ]
+  },
+  {
+   "id": "bingerville-nord-est-plan-de-lotissement-modifie",
+   "nom": "BINGERVILLE NORD-EST PLAN DE LOTISSEMENT MODIFIE",
+   "appro": "Normale",
+   "conformite": "Modifié",
+   "groupe_qgis": "NORMAL / MODIFE",
+   "fichier": "lotissement_BINGERVILLE NORD-EST PLAN DE LOTISSEMENT MODIFIE.shp",
+   "barcode": "a86-00000066",
+   "origine": "Reprise",
+   "nb_lots": 3289,
+   "nb_ilots": 350,
+   "superficie_ha": 274.46,
+   "superficie_lots_ha": 211.57,
+   "usages": {
+    "RESIDENTIEL": 3264,
+    "ESPACE VERT": 14,
+    "ECOLE": 5,
+    "RESERVE ADMINISTRATIVE": 2,
+    "LIEU DE CULTE": 2,
+    "FOYER": 1,
+    "MARCHE": 1
+   },
+   "classes_lots": {
+    "Conforme": 3023,
+    "Modifié": 266
+   },
+   "centre": [
+    -3.851031,
+    5.376845
+   ],
+   "bbox": [
+    -3.863925,
+    5.354058,
+    -3.838615,
+    5.384395
+   ],
+   "chevauchements": [
+    "CH-02",
+    "CH-15",
+    "CH-16",
+    "CH-17",
+    "CH-18",
+    "CH-19"
+   ]
+  },
+  {
+   "id": "bingerville-nord-est-plan-de-rajout-modifie",
+   "nom": "BINGERVILLE NORD-EST PLAN DE RAJOUT MODIFIE",
+   "appro": "Normale",
+   "conformite": "Modifié",
+   "groupe_qgis": "NORMAL / MODIFE",
+   "fichier": "lotissement_BINGERVILLE NORD-EST PLAN DE RAJOUT MODIFIE.shp",
+   "barcode": "a86-00000048",
+   "origine": "Reprise",
+   "nb_lots": 441,
+   "nb_ilots": 48,
+   "superficie_ha": 29.79,
+   "superficie_lots_ha": 23.9,
+   "usages": {
+    "RESIDENTIEL": 440,
+    "ESPACE VERT": 1
+   },
+   "classes_lots": {
+    "Conforme": 327,
+    "Modifié": 114
+   },
+   "centre": [
+    -3.849914,
+    5.365695
+   ],
+   "bbox": [
+    -3.864654,
+    5.360812,
+    -3.846247,
+    5.368568
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "bingerville-quartier-de-la-celle",
+   "nom": "BINGERVILLE QUARTIER DE LA CELLE",
+   "appro": "Régularisation",
+   "conformite": "Modifié",
+   "groupe_qgis": "REGULARISATION / MODIFIE",
+   "fichier": "lotissement_BINGERVILLE QUARTIER DE LA CELLE.shp",
+   "barcode": "a86-00000056",
+   "origine": "Reprise",
+   "nb_lots": 434,
+   "nb_ilots": 50,
+   "superficie_ha": 31.27,
+   "superficie_lots_ha": 24.07,
+   "usages": {
+    "RESIDENTIEL": 428,
+    "RESERVE ADMINISTRATIVE": 2,
+    "CENTRE DE SANTE": 1,
+    "ESPACE VERT": 1,
+    "CENTRE COMMERCIAL": 1,
+    "ECOLE": 1
+   },
+   "classes_lots": {
+    "Conforme": 228,
+    "Modifié": 206
+   },
+   "centre": [
+    -3.875725,
+    5.375372
+   ],
+   "bbox": [
+    -3.878731,
+    5.372099,
+    -3.871768,
+    5.383607
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "bingerville-quartier-esie",
+   "nom": "BINGERVILLE QUARTIER ESIE",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_BINGERVILLE QUARTIER ESIE.shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 205,
+   "nb_ilots": 37,
+   "superficie_ha": 18.85,
+   "superficie_lots_ha": 14.18,
+   "usages": {
+    "RESIDENTIEL": 203,
+    "DOMAINE PRIVE": 2
+   },
+   "classes_lots": {
+    "Conforme": 205
+   },
+   "centre": [
+    -3.905668,
+    5.36415
+   ],
+   "bbox": [
+    -3.908116,
+    5.360736,
+    -3.902947,
+    5.367502
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "blessoue",
+   "nom": "BLESSOUE",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_BLESSOUE.shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 65,
+   "nb_ilots": 10,
+   "superficie_ha": 4.15,
+   "superficie_lots_ha": 3.41,
+   "usages": {
+    "HABITATION": 65
+   },
+   "classes_lots": {
+    "Conforme": 65
+   },
+   "centre": [
+    -3.904319,
+    5.389172
+   ],
+   "bbox": [
+    -3.906096,
+    5.387925,
+    -3.903636,
+    5.391383
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "bregbo",
+   "nom": "BREGBO",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_BREGBO.shp",
+   "barcode": "a86-00000003",
+   "origine": "Reprise",
+   "nb_lots": 709,
+   "nb_ilots": 117,
+   "superficie_ha": 125.06,
+   "superficie_lots_ha": 97.0,
+   "usages": {
+    "RESIDENTIEL": 651,
+    "AUTRE": 20,
+    "MIXTE": 16,
+    "ESPACE VERT": 7,
+    "RESERVE ADMINISTRATIVE": 5,
+    "CENTRE DE SANTE": 2,
+    "LIEU DE CULTE": 2,
+    "GARE ROUTIERE": 1,
+    "MARCHE": 1,
+    "FOYER": 1,
+    "CIMETIERE": 1,
+    "SPORT": 1,
+    "ECOLE": 1
+   },
+   "classes_lots": {
+    "Conforme": 709
+   },
+   "centre": [
+    -3.830815,
+    5.305884
+   ],
+   "bbox": [
+    -3.835895,
+    5.300679,
+    -3.817175,
+    5.311147
+   ],
+   "chevauchements": [
+    "CH-08"
+   ]
+  },
+  {
+   "id": "bregbo-residentiel-modifie",
+   "nom": "BREGBO RESIDENTIEL MODIFIE",
+   "appro": "Régularisation",
+   "conformite": "Modifié",
+   "groupe_qgis": "REGULARISATION / MODIFIE",
+   "fichier": "lotissement_BREGBO RESIDENTIEL MODIFIE.shp",
+   "barcode": "a86-00001033",
+   "origine": "Reprise",
+   "nb_lots": 1300,
+   "nb_ilots": 149,
+   "superficie_ha": 94.39,
+   "superficie_lots_ha": 72.65,
+   "usages": {
+    "RESIDENTIEL": 1279,
+    "ESPACE VERT": 12,
+    "RESERVE ADMINISTRATIVE": 2,
+    "AUTRE": 2,
+    "LYCEE": 1,
+    "ECOLE": 1,
+    "CENTRE COMMERCIAL": 1,
+    "LIEU DE CULTE": 1,
+    "GENDARMERIE": 1
+   },
+   "classes_lots": {
+    "Modifié": 1300
+   },
+   "centre": [
+    -3.827468,
+    5.31997
+   ],
+   "bbox": [
+    -3.837429,
+    5.318181,
+    -3.816744,
+    5.333255
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "bregbo-cite-atcho-albert",
+   "nom": "BREGBO: CITE ATCHO ALBERT",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_BREGBO_ CITE ATCHO ALBERT.shp",
+   "barcode": "a86-00000065",
+   "origine": "Reprise",
+   "nb_lots": 325,
+   "nb_ilots": 50,
+   "superficie_ha": 157.21,
+   "superficie_lots_ha": 145.49,
+   "usages": {
+    "RESIDENTIEL": 302,
+    "DOMAINE PRIVE": 17,
+    "ESPACE VERT": 5,
+    "PARKING": 1
+   },
+   "classes_lots": {
+    "Conforme": 325
+   },
+   "centre": [
+    -3.809694,
+    5.301535
+   ],
+   "bbox": [
+    -3.814088,
+    5.295511,
+    -3.796864,
+    5.310328
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "bregbo-espoir-akeno-noel",
+   "nom": "BREGBO: ESPOIR AKENO NOEL",
+   "appro": "Régularisation",
+   "conformite": "Modifié",
+   "groupe_qgis": "REGULARISATION / MODIFIE",
+   "fichier": "lotissement_BREGBO_ ESPOIR AKENO NOEL.shp",
+   "barcode": "a86-00000091",
+   "origine": "Reprise",
+   "nb_lots": 657,
+   "nb_ilots": 72,
+   "superficie_ha": 54.47,
+   "superficie_lots_ha": 43.54,
+   "usages": {
+    "RESIDENTIEL": 642,
+    "ESPACE VERT": 7,
+    "RESERVE ADMINISTRATIVE": 2,
+    "CENTRE DE SANTE": 1,
+    "RESERVE FONCIERE": 1,
+    "AUTRE": 1,
+    "MARCHE": 1,
+    "TERRAIN DE SPORT": 1,
+    "ECOLE": 1
+   },
+   "classes_lots": {
+    "Modifié": 459,
+    "Conforme": 198
+   },
+   "centre": [
+    -3.821748,
+    5.312103
+   ],
+   "bbox": [
+    -3.833416,
+    5.304659,
+    -3.807891,
+    5.321423
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "carriere-village",
+   "nom": "CARRIERE VILLAGE",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_CARRIERE VILLAGE.shp",
+   "barcode": "a86-00000013",
+   "origine": "Reprise",
+   "nb_lots": 238,
+   "nb_ilots": 30,
+   "superficie_ha": 24.79,
+   "superficie_lots_ha": 19.13,
+   "usages": {
+    "RESIDENTIEL": 232,
+    "FOYER": 1,
+    "LIEU DE CULTE": 1,
+    "SPORT": 1,
+    "ECOLE": 1,
+    "ESPACE VERT": 1,
+    "CENTRE DE SANTE": 1
+   },
+   "classes_lots": {
+    "Conforme": 238
+   },
+   "centre": [
+    -3.914946,
+    5.360101
+   ],
+   "bbox": [
+    -3.917192,
+    5.357246,
+    -3.910818,
+    5.362953
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "cite-bnetd",
+   "nom": "CITE BNETD",
+   "appro": "Régularisation",
+   "conformite": "Modifié",
+   "groupe_qgis": "REGULARISATION / MODIFIE",
+   "fichier": "lotissement_CITE BNETD.shp",
+   "barcode": "a86-00001463",
+   "origine": "DMISSA (non repris)",
+   "nb_lots": 569,
+   "nb_ilots": 50,
+   "superficie_ha": 46.4,
+   "superficie_lots_ha": 35.46,
+   "usages": {
+    "RESIDENTIEL": 528,
+    "MIXTE": 38,
+    "ECOLE": 1,
+    "AUTRE": 1,
+    "MARCHE": 1
+   },
+   "classes_lots": {
+    "Conforme": 438,
+    "Modifié": 131
+   },
+   "centre": [
+    -3.906579,
+    5.35826
+   ],
+   "bbox": [
+    -3.910763,
+    5.353598,
+    -3.902867,
+    5.36257
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "cite-des-lagunes",
+   "nom": "CITE DES LAGUNES",
+   "appro": "Neutre",
+   "conformite": "Semi conforme",
+   "groupe_qgis": "NEUTRE / SEMI CONFORME (ABSENCE DE BATIS POUR VALIDER LA CONFORMITE)",
+   "fichier": "lotissement_CITE DES LAGUNES.shp",
+   "barcode": "",
+   "origine": "",
+   "nb_lots": 1228,
+   "nb_ilots": 111,
+   "superficie_ha": 65.92,
+   "superficie_lots_ha": 49.15,
+   "usages": {
+    "NON RENSEIGNÉ": 1228
+   },
+   "classes_lots": {
+    "Modifié": 1228
+   },
+   "centre": [
+    -3.734318,
+    5.294281
+   ],
+   "bbox": [
+    -3.739488,
+    5.289621,
+    -3.727925,
+    5.298853
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "cites-des-anges",
+   "nom": "CITES DES ANGES",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_CITES DES ANGES.shp",
+   "barcode": "",
+   "origine": "",
+   "nb_lots": 188,
+   "nb_ilots": 11,
+   "superficie_ha": 4.65,
+   "superficie_lots_ha": 7.73,
+   "usages": {
+    "NON RENSEIGNÉ": 188
+   },
+   "classes_lots": {
+    "Non renseigné": 94,
+    "Conforme": 94
+   },
+   "centre": [
+    -3.911357,
+    5.381053
+   ],
+   "bbox": [
+    -3.912332,
+    5.379599,
+    -3.910168,
+    5.382508
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "communaute-villageoise-akouai-agban",
+   "nom": "COMMUNAUTE VILLAGEOISE AKOUAI AGBAN",
+   "appro": "Régularisation",
+   "conformite": "Modifié",
+   "groupe_qgis": "REGULARISATION / MODIFIE",
+   "fichier": "lotissement_COMMUNAUTE VILLAGEOISE AKOUAI AGBAN.shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 1034,
+   "nb_ilots": 73,
+   "superficie_ha": 73.32,
+   "superficie_lots_ha": 59.09,
+   "usages": {
+    "NON RENSEIGNÉ": 1034
+   },
+   "classes_lots": {
+    "Modifié": 1034
+   },
+   "centre": [
+    -3.848445,
+    5.316548
+   ],
+   "bbox": [
+    -3.85711,
+    5.311368,
+    -3.845313,
+    5.321716
+   ],
+   "chevauchements": [
+    "CH-06"
+   ]
+  },
+  {
+   "id": "danhokro-modifie",
+   "nom": "DANHOKRO MODIFIE",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_DANHOKRO MODIFIE.shp",
+   "barcode": "a86-00000039",
+   "origine": "DMISSA (non repris)",
+   "nb_lots": 2036,
+   "nb_ilots": 241,
+   "superficie_ha": 160.67,
+   "superficie_lots_ha": 120.03,
+   "usages": {
+    "RESIDENTIEL": 1998,
+    "ESPACE VERT": 10,
+    "RESERVE ADMINISTRATIVE": 10,
+    "AUTRE": 9,
+    "ECOLE": 2,
+    "CENTRE COMMERCIAL": 1,
+    "TERRAIN DE SPORT": 1,
+    "LIEU DE CULTE": 1,
+    "CIMETIERE": 1,
+    "MIXTE": 1,
+    "CENTRE DE SANTE": 1,
+    "MARCHE": 1
+   },
+   "classes_lots": {
+    "Conforme": 2035,
+    "Modifié": 1
+   },
+   "centre": [
+    -3.827428,
+    5.338732
+   ],
+   "bbox": [
+    -3.83656,
+    5.329003,
+    -3.816449,
+    5.34878
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "delacelle-mairie-30-ha",
+   "nom": "DELACELLE-MAIRIE 30 HA",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_DELACELLE-MAIRIE 30 HA.shp",
+   "barcode": "a86-00000089",
+   "origine": "Reprise",
+   "nb_lots": 635,
+   "nb_ilots": 52,
+   "superficie_ha": 35.06,
+   "superficie_lots_ha": 27.01,
+   "usages": {
+    "RESIDENTIEL": 631,
+    "RESERVE ADMINISTRATIVE": 2,
+    "ECOLE": 1,
+    "CENTRE DE SANTE": 1
+   },
+   "classes_lots": {
+    "Conforme": 635
+   },
+   "centre": [
+    -3.875617,
+    5.375526
+   ],
+   "bbox": [
+    -3.878712,
+    5.372104,
+    -3.871833,
+    5.383524
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "djondoumin-residentiel",
+   "nom": "DJONDOUMIN RESIDENTIEL",
+   "appro": "Normale",
+   "conformite": "Modifié",
+   "groupe_qgis": "NORMAL / MODIFE",
+   "fichier": "lotissement_DJONDOUMIN RESIDENTIEL.shp",
+   "barcode": "a86-00000064",
+   "origine": "Reprise",
+   "nb_lots": 5,
+   "nb_ilots": 5,
+   "superficie_ha": 173.23,
+   "superficie_lots_ha": 172.26,
+   "usages": {
+    "AUTRE": 4,
+    "MIXTE": 1
+   },
+   "classes_lots": {
+    "Modifié": 5
+   },
+   "centre": [
+    -3.852163,
+    5.33053
+   ],
+   "bbox": [
+    -3.859988,
+    5.322755,
+    -3.842964,
+    5.337895
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "eloka-sud-est",
+   "nom": "ELOKA SUD-EST",
+   "appro": "Régularisation",
+   "conformite": "Semi conforme",
+   "groupe_qgis": "REGULARISATION / SEMI CONFORME (ABSENCE DE BATIS POUR VALIDER LA CONFORMITE)",
+   "fichier": "lotissement_ELOKA SUD-EST.shp",
+   "barcode": "a86-00000071",
+   "origine": "Reprise",
+   "nb_lots": 1344,
+   "nb_ilots": 115,
+   "superficie_ha": 129.28,
+   "superficie_lots_ha": 100.96,
+   "usages": {
+    "RESIDENTIEL": 1320,
+    "ESPACE VERT": 7,
+    "MIXTE": 4,
+    "RESERVE ADMINISTRATIVE": 3,
+    "AIRE DE JEUX": 2,
+    "LIEU DE CULTE": 2,
+    "TERRAIN DE SPORT": 1,
+    "CENTRE DE SANTE": 1,
+    "ECOLE": 1,
+    "COLLEGE": 1,
+    "CIMETIERE": 1,
+    "CENTRE COMMERCIAL": 1
+   },
+   "classes_lots": {
+    "Modifié": 1344
+   },
+   "centre": [
+    -3.750621,
+    5.286502
+   ],
+   "bbox": [
+    -3.756059,
+    5.282739,
+    -3.739405,
+    5.299657
+   ],
+   "chevauchements": [
+    "CH-07"
+   ]
+  },
+  {
+   "id": "gare-routiere",
+   "nom": "GARE ROUTIERE",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_GARE ROUTIERE.shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 353,
+   "nb_ilots": 28,
+   "superficie_ha": 24.31,
+   "superficie_lots_ha": 18.88,
+   "usages": {
+    "NON RENSEIGNÉ": 353
+   },
+   "classes_lots": {
+    "Conforme": 351,
+    "Modifié": 2
+   },
+   "centre": [
+    -3.875432,
+    5.354475
+   ],
+   "bbox": [
+    -3.877659,
+    5.351718,
+    -3.871112,
+    5.357092
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "gbagba-1ere-extension-marchoux-2",
+   "nom": "GBAGBA 1ère EXTENSION MARCHOUX 2",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_GBAGBA 1ère EXTENSION MARCHOUX 2.shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 50,
+   "nb_ilots": 7,
+   "superficie_ha": 3.1,
+   "superficie_lots_ha": 2.53,
+   "usages": {
+    "HABITATION": 50
+   },
+   "classes_lots": {
+    "Conforme": 50
+   },
+   "centre": [
+    -3.886339,
+    5.332986
+   ],
+   "bbox": [
+    -3.887351,
+    5.331897,
+    -3.884917,
+    5.333941
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "habitat-est",
+   "nom": "HABITAT-EST",
+   "appro": "Régularisation",
+   "conformite": "Modifié",
+   "groupe_qgis": "REGULARISATION / MODIFIE",
+   "fichier": "lotissement_HABITAT-EST.shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 205,
+   "nb_ilots": 25,
+   "superficie_ha": 15.77,
+   "superficie_lots_ha": 13.28,
+   "usages": {
+    "NON RENSEIGNÉ": 205
+   },
+   "classes_lots": {
+    "Conforme": 110,
+    "Modifié": 95
+   },
+   "centre": [
+    -3.869167,
+    5.346218
+   ],
+   "bbox": [
+    -3.87284,
+    5.341957,
+    -3.867133,
+    5.350414
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "koffikro",
+   "nom": "KOFFIKRO",
+   "appro": "Régularisation",
+   "conformite": "Modifié",
+   "groupe_qgis": "REGULARISATION / MODIFIE",
+   "fichier": "lotissement_KOFFIKRO.shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 2012,
+   "nb_ilots": 168,
+   "superficie_ha": 149.37,
+   "superficie_lots_ha": 120.77,
+   "usages": {
+    "NON RENSEIGNÉ": 2012
+   },
+   "classes_lots": {
+    "Conforme": 1294,
+    "Modifié": 668,
+    "Non conforme": 50
+   },
+   "centre": [
+    -3.823708,
+    5.325877
+   ],
+   "bbox": [
+    -3.828617,
+    5.32048,
+    -3.813325,
+    5.341824
+   ],
+   "chevauchements": [
+    "CH-05"
+   ]
+  },
+  {
+   "id": "m-batto-bouake",
+   "nom": "M'BATTO BOUAKE",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_M'BATTO BOUAKE.shp",
+   "barcode": "a86-00000037",
+   "origine": "DMISSA (non repris)",
+   "nb_lots": 3078,
+   "nb_ilots": 262,
+   "superficie_ha": 261.69,
+   "superficie_lots_ha": 209.02,
+   "usages": {
+    "RESIDENTIEL": 3026,
+    "ESPACE VERT": 18,
+    "ECOLE PRIMAIRE": 6,
+    "AUTRE": 5,
+    "TERRAIN DE SPORT": 4,
+    "LIEU DE CULTE": 3,
+    "FOYER": 3,
+    "RESERVE ADMINISTRATIVE": 2,
+    "CENTRE COMMERCIAL": 2,
+    "PLACE PUBLIQUE": 2,
+    "GARE ROUTIERE": 1,
+    "LYCEE": 1,
+    "POSTE DE POLICE": 1,
+    "AIRE DE JEUX": 1,
+    "CENTRE DE SANTE": 1,
+    "COLLEGE": 1,
+    "MARCHE": 1
+   },
+   "classes_lots": {
+    "Conforme": 3078
+   },
+   "centre": [
+    -3.797782,
+    5.343564
+   ],
+   "bbox": [
+    -3.814374,
+    5.336629,
+    -3.789149,
+    5.355079
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "m-pate-cite-des-merveilles-1",
+   "nom": "M'PATE CITE DES MERVEILLES 1",
+   "appro": "Régularisation",
+   "conformite": "Semi conforme",
+   "groupe_qgis": "REGULARISATION / SEMI CONFORME (ABSENCE DE BATIS POUR VALIDER LA CONFORMITE)",
+   "fichier": "lotissement_M'PATE CITE DES MERVEILLES 1.shp",
+   "barcode": "a86-00000667",
+   "origine": "Reprise",
+   "nb_lots": 987,
+   "nb_ilots": 79,
+   "superficie_ha": 91.07,
+   "superficie_lots_ha": 69.2,
+   "usages": {
+    "RESIDENTIEL": 975,
+    "MIXTE": 2,
+    "ECOLE": 2,
+    "AUTRE": 2,
+    "LIEU DE CULTE": 2,
+    "ESPACE VERT": 2,
+    "RESERVE ADMINISTRATIVE": 1,
+    "HOTEL": 1
+   },
+   "classes_lots": {
+    "Modifié": 987
+   },
+   "centre": [
+    -3.75746,
+    5.281609
+   ],
+   "bbox": [
+    -3.766626,
+    5.27589,
+    -3.75269,
+    5.286073
+   ],
+   "chevauchements": [
+    "CH-07"
+   ]
+  },
+  {
+   "id": "m-pate-cite-des-merveilles-2",
+   "nom": "M'PATE CITE DES MERVEILLES 2",
+   "appro": "Régularisation",
+   "conformite": "Semi conforme",
+   "groupe_qgis": "REGULARISATION / SEMI CONFORME (ABSENCE DE BATIS POUR VALIDER LA CONFORMITE)",
+   "fichier": "lotissement_M'PATE CITE DES MERVEILLES 2.shp",
+   "barcode": "a86-00000705",
+   "origine": "Reprise",
+   "nb_lots": 547,
+   "nb_ilots": 46,
+   "superficie_ha": 37.24,
+   "superficie_lots_ha": 28.28,
+   "usages": {
+    "RESIDENTIEL": 542,
+    "ESPACE VERT": 3,
+    "LIEU DE CULTE": 1,
+    "HOTEL": 1
+   },
+   "classes_lots": {
+    "Modifié": 547
+   },
+   "centre": [
+    -3.767717,
+    5.283375
+   ],
+   "bbox": [
+    -3.771431,
+    5.280275,
+    -3.764102,
+    5.286982
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "m-pate-residentiel-1",
+   "nom": "M'PATE RESIDENTIEL 1",
+   "appro": "Régularisation",
+   "conformite": "Semi conforme",
+   "groupe_qgis": "REGULARISATION / SEMI CONFORME (ABSENCE DE BATIS POUR VALIDER LA CONFORMITE)",
+   "fichier": "lotissement_M'PATE RESIDENTIEL 1.shp",
+   "barcode": "a86-00000587",
+   "origine": "Reprise",
+   "nb_lots": 511,
+   "nb_ilots": 55,
+   "superficie_ha": 37.63,
+   "superficie_lots_ha": 28.7,
+   "usages": {
+    "RESIDENTIEL": 502,
+    "ESPACE VERT": 3,
+    "ECOLE": 2,
+    "CENTRE DE SANTE": 1,
+    "LIEU DE CULTE": 1,
+    "AIRE DE JEUX": 1,
+    "AUTRE": 1
+   },
+   "classes_lots": {
+    "Modifié": 511
+   },
+   "centre": [
+    -3.765185,
+    5.296128
+   ],
+   "bbox": [
+    -3.772801,
+    5.291628,
+    -3.760207,
+    5.30141
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "m-pate-residentiel-2",
+   "nom": "M'PATE RESIDENTIEL 2",
+   "appro": "Régularisation",
+   "conformite": "Semi conforme",
+   "groupe_qgis": "REGULARISATION / SEMI CONFORME (ABSENCE DE BATIS POUR VALIDER LA CONFORMITE)",
+   "fichier": "lotissement_M'PATE RESIDENTIEL 2.shp",
+   "barcode": "a86-00000586",
+   "origine": "Reprise",
+   "nb_lots": 1350,
+   "nb_ilots": 125,
+   "superficie_ha": 114.21,
+   "superficie_lots_ha": 86.64,
+   "usages": {
+    "RESIDENTIEL": 1330,
+    "AUTRE": 5,
+    "ESPACE VERT": 4,
+    "LIEU DE CULTE": 2,
+    "COMMISSARIAT": 1,
+    "FOYER": 1,
+    "CENTRE DE SANTE": 1,
+    "CENTRE COMMERCIAL": 1,
+    "HOPITAL": 1,
+    "LYCEE": 1,
+    "CENTRE CULTUREL": 1,
+    "MARCHE": 1,
+    "GENDARMERIE": 1
+   },
+   "classes_lots": {
+    "Modifié": 1350
+   },
+   "centre": [
+    -3.763331,
+    5.289315
+   ],
+   "bbox": [
+    -3.771226,
+    5.284548,
+    -3.752879,
+    5.300032
+   ],
+   "chevauchements": [
+    "CH-07"
+   ]
+  },
+  {
+   "id": "mufalo",
+   "nom": "MUFALO",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_MUFALO.shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 76,
+   "nb_ilots": 8,
+   "superficie_ha": 4.56,
+   "superficie_lots_ha": 3.91,
+   "usages": {
+    "HABITATION": 76
+   },
+   "classes_lots": {
+    "Conforme": 76
+   },
+   "centre": [
+    -3.893087,
+    5.371147
+   ],
+   "bbox": [
+    -3.897474,
+    5.370371,
+    -3.892012,
+    5.372299
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "namoue-residentiel-extension",
+   "nom": "NAMOUE RESIDENTIEL EXTENSION",
+   "appro": "Neutre",
+   "conformite": "Modifié",
+   "groupe_qgis": "NEUTRE / MODIFIE",
+   "fichier": "lotissement_NAMOUE RESIDENTIEL EXTENSION.shp",
+   "barcode": "a86-00000026",
+   "origine": "Reprise",
+   "nb_lots": 358,
+   "nb_ilots": 46,
+   "superficie_ha": 27.87,
+   "superficie_lots_ha": 20.71,
+   "usages": {
+    "RESIDENTIEL": 351,
+    "MIXTE": 2,
+    "RESERVE FONCIERE": 1,
+    "ESPACE VERT": 1,
+    "MARCHE": 1,
+    "RESERVE ADMINISTRATIVE": 1,
+    "CENTRE DE SANTE": 1
+   },
+   "classes_lots": {
+    "Conforme": 278,
+    "Modifié": 80
+   },
+   "centre": [
+    -3.861957,
+    5.356729
+   ],
+   "bbox": [
+    -3.865101,
+    5.35349,
+    -3.85523,
+    5.359783
+   ],
+   "chevauchements": [
+    "CH-10",
+    "CH-15",
+    "CH-16",
+    "CH-17"
+   ]
+  },
+  {
+   "id": "nanmoue-residentiel",
+   "nom": "NANMOUE RESIDENTIEL",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_NANMOUE RESIDENTIEL.shp",
+   "barcode": "a86-00000007",
+   "origine": "Reprise",
+   "nb_lots": 1053,
+   "nb_ilots": 108,
+   "superficie_ha": 83.05,
+   "superficie_lots_ha": 58.22,
+   "usages": {
+    "RESIDENTIEL": 1038,
+    "RESERVE ADMINISTRATIVE": 4,
+    "ESPACE VERT": 3,
+    "ECOLE": 2,
+    "LIEU DE CULTE": 2,
+    "FOYER": 1,
+    "TERRAIN DE SPORT": 1,
+    "MARCHE": 1,
+    "CENTRE DE SANTE": 1
+   },
+   "classes_lots": {
+    "Conforme": 1053
+   },
+   "centre": [
+    -3.858917,
+    5.352369
+   ],
+   "bbox": [
+    -3.867269,
+    5.348051,
+    -3.853372,
+    5.356818
+   ],
+   "chevauchements": [
+    "CH-11",
+    "CH-16",
+    "CH-17"
+   ]
+  },
+  {
+   "id": "nanmoue-residentiel-extension-rajout",
+   "nom": "NANMOUE RESIDENTIEL EXTENSION RAJOUT",
+   "appro": "Régularisation",
+   "conformite": "Modifié",
+   "groupe_qgis": "REGULARISATION / MODIFIE",
+   "fichier": "lotissement_NANMOUE RESIDENTIEL EXTENSION RAJOUT.shp",
+   "barcode": "a86-00000100",
+   "origine": "DMISSA (non repris)",
+   "nb_lots": 70,
+   "nb_ilots": 8,
+   "superficie_ha": 4.13,
+   "superficie_lots_ha": 2.99,
+   "usages": {
+    "RESIDENTIEL": 69,
+    "AUTRE": 1
+   },
+   "classes_lots": {
+    "Modifié": 56,
+    "Conforme": 14
+   },
+   "centre": [
+    -3.862005,
+    5.359696
+   ],
+   "bbox": [
+    -3.863118,
+    5.35852,
+    -3.860601,
+    5.361418
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "ngotto-kandana",
+   "nom": "NGOTTO KANDANA",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_NGOTTO KANDANA.shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 84,
+   "nb_ilots": 10,
+   "superficie_ha": 5.01,
+   "superficie_lots_ha": 4.17,
+   "usages": {
+    "HABITATION": 82,
+    "ESPACE VERT": 2
+   },
+   "classes_lots": {
+    "Conforme": 84
+   },
+   "centre": [
+    -3.863091,
+    5.365435
+   ],
+   "bbox": [
+    -3.863921,
+    5.363711,
+    -3.861496,
+    5.367212
+   ],
+   "chevauchements": [
+    "CH-02"
+   ]
+  },
+  {
+   "id": "noyatho-residentiel",
+   "nom": "NOYATHO RESIDENTIEL",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_NOYATHO RESIDENTIEL.shp",
+   "barcode": "a86-00000044",
+   "origine": "Reprise",
+   "nb_lots": 193,
+   "nb_ilots": 21,
+   "superficie_ha": 13.98,
+   "superficie_lots_ha": 10.02,
+   "usages": {
+    "RESIDENTIEL": 190,
+    "ECOLE": 1,
+    "MARCHE": 1,
+    "SPORT": 1
+   },
+   "classes_lots": {
+    "Conforme": 193
+   },
+   "centre": [
+    -3.83436,
+    5.339861
+   ],
+   "bbox": [
+    -3.836452,
+    5.337576,
+    -3.831757,
+    5.342098
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "oribat-abatta-40ha",
+   "nom": "ORIBAT ABATTA 40Ha",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_ORIBAT ABATTA 40Ha.shp",
+   "barcode": "",
+   "origine": "",
+   "nb_lots": 531,
+   "nb_ilots": 55,
+   "superficie_ha": 41.7,
+   "superficie_lots_ha": 32.32,
+   "usages": {
+    "NON RENSEIGNÉ": 531
+   },
+   "classes_lots": {
+    "Conforme": 531
+   },
+   "centre": [
+    -3.917636,
+    5.336766
+   ],
+   "bbox": [
+    -3.920902,
+    5.332137,
+    -3.912649,
+    5.341289
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "palmeraie-djobissandret-1",
+   "nom": "PALMERAIE DJOBISSANDRET 1",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_PALMERAIE DJOBISSANDRET 1.shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 825,
+   "nb_ilots": 61,
+   "superficie_ha": 63.41,
+   "superficie_lots_ha": 51.43,
+   "usages": {
+    "NON RENSEIGNÉ": 825
+   },
+   "classes_lots": {
+    "Conforme": 586,
+    "Modifié": 239
+   },
+   "centre": [
+    -3.867512,
+    5.370285
+   ],
+   "bbox": [
+    -3.874184,
+    5.355414,
+    -3.862549,
+    5.376629
+   ],
+   "chevauchements": [
+    "CH-10"
+   ]
+  },
+  {
+   "id": "plan-d-application-bronasso-iii",
+   "nom": "PLAN D'APPLICATION BRONASSO III",
+   "appro": "Régularisation",
+   "conformite": "Modifié",
+   "groupe_qgis": "REGULARISATION / MODIFIE",
+   "fichier": "lotissement_PLAN D'APPLICATION BRONASSO III.shp",
+   "barcode": "",
+   "origine": "Reprise",
+   "nb_lots": 122,
+   "nb_ilots": 16,
+   "superficie_ha": 7.9,
+   "superficie_lots_ha": 6.12,
+   "usages": {
+    "NON RENSEIGNÉ": 122
+   },
+   "classes_lots": {
+    "Modifié": 122
+   },
+   "centre": [
+    -3.839899,
+    5.334339
+   ],
+   "bbox": [
+    -3.841095,
+    5.332242,
+    -3.836982,
+    5.335738
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "plan-modifie-d-akandje",
+   "nom": "PLAN MODIFIE D'AKANDJE",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_PLAN MODIFIE D'AKANDJE.shp",
+   "barcode": "a86-00001315",
+   "origine": "Reprise",
+   "nb_lots": 1039,
+   "nb_ilots": 118,
+   "superficie_ha": 112.44,
+   "superficie_lots_ha": 87.79,
+   "usages": {
+    "RESIDENTIEL": 1023,
+    "ESPACE VERT": 6,
+    "LIEU DE CULTE": 4,
+    "AUTRE": 2,
+    "MARCHE": 1,
+    "RESERVE ADMINISTRATIVE": 1,
+    "CENTRE DE SANTE": 1,
+    "R.A.P.": 1
+   },
+   "classes_lots": {
+    "Conforme": 1039
+   },
+   "centre": [
+    -3.911772,
+    5.392724
+   ],
+   "bbox": [
+    -3.914996,
+    5.390751,
+    -3.899567,
+    5.406104
+   ],
+   "chevauchements": [
+    "CH-12"
+   ]
+  },
+  {
+   "id": "quartier-akandje-ii-rajout",
+   "nom": "QUARTIER AKANDJE II RAJOUT",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_QUARTIER AKANDJE II RAJOUT.shp",
+   "barcode": "a86-00000050",
+   "origine": "Reprise",
+   "nb_lots": 447,
+   "nb_ilots": 78,
+   "superficie_ha": 29.97,
+   "superficie_lots_ha": 24.15,
+   "usages": {
+    "RESIDENTIEL": 440,
+    "AUTRE": 7
+   },
+   "classes_lots": {
+    "Conforme": 447
+   },
+   "centre": [
+    -3.899449,
+    5.402083
+   ],
+   "bbox": [
+    -3.900324,
+    5.381454,
+    -3.886146,
+    5.404064
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "quartier-djangon-akandje",
+   "nom": "QUARTIER DJANGON-AKANDJE",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_QUARTIER DJANGON-AKANDJE.shp",
+   "barcode": "a86-00000073",
+   "origine": "Reprise",
+   "nb_lots": 77,
+   "nb_ilots": 15,
+   "superficie_ha": 3.45,
+   "superficie_lots_ha": 3.0,
+   "usages": {
+    "RESIDENTIEL": 76,
+    "ESPACE VERT": 1
+   },
+   "classes_lots": {
+    "Conforme": 77
+   },
+   "centre": [
+    -3.888854,
+    5.378762
+   ],
+   "bbox": [
+    -3.889409,
+    5.378025,
+    -3.881516,
+    5.390402
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "quartier-djangon-akandje-modifie",
+   "nom": "QUARTIER DJANGON-AKANDJE MODIFIE",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_QUARTIER DJANGON-AKANDJE MODIFIE.shp",
+   "barcode": "a86-00000063",
+   "origine": "Reprise",
+   "nb_lots": 1097,
+   "nb_ilots": 119,
+   "superficie_ha": 75.5,
+   "superficie_lots_ha": 56.32,
+   "usages": {
+    "RESIDENTIEL": 1082,
+    "ESPACE VERT": 7,
+    "ECOLE": 3,
+    "LIEU DE CULTE": 2,
+    "MARCHE": 1,
+    "AUTRE": 1,
+    "CENTRE DE SANTE": 1
+   },
+   "classes_lots": {
+    "Conforme": 1080,
+    "Non conforme": 17
+   },
+   "centre": [
+    -3.882625,
+    5.386712
+   ],
+   "bbox": [
+    -3.891013,
+    5.378556,
+    -3.875416,
+    5.392728
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "quartier-konian",
+   "nom": "QUARTIER KONIAN",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_QUARTIER KONIAN.shp",
+   "barcode": "a86-00000852",
+   "origine": "Reprise",
+   "nb_lots": 152,
+   "nb_ilots": 23,
+   "superficie_ha": 10.22,
+   "superficie_lots_ha": 7.47,
+   "usages": {
+    "RESIDENTIEL": 151,
+    "AUTRE": 1
+   },
+   "classes_lots": {
+    "Conforme": 152
+   },
+   "centre": [
+    -3.88395,
+    5.330964
+   ],
+   "bbox": [
+    -3.884819,
+    5.327907,
+    -3.87867,
+    5.334675
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "quartier-yamadan",
+   "nom": "QUARTIER YAMADAN",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_QUARTIER YAMADAN.shp",
+   "barcode": "a86-00000097",
+   "origine": "Reprise",
+   "nb_lots": 89,
+   "nb_ilots": 11,
+   "superficie_ha": 7.03,
+   "superficie_lots_ha": 5.93,
+   "usages": {
+    "RESIDENTIEL": 89
+   },
+   "classes_lots": {
+    "Conforme": 89
+   },
+   "centre": [
+    -3.882221,
+    5.362188
+   ],
+   "bbox": [
+    -3.883546,
+    5.360179,
+    -3.881204,
+    5.36406
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "residentiel-portquet",
+   "nom": "RESIDENTIEL PORTQUET",
+   "appro": "Régularisation",
+   "conformite": "Conforme",
+   "groupe_qgis": "REGULARISATION / CONFORME",
+   "fichier": "lotissement_RESIDENTIEL PORTQUET.shp",
+   "barcode": "",
+   "origine": "",
+   "nb_lots": 190,
+   "nb_ilots": 24,
+   "superficie_ha": 15.89,
+   "superficie_lots_ha": 12.17,
+   "usages": {
+    "NON RENSEIGNÉ": 190
+   },
+   "classes_lots": {
+    "Conforme": 190
+   },
+   "centre": [
+    -3.895046,
+    5.353511
+   ],
+   "bbox": [
+    -3.898739,
+    5.351447,
+    -3.892372,
+    5.355361
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "rosee-d-hermon",
+   "nom": "ROSEE D'HERMON",
+   "appro": "Régularisation",
+   "conformite": "Modifié",
+   "groupe_qgis": "REGULARISATION / MODIFIE",
+   "fichier": "lotissement_ROSEE D'HERMON.shp",
+   "barcode": "a86-00000086",
+   "origine": "DMISSA (non repris)",
+   "nb_lots": 319,
+   "nb_ilots": 54,
+   "superficie_ha": 25.87,
+   "superficie_lots_ha": 19.11,
+   "usages": {
+    "RESIDENTIEL": 302,
+    "ESPACE VERT": 7,
+    "LIEU DE CULTE": 3,
+    "AIRE DE JEUX": 2,
+    "DOMAINE PRIVE": 1,
+    "AUTRE": 1,
+    "ECOLE": 1,
+    "SPORT": 1,
+    "FOYER": 1
+   },
+   "classes_lots": {
+    "Modifié": 319
+   },
+   "centre": [
+    -3.837783,
+    5.3081
+   ],
+   "bbox": [
+    -3.842299,
+    5.304139,
+    -3.833139,
+    5.312018
+   ],
+   "chevauchements": [
+    "CH-08"
+   ]
+  },
+  {
+   "id": "safh-ci-bel-horizon",
+   "nom": "SAFH-CI BEL HORIZON",
+   "appro": "Régularisation",
+   "conformite": "Semi conforme",
+   "groupe_qgis": "REGULARISATION / SEMI CONFORME (ABSENCE DE BATIS POUR VALIDER LA CONFORMITE)",
+   "fichier": "lotissement_SAFH-CI BEL HORIZON.shp",
+   "barcode": "a86-00000102",
+   "origine": "Reprise",
+   "nb_lots": 762,
+   "nb_ilots": 74,
+   "superficie_ha": 65.9,
+   "superficie_lots_ha": 49.46,
+   "usages": {
+    "RESIDENTIEL": 750,
+    "ESPACE VERT": 5,
+    "GROUPE SCOLAIRE": 2,
+    "DOMAINE PRIVE": 1,
+    "LIEU DE CULTE": 1,
+    "TERRAIN DE SPORT": 1,
+    "CENTRE DE SANTE": 1,
+    "AUTRE": 1
+   },
+   "classes_lots": {
+    "Modifié": 762
+   },
+   "centre": [
+    -3.769171,
+    5.300497
+   ],
+   "bbox": [
+    -3.77356,
+    5.296261,
+    -3.764326,
+    5.304783
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "sebia-yao",
+   "nom": "SEBIA-YAO",
+   "appro": "Normale",
+   "conformite": "Modifié",
+   "groupe_qgis": "NORMAL / MODIFE",
+   "fichier": "lotissement_SEBIA-YAO.shp",
+   "barcode": "a86-00000087",
+   "origine": "Reprise",
+   "nb_lots": 348,
+   "nb_ilots": 42,
+   "superficie_ha": 29.25,
+   "superficie_lots_ha": 23.39,
+   "usages": {
+    "RESIDENTIEL": 343,
+    "MIXTE": 4,
+    "LIEU DE CULTE": 1
+   },
+   "classes_lots": {
+    "Conforme": 225,
+    "Modifié": 123
+   },
+   "centre": [
+    -3.836135,
+    5.322325
+   ],
+   "bbox": [
+    -3.84137,
+    5.31999,
+    -3.833428,
+    5.326017
+   ],
+   "chevauchements": []
+  },
+  {
+   "id": "village-d-adjin",
+   "nom": "VILLAGE D'ADJIN",
+   "appro": "Normale",
+   "conformite": "Conforme",
+   "groupe_qgis": "NORMAL / CONFORME",
+   "fichier": "lotissement_VILLAGE D'ADJIN.shp",
+   "barcode": "a86-00000645",
+   "origine": "Reprise",
+   "nb_lots": 613,
+   "nb_ilots": 96,
+   "superficie_ha": 55.61,
+   "superficie_lots_ha": 44.1,
+   "usages": {
+    "RESIDENTIEL": 571,
+    "MIXTE": 24,
+    "AUTRE": 7,
+    "ESPACE VERT": 3,
+    "CIMETIERE": 2,
+    "GARE ROUTIERE": 1,
+    "LIEU DE CULTE": 1,
+    "SPORT": 1,
+    "CENTRE DE SANTE": 1,
+    "MARCHE": 1,
+    "ECOLE PRIMAIRE": 1
+   },
+   "classes_lots": {
+    "Conforme": 613
+   },
+   "centre": [
+    -3.85566,
+    5.392872
+   ],
+   "bbox": [
+    -3.859813,
+    5.382547,
+    -3.851428,
+    5.39833
+   ],
+   "chevauchements": [
+    "CH-14"
+   ]
+  }
+ ],
+ "versions_ecartees": [
+  {
+   "fichier": "lotissement_ADJAME-BINGERVILLE RESIDENTIEL QUARTIER N'GOTTO ET N'GBROMIN PLAN DE DECLASSEMENT ET DE MORCELLEMENT DES ILOTS 117 (Lots_ 1172 et 1173) 94 - 72 (Lots_ 715 et 716.shp",
+   "nom": "ADJAME-BINGERVILLE RESIDENTIEL QUARTIER N'GOTTO ET N'GBROMIN PLAN DE DECLASSEMENT ET DE MORCELLEMENT DES ILOTS 117 (Lots: 1172 et 1173) 94 - 72 (Lots: 715 et 716",
+   "nb_lots": 36
+  },
+  {
+   "fichier": "lotissement_AKWE -DJEMIN (ADJAME-BINGERVILLE) PLAN DE DECLASSEMENT ET MORCELLEMENT DE LA VOIE DE 70 METRES (ILOTS N° 1A-1B-1C-1D-1E) ET DES DELAISSES DE VOIRIE (ILOTS N° 8-9-43-43A-43B-43C).shp",
+   "nom": "AKWE -DJEMIN (ADJAME-BINGERVILLE) PLAN DE DECLASSEMENT ET MORCELLEMENT DE LA VOIE DE 70 METRES (ILOTS N° 1A-1B-1C-1D-1E) ET DES DELAISSES DE VOIRIE (ILOTS N° 8-9-43-43A-43B-43C)",
+   "nb_lots": 104
+  },
+  {
+   "fichier": "lotissement_DJANGON-AKANDJE.shp",
+   "nom": "DJANGON-AKANDJE",
+   "nb_lots": 656
+  }
+ ],
+ "avertissements": [
+  "Chevauchement 59: 'ADJAME-BINGERVILLE RESIDENTIEL QUARTIER N'GOTTO ET N'GBROMIN PLAN DE DECLASSEMENT (ILOTS 117, 94, 72)' introuvable parmi les 104 plans"
+ ]
+}
