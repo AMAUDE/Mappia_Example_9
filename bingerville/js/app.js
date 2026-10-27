@@ -18,11 +18,19 @@ const LOTS_MINZOOM = 14;
 const BASEMAPS = {
   light: { tiles: ["https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png", "https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png"], attribution: "© OpenStreetMap © CARTO", maxzoom: 20 },
   sat: { tiles: ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"], attribution: "Imagerie © Esri, Maxar, Earthstar Geographics", maxzoom: 19 },
-  osm: { tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], attribution: "© contributeurs OpenStreetMap", maxzoom: 19 }
+  osm: { tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"], attribution: "© contributeurs OpenStreetMap", maxzoom: 19 },
+  mq: { tiles: mqTiles("sat"), attribution: "Imagerie © MapQuest", maxzoom: 18 },
+  mqhyb: { tiles: mqTiles("sat"), overlay: mqTiles("hyb"), attribution: "Imagerie © MapQuest", maxzoom: 18 }
 };
+/* MapQuest : serveur de tuiles a/b/c/d.tiles.mapquest.com. Si MapQuest exige une clé,
+   la renseigner ici (compte gratuit sur developer.mapquest.com). */
+function mqTiles(style) {
+  const MQ_KEY = "";
+  return ["a", "b", "c", "d"].map(s => `https://${s}.tiles.mapquest.com/render/latest/${style}/{z}/{x}/{y}/256/png${MQ_KEY ? "?key=" + MQ_KEY : ""}`);
+}
 
 const S = { mode: "overview", visible: new Set(), showPromo: true, showChev: true, showNoms: true,
-  lotClasse: false, selected: null, selChev: null, loadedLots: new Map(), loading: new Set(), basemap: "light" };
+  lotClasse: false, selected: null, selChev: null, loadedLots: new Map(), loading: new Set(), basemap: "light", bmErrors: 0 };
 let META, BY_ID, EMPRISES, CHEV, PROMO_PTS, PROMO_POLY, NOGEO, map, popup;
 
 const $ = (s, el = document) => el.querySelector(s);
@@ -122,6 +130,10 @@ function initMap() {
     $("#loading").classList.add("off");
   });
   map.on("moveend", ensureLots);
+  map.on("error", e => {
+    if (!["base", "base-ov"].includes(e.sourceId) || !S.basemap.startsWith("mq")) return;
+    if (++S.bmErrors === 6) toast("Les tuiles MapQuest ne répondent pas (clé API probablement requise). Revenez au fond « Satellite ».");
+  });
   map.on("zoom", () => $("#zoom-hint").classList.toggle("off", map.getZoom() >= LOTS_MINZOOM));
 }
 
@@ -676,15 +688,26 @@ function exportCSV() {
   a.click(); URL.revokeObjectURL(a.href);
 }
 
+function toast(msg) {
+  const t = Object.assign(document.createElement("div"), { className: "toast", textContent: msg });
+  document.querySelector(".map-wrap").appendChild(t); setTimeout(() => t.remove(), 7000);
+}
+
 /* ================================================================ UI globale */
 function initUI() {
   $$(".tabs button").forEach(b => b.onclick = () => setMode(b.dataset.mode));
   $$(".basemaps button").forEach(b => b.onclick = () => {
     $$(".basemaps button").forEach(x => x.classList.toggle("active", x === b));
     const bm = BASEMAPS[b.dataset.bm];
-    map.removeLayer("base"); map.removeSource("base");
-    map.addSource("base", { type: "raster", tileSize: 256, ...bm });
+    ["base-ov", "base"].forEach(id => { if (map.getLayer(id)) map.removeLayer(id); if (map.getSource(id)) map.removeSource(id); });
+    const { overlay, ...src } = bm;
+    map.addSource("base", { type: "raster", tileSize: 256, ...src });
     map.addLayer({ id: "base", type: "raster", source: "base" }, "emp-fill");
+    if (overlay) {
+      map.addSource("base-ov", { type: "raster", tileSize: 256, tiles: overlay, maxzoom: bm.maxzoom });
+      map.addLayer({ id: "base-ov", type: "raster", source: "base-ov" }, "emp-fill");
+    }
+    S.bmErrors = 0;
     S.basemap = b.dataset.bm;
   });
   $("#lot-classe").onchange = e => { S.lotClasse = e.target.checked; refreshLotStyles(); renderLegend(); if (S.lotClasse && map.getZoom() < LOTS_MINZOOM) map.easeTo({ zoom: LOTS_MINZOOM + 0.5 }); };
