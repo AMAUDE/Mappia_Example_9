@@ -21,6 +21,12 @@ Interactions : arbre de couches (afficher / masquer chaque plan ou groupe), rech
 - Statistiques et statuts par lotissement : couche « conformite » (Direction.gpkg). Carte : couche « Assemblage BINGERVILLE » (conformité lot par lot ; non conforme = non conforme + modifié).
 - Superficies calculées en UTM 30N (EPSG:32630) ; données publiées en WGS84 (GeoJSON).
 
+## Modifier les textes
+
+- Titres et paragraphes des onglets : `js/textes.js` (un texte par ligne, entre accents graves `` ` ``).
+- Titre du site, sous-titre, noms des onglets et boutons fixes : `index.html`.
+- Sur GitHub : ouvrir le fichier, cliquer sur le crayon (« Edit »), modifier, puis « Commit changes ». Le site se met à jour en une à deux minutes.
+
 ## Mettre à jour
 
 ```bash

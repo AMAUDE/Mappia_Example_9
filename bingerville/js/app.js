@@ -45,6 +45,7 @@ function mqTiles(style) {
 
 const S = { mode: "overview", visible: new Set(), confFilter: null, statFilter: null, showPromo: true, showChev: true, showNoms: true,
   selected: null, selChev: null, basemap: "light", bmErrors: 0 };
+const TX = window.TEXTES || {};
 let META, BY_ID, BY_K, ASM, CHEV, PROG, S3I, map, popup;
 
 const $ = (s, el = document) => el.querySelector(s);
@@ -239,7 +240,7 @@ function matrixTable() {
 function renderOverview() {
   const T = META.totaux;
   $("#panel").innerHTML = `
-    <p class="lead">Cette plateforme présente la <strong>cartographie des lotissements de la localité de Bingerville</strong>, issue des travaux réalisés sous QGIS. La carte affiche l'assemblage de tous les plans ; cliquez une catégorie pour la faire apparaître.</p>
+    <p class="lead">${TX.accueil_intro}</p>
     <div class="kpis">
       <div class="kpi hero"><div class="v">${T.lotissements}</div><div><div class="l">lotissements à Bingerville</div></div></div>
       <div class="kpi"><div class="v" style="color:${COL.chev}">${T.chevauchements}</div><div class="l">zones de chevauchement</div></div>
@@ -259,7 +260,7 @@ function renderOverview() {
       <button class="btn" data-goto="p3" style="text-align:left"><b>3.</b> Lotissements ayant des chevauchements →</button>
       <button class="btn" data-goto="p4" style="text-align:left"><b>4.</b> Combinaisons et enjeux fonciers →</button>
     </div>
-    <p class="note" style="margin-top:18px">Statistiques : couche « conformité » (un statut par lotissement). Carte : lots de la couche « Assemblage BINGERVILLE ». Chaque lot garde sa classe QGIS : vert = conforme, rouge = non conforme ou modifié (y compris les lots conformes situés dans un lotissement non conforme).</p>`;
+    <p class="note" style="margin-top:18px">${TX.accueil_note}</p>`;
   $$(".barrow").forEach(r => r.onclick = () => {
     const key = r.dataset.filter, v = r.dataset.value;
     if (key === "conformite") {
@@ -315,8 +316,8 @@ function renderP1() {
   const by = c => META.lotissements.filter(l => l.conformite === c);
   $("#panel").innerHTML = `
     <div class="section-title">Projet 1</div>
-    <h2 class="ptitle">Présentation générale des lotissements</h2>
-    <p class="lead">Les ${META.lotissements.length} lotissements de Bingerville. <strong>Chaque plan est une couche</strong> que l'on peut afficher, masquer et consulter. Sur la carte, chaque lotissement est coloré selon sa conformité.</p>
+    <h2 class="ptitle">${TX.p1_titre}</h2>
+    <p class="lead">${(TX.p1_intro || "").replace("{n}", META.lotissements.length)}</p>
     <div class="kpis">
       <div class="kpi hero"><div class="v">${META.lotissements.length}</div><div><div class="l">lotissements existants dans la localité</div></div></div>
       <div class="kpi"><div class="v" style="color:${COL.conf["Conforme"]}">${by("Conforme").length}</div><div class="l">conformes</div></div>
@@ -331,8 +332,8 @@ function renderP1() {
 function renderP2() {
   $("#panel").innerHTML = `
     <div class="section-title">Projet 2</div>
-    <h2 class="ptitle">Catégorisation par arrêté d'approbation</h2>
-    <p class="lead">Lotissements approuvés <strong>par voie normale</strong> et <strong>par voie de régularisation</strong>, avec leur conformité.</p>
+    <h2 class="ptitle">${TX.p2_titre}</h2>
+    <p class="lead">${TX.p2_intro}</p>
     <div class="kpis">${STAT_ORDER.map(s => `<div class="kpi"><div class="v" style="color:${COL.statut[s]}">${count(l => l.statut === s)}</div><div class="l">${s === "Normale" ? "voie normale" : "voie de régularisation"}</div></div>`).join("")}</div>
     <div class="section-title">Arrêté × conformité</div>
     <div class="card" style="padding:6px 8px">${matrixTable()}</div>
@@ -352,8 +353,8 @@ function renderP3() {
   const feats = [...CHEV.features].sort((a, b) => b.properties.superficie_ha - a.properties.superficie_ha);
   $("#panel").innerHTML = `
     <div class="section-title">Projet 3</div>
-    <h2 class="ptitle">Lotissements ayant des chevauchements</h2>
-    <p class="lead">Zones où deux plans ou plus se superposent. Cliquez une zone pour la localiser.</p>
+    <h2 class="ptitle">${TX.p3_titre}</h2>
+    <p class="lead">${TX.p3_intro}</p>
     <div class="kpis">
       <div class="kpi"><div class="v" style="color:${COL.chev}">${CHEV.features.length}</div><div class="l">zones de chevauchement</div></div>
       <div class="kpi"><div class="v">${inv.length}</div><div class="l">lotissements concernés</div><div class="s">sur ${META.lotissements.length}</div></div>
@@ -403,8 +404,8 @@ function renderP4() {
   const of = n => META.lotissements.filter(l => l.combo === n);
   $("#panel").innerHTML = `
     <div class="section-title">Projet 4</div>
-    <h2 class="ptitle">Combinaisons et enjeux fonciers</h2>
-    <p class="lead">Chaque lotissement est classé selon trois critères — <strong>conformité</strong>, <strong>chevauchement</strong> et <strong>approbation</strong> — de la situation la plus régulière (1) à la plus critique (8). Cliquez une situation pour l'isoler.</p>
+    <h2 class="ptitle">${TX.p4_titre}</h2>
+    <p class="lead">${TX.p4_intro}</p>
     <div class="card" style="padding:4px 6px">
       <table class="matrix combo-table"><thead><tr><th>N°</th><th>Conf.</th><th>Chev.</th><th>Appr.</th><th style="text-align:left">Enjeu</th><th>Plans</th></tr></thead><tbody>
       ${COMBOS.map(c => `<tr class="combo-row" data-combo="${c.n}" title="${comboLabel(c)}">
