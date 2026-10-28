@@ -6,8 +6,6 @@
    ============================================================ */
 window.TEXTES = {
 
-  // Vue d'ensemble — paragraphe d'introduction
-  accueil_intro: `Cette plateforme présente la <strong>cartographie des lotissements de la localité de Bingerville</strong>, issue des travaux réalisés sous QGIS. La carte affiche l'assemblage de tous les plans ; cliquez une catégorie pour la faire apparaître.`,
 
 
   // Projet 1 — titre
@@ -20,7 +18,7 @@ window.TEXTES = {
   p2_titre: `Catégorisation par arrêté d'approbation`,
 
   // Projet 2 — introduction
-  p2_intro: `Lotissements approuvés <strong>par voie normale</strong> et <strong>par voie de régularisation</strong>, avec l'état de leur arrêté : <strong>reçu</strong> ou <strong>non reçu</strong>.`,
+  p2_intro: `Lotissements approuvés <strong>par voie normale</strong> et <strong>par voie de régularisation</strong>.`,
 
   // Projet 3 — titre
   p3_titre: `Lotissements ayant des chevauchements`,

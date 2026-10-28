@@ -16,7 +16,9 @@ const COL = {
 const CONF_ORDER = ["Conforme", "Non conforme"];
 const STAT_ORDER = ["Normale", "Régularisation"];
 const APPR_ORDER = ["Arrêté reçu", "Arrêté non reçu"];
-const APPR_LABEL = { "Arrêté reçu": "Arrêté reçu", "Arrêté non reçu": "Arrêté non reçu" };
+const APPR_LABEL = { "Arrêté reçu": "Lotissements (arrêtés reçus)", "Arrêté non reçu": "Lotissements (arrêtés non reçus)" };
+const APPR_SHORT = { "Arrêté reçu": "Reçu", "Arrêté non reçu": "Non reçu" };
+const APPR_KPI = { "Arrêté reçu": "lotissements dont nous avons reçu les arrêtés", "Arrêté non reçu": "lotissements dont nous n'avons pas reçu les arrêtés" };
 const apprOf = l => l.approuve ? "Arrêté reçu" : "Arrêté non reçu";
 const STAT_LABEL = { "Normale": "Approbation par voie normale", "Régularisation": "Approbation par voie de régularisation" };
 
@@ -244,7 +246,6 @@ function matrixTable() {
 function renderOverview() {
   const T = META.totaux;
   $("#panel").innerHTML = `
-    <p class="lead">${TX.accueil_intro}</p>
     <div class="kpis">
       <div class="kpi hero"><div class="v">${T.lotissements}</div><div><div class="l">lotissements à Bingerville</div></div></div>
       <div class="kpi"><div class="v" style="color:${COL.chev}">${T.chevauchements}</div><div class="l">zones de chevauchement</div></div>
@@ -255,7 +256,7 @@ function renderOverview() {
     <div class="section-title">Arrêtés d'approbation</div>
     <div class="card">${barRows(STAT_ORDER, COL.statut, "statut")}</div>
     <div class="section-title">Approbation</div>
-    <div class="card">${barRows(APPR_ORDER, COL.appr, "appr")}</div>
+    <div class="card wide-bars">${barRows(APPR_ORDER, COL.appr, "appr", APPR_LABEL)}</div>
     <div class="section-title">Arrêté × conformité</div>
     <div class="card" style="padding:6px 8px">${matrixTable()}</div>
     <button class="btn" id="btn-reset" style="margin-top:10px;width:100%">Revenir à l'assemblage (tout en bleu)</button>
@@ -347,11 +348,11 @@ function renderP2() {
     <h2 class="ptitle">${TX.p2_titre}</h2>
     <p class="lead">${TX.p2_intro}</p>
     <div class="kpis">
-      ${APPR_ORDER.map(a => `<div class="kpi"><div class="v" style="color:${COL.appr[a]}">${count(l => l.appr === a)}</div><div class="l">${a.toLowerCase()}</div></div>`).join("")}
+      ${APPR_ORDER.map(a => `<div class="kpi"><div class="v" style="color:${COL.appr[a]}">${count(l => l.appr === a)}</div><div class="l">${APPR_KPI[a]}</div></div>`).join("")}
       ${STAT_ORDER.map(s => `<div class="kpi"><div class="v" style="color:${COL.statut[s]}">${count(l => l.statut === s)}</div><div class="l">${s === "Normale" ? "voie normale" : "voie de régularisation"}</div></div>`).join("")}
     </div>
     <div class="section-title">Voie × arrêté</div>
-    <div class="card" style="padding:6px 8px"><table class="matrix"><thead><tr><th></th>${APPR_ORDER.map(a => `<th><span class="dot" style="background:${COL.appr[a]}"></span> ${a}</th>`).join("")}<th>Total</th></tr></thead>
+    <div class="card" style="padding:6px 8px"><table class="matrix"><thead><tr><th></th>${APPR_ORDER.map(a => `<th><span class="dot" style="background:${COL.appr[a]}"></span> ${APPR_SHORT[a]}</th>`).join("")}<th>Total</th></tr></thead>
       <tbody>${STAT_ORDER.map(st => `<tr><td><span class="dot" style="background:${COL.statut[st]}"></span> ${st}</td>${APPR_ORDER.map(a => `<td class="clk" data-s="${st}" data-a="${a}">${cell(st, a)}</td>`).join("")}<td><b>${count(l => l.statut === st)}</b></td></tr>`).join("")}</tbody>
       <tfoot><tr><td>Total</td>${APPR_ORDER.map(a => `<td>${count(l => l.appr === a)}</td>`).join("")}<td>${META.lotissements.length}</td></tr></tfoot></table></div>
     <div class="section-title">Couches</div>
