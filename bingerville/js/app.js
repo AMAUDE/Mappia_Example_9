@@ -10,10 +10,14 @@ const COL = {
   conf: { "Conforme": "#2E9E5B", "Non conforme": "#D64545" },
   statut: { "Normale": "#2F6FD6", "Régularisation": "#8E4FC9" },
   lotc: ["#2E9E5B", "#D64545", "#A9B3B8"],           // classe lot : 0 conforme, 1 non conforme (non_conforme + modifié), 2 non renseigné
+  appr: { "Approuvé": "#0E7C86", "Non approuvé": "#E0A030" },
   chev: "#E0245E", promo: "#0B9A9A", muted: "#B9C2C6", involved: "#5B6B73"
 };
 const CONF_ORDER = ["Conforme", "Non conforme"];
 const STAT_ORDER = ["Normale", "Régularisation"];
+const APPR_ORDER = ["Approuvé", "Non approuvé"];
+const APPR_LABEL = { "Approuvé": "Approuvé (arrêté reçu)", "Non approuvé": "Non approuvé (arrêté non reçu)" };
+const apprOf = l => l.approuve ? "Approuvé" : "Non approuvé";
 const STAT_LABEL = { "Normale": "Approbation par voie normale", "Régularisation": "Approbation par voie de régularisation" };
 
 /* Projet 4 — combinaisons : conformité (couche conformite) × chevauchement × approbation (arrêté reçu) */
@@ -43,7 +47,7 @@ function mqTiles(style) {
   return ["a", "b", "c", "d"].map(s => `https://${s}.tiles.mapquest.com/render/latest/${style}/{z}/{x}/{y}/256/png${MQ_KEY ? "?key=" + MQ_KEY : ""}`);
 }
 
-const S = { mode: "overview", visible: new Set(), confFilter: null, statFilter: null, showPromo: true, showChev: true, showNoms: true,
+const S = { mode: "overview", visible: new Set(), confFilter: null, statFilter: null, apprFilter: null, showPromo: true, showChev: true, showNoms: true,
   selected: null, selChev: null, basemap: "light", bmErrors: 0 };
 const TX = window.TEXTES || {};
 let META, BY_ID, BY_K, ASM, CHEV, PROG, S3I, map, popup;
@@ -62,11 +66,11 @@ async function load() {
   [META, ASM, CHEV, PROG, S3I] = await Promise.all([j("data/lotissements.json"), j("data/assemblage.geojson"),
     j("data/chevauchements.geojson"), j("data/programmes.geojson"), j("data/promotions_s3i.geojson")]);
   META.lotissements.sort((a, b) => a.nom.localeCompare(b.nom, "fr"));
-  META.lotissements.forEach((l, i) => { l.num = i + 1; l.combo = comboOf(l); });
+  META.lotissements.forEach((l, i) => { l.num = i + 1; l.combo = comboOf(l); l.appr = apprOf(l); });
   BY_ID = Object.fromEntries(META.lotissements.map(l => [l.id, l]));
   BY_K = Object.fromEntries(META.lotissements.map(l => [l.k, l]));
   // attributs du lotissement recopiés sur chaque lot (pour les styles par mode)
-  ASM.features.forEach(f => { const l = BY_K[f.properties.k]; f.properties.st = l.statut; f.properties.lc = l.conformite; f.properties.dc = f.properties.c === 0 ? "Conforme" : f.properties.c === 1 ? "Non conforme" : l.conformite; /* classe du lot dans l'assemblage QGIS */ f.properties.cb = l.combo; f.properties.nc = l.chevauchements.length; });
+  ASM.features.forEach(f => { const l = BY_K[f.properties.k]; f.properties.st = l.statut; f.properties.ap = apprOf(l); f.properties.lc = l.conformite; f.properties.dc = f.properties.c === 0 ? "Conforme" : f.properties.c === 1 ? "Non conforme" : l.conformite; /* classe du lot dans l'assemblage QGIS */ f.properties.cb = l.combo; f.properties.nc = l.chevauchements.length; });
   CHEV.features.forEach(f => { let ids = f.properties.ids; if (typeof ids === "string") try { ids = JSON.parse(ids); } catch { ids = []; } f.properties.idsArr = ids || []; });
   S.visible = ALL();
 }
@@ -180,15 +184,16 @@ function lotColorExpr() {
   if (S.mode === "overview") {
     if (S.confFilter) return COL.conf[S.confFilter];
     if (S.statFilter) return COL.statut[S.statFilter];
+    if (S.apprFilter) return COL.appr[S.apprFilter];
     return COL.asm;
   }
   if (S.mode === "p1") return ["match", ["get", "dc"], "Conforme", COL.conf["Conforme"], COL.conf["Non conforme"]];
-  if (S.mode === "p2") return ["match", ["get", "st"], "Normale", COL.statut["Normale"], COL.statut["Régularisation"]];
+  if (S.mode === "p2") return ["match", ["get", "ap"], "Approuvé", COL.appr["Approuvé"], COL.appr["Non approuvé"]];
   if (S.mode === "p3") return ["case", [">", ["get", "nc"], 0], COL.involved, COL.muted];
   return ["match", ["get", "cb"], ...COMBOS.flatMap(c => [c.n, c.color]), COL.muted];
 }
 function planColor(l) {
-  if (S.mode === "p2") return COL.statut[l.statut];
+  if (S.mode === "p2") return COL.appr[apprOf(l)];
   if (S.mode === "p3") return l.chevauchements.length ? COL.involved : COL.muted;
   if (S.mode === "p4") return COMBOS[l.combo - 1].color;
   return COL.conf[l.conformite];
@@ -211,7 +216,7 @@ function applyFilters() {
 function setMode(mode) {
   S.mode = mode;
   $$(".tabs button").forEach(b => b.classList.toggle("active", b.dataset.mode === mode));
-  S.visible = ALL(); S.confFilter = null; S.statFilter = null;
+  S.visible = ALL(); S.confFilter = null; S.statFilter = null; S.apprFilter = null;
   S.showChev = mode === "p3" || mode === "p4";
   S.showPromo = mode === "overview" || mode === "p1";
   S.selChev = null; map.setFilter("chev-sel", ["==", ["get", "id"], ""]);
@@ -249,6 +254,9 @@ function renderOverview() {
     <div class="card">${barRows(CONF_ORDER, COL.conf, "conformite")}</div>
     <div class="section-title">Arrêtés d'approbation</div>
     <div class="card">${barRows(STAT_ORDER, COL.statut, "statut")}</div>
+    <div class="section-title">Approbation</div>
+    <div class="card">${barRows(APPR_ORDER, COL.appr, "appr")}</div>
+    <div style="font-size:11.5px;color:var(--ink-3);margin-top:4px">Approuvé = arrêté d'approbation reçu.</div>
     <div class="section-title">Arrêté × conformité</div>
     <div class="card" style="padding:6px 8px">${matrixTable()}</div>
     <button class="btn" id="btn-reset" style="margin-top:10px;width:100%">Revenir à l'assemblage (tout en bleu)</button>
@@ -262,12 +270,18 @@ function renderOverview() {
   $$(".barrow").forEach(r => r.onclick = () => {
     const key = r.dataset.filter, v = r.dataset.value;
     if (key === "conformite") {
-      S.statFilter = null; S.visible = ALL();
+      S.statFilter = null; S.apprFilter = null; S.visible = ALL();
       S.confFilter = S.confFilter === v ? null : v;
       applyFilters(); renderLegend(); markActive();
       if (S.confFilter) fitToLots(S.confFilter); else fitAll();
+    } else if (key === "appr") {
+      S.confFilter = null; S.statFilter = null;
+      S.apprFilter = S.apprFilter === v ? null : v;
+      S.visible = S.apprFilter ? new Set(META.lotissements.filter(l => l.appr === v).map(l => l.id)) : ALL();
+      applyFilters(); renderLegend(); markActive();
+      S.apprFilter ? fitTo([...S.visible]) : fitAll();
     } else {
-      S.confFilter = null;
+      S.confFilter = null; S.apprFilter = null;
       S.statFilter = S.statFilter === v ? null : v;
       S.visible = S.statFilter ? new Set(META.lotissements.filter(l => l.statut === v).map(l => l.id)) : ALL();
       applyFilters(); renderLegend(); markActive();
@@ -275,15 +289,15 @@ function renderOverview() {
     }
   });
   $$(".matrix td.clk").forEach(td => td.onclick = () => {
-    S.confFilter = null; S.statFilter = td.dataset.s;
+    S.confFilter = null; S.apprFilter = null; S.statFilter = td.dataset.s;
     S.visible = new Set(META.lotissements.filter(l => l.statut === td.dataset.s && l.conformite === td.dataset.c).map(l => l.id));
     applyFilters(); renderLegend(); markActive(); fitTo([...S.visible]);
   });
-  $("#btn-reset").onclick = () => { S.confFilter = null; S.statFilter = null; S.visible = ALL(); applyFilters(); renderLegend(); markActive(); fitAll(); };
+  $("#btn-reset").onclick = () => { S.confFilter = null; S.statFilter = null; S.apprFilter = null; S.visible = ALL(); applyFilters(); renderLegend(); markActive(); fitAll(); };
   $$("[data-goto]").forEach(b => b.onclick = () => setMode(b.dataset.goto));
 }
 function markActive() {
-  $$(".barrow").forEach(r => r.classList.toggle("on", (r.dataset.filter === "conformite" && S.confFilter === r.dataset.value) || (r.dataset.filter === "statut" && S.statFilter === r.dataset.value)));
+  $$(".barrow").forEach(r => r.classList.toggle("on", (r.dataset.filter === "conformite" && S.confFilter === r.dataset.value) || (r.dataset.filter === "statut" && S.statFilter === r.dataset.value) || (r.dataset.filter === "appr" && S.apprFilter === r.dataset.value)));
 }
 
 /* --------------------------- arbre des couches */
@@ -328,19 +342,25 @@ function renderP1() {
 }
 
 function renderP2() {
+  const cell = (st, a) => count(l => l.statut === st && l.appr === a);
   $("#panel").innerHTML = `
     <div class="section-title">Projet 2</div>
     <h2 class="ptitle">${TX.p2_titre}</h2>
     <p class="lead">${TX.p2_intro}</p>
-    <div class="kpis">${STAT_ORDER.map(s => `<div class="kpi"><div class="v" style="color:${COL.statut[s]}">${count(l => l.statut === s)}</div><div class="l">${s === "Normale" ? "voie normale" : "voie de régularisation"}</div></div>`).join("")}</div>
-    <div class="section-title">Arrêté × conformité</div>
-    <div class="card" style="padding:6px 8px">${matrixTable()}</div>
+    <div class="kpis">
+      ${APPR_ORDER.map(a => `<div class="kpi"><div class="v" style="color:${COL.appr[a]}">${count(l => l.appr === a)}</div><div class="l">${a === "Approuvé" ? "approuvés" : "non approuvés"}</div><div class="s">${a === "Approuvé" ? "arrêté reçu" : "arrêté non reçu"}</div></div>`).join("")}
+      ${STAT_ORDER.map(s => `<div class="kpi"><div class="v" style="color:${COL.statut[s]}">${count(l => l.statut === s)}</div><div class="l">${s === "Normale" ? "voie normale" : "voie de régularisation"}</div></div>`).join("")}
+    </div>
+    <div class="section-title">Voie × approbation</div>
+    <div class="card" style="padding:6px 8px"><table class="matrix"><thead><tr><th></th>${APPR_ORDER.map(a => `<th><span class="dot" style="background:${COL.appr[a]}"></span> ${a}</th>`).join("")}<th>Total</th></tr></thead>
+      <tbody>${STAT_ORDER.map(st => `<tr><td><span class="dot" style="background:${COL.statut[st]}"></span> ${st}</td>${APPR_ORDER.map(a => `<td class="clk" data-s="${st}" data-a="${a}">${cell(st, a)}</td>`).join("")}<td><b>${count(l => l.statut === st)}</b></td></tr>`).join("")}</tbody>
+      <tfoot><tr><td>Total</td>${APPR_ORDER.map(a => `<td>${count(l => l.appr === a)}</td>`).join("")}<td>${META.lotissements.length}</td></tr></tfoot></table></div>
     <div class="section-title">Couches</div>
     ${treeTools()}
-    <div id="tree">${STAT_ORDER.map(s => { const list = META.lotissements.filter(l => l.statut === s);
-      return groupHTML(STAT_LABEL[s], COL.statut[s], list, { open: true, body: CONF_ORDER.map(c => groupHTML(c, COL.conf[c], list.filter(l => l.conformite === c))).join("") }); }).join("")}</div>`;
+    <div id="tree">${STAT_ORDER.map(st => { const list = META.lotissements.filter(l => l.statut === st);
+      return groupHTML(STAT_LABEL[st], COL.statut[st], list, { open: true, body: APPR_ORDER.map(a => groupHTML(APPR_LABEL[a], COL.appr[a], list.filter(l => l.appr === a), { open: a === "Non approuvé" })).join("") }); }).join("")}</div>`;
   $$(".matrix td.clk").forEach(td => td.onclick = () => {
-    S.visible = new Set(META.lotissements.filter(l => l.statut === td.dataset.s && l.conformite === td.dataset.c).map(l => l.id));
+    S.visible = new Set(META.lotissements.filter(l => l.statut === td.dataset.s && l.appr === td.dataset.a).map(l => l.id));
     applyFilters(); syncTree(); fitTo([...S.visible]);
   });
   bindPanel(); bindTree();
@@ -540,7 +560,7 @@ function renderFiche(id) {
       <div class="section-title">Conformité lot par lot (assemblage)</div>
       ${stackBar(l.classes_lots, { "Conforme": COL.lotc[0], "Non conforme": COL.lotc[1], "Non renseigné": COL.lotc[2] })}
       <div class="section-title">Arrêté d'approbation</div>
-      <div style="font-size:12.5px">${esc(l.arrete) || "<i>Non renseigné</i>"}</div>
+      <div style="font-size:12.5px">${l.approuve ? "Arrêté reçu" : "<b>Arrêté non reçu</b>"}${l.annee_arrete ? ` · ${l.annee_arrete}` : ""}<br>${esc(l.arrete) || "<i>N° non renseigné</i>"}</div>
       <div class="section-title">Usages des lots</div>
       <div class="bars">${usages.map(([k, v]) => `<div class="barrow" style="cursor:default;grid-template-columns:140px 1fr 44px"><span title="${esc(k)}" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(k.toLowerCase().replace(/^./, x => x.toUpperCase()))}</span><div class="track"><span style="width:${v / umax * 100}%;background:#5B7F86"></span></div><span class="n">${fmt(v)}</span></div>`).join("")}</div>
       ${l.chevauchements.length ? `<div class="section-title">Chevauchements</div>${l.chevauchements.map(cid => { const f = CHEV.features.find(x => x.properties.id === cid); return `<div class="linkchip chev" data-chev="${cid}">${cid} · ${fmt(f.properties.superficie_ha, 2)} ha — avec ${esc(f.properties.lotissements.split(" / ").filter(n => n !== l.nom).join(", "))}</div>`; }).join("")}` : ""}
@@ -569,9 +589,10 @@ function renderLegend() {
     rows.push("<h4>Carte</h4>");
     if (S.confFilter) sw(COL.conf[S.confFilter], `Lots ${S.confFilter === "Conforme" ? "conformes" : "non conformes"}`);
     else if (S.statFilter) sw(COL.statut[S.statFilter], STAT_LABEL[S.statFilter]);
+    else if (S.apprFilter) sw(COL.appr[S.apprFilter], APPR_LABEL[S.apprFilter]);
     else sw(COL.asm, "Assemblage des lotissements");
   } else if (S.mode === "p1") { rows.push("<h4>Conformité</h4>"); CONF_ORDER.forEach(c => sw(COL.conf[c], c)); }
-  else if (S.mode === "p2") { rows.push("<h4>Arrêté d'approbation</h4>"); STAT_ORDER.forEach(s => sw(COL.statut[s], STAT_LABEL[s])); }
+  else if (S.mode === "p2") { rows.push("<h4>Approbation</h4>"); APPR_ORDER.forEach(a => sw(COL.appr[a], APPR_LABEL[a])); }
   else if (S.mode === "p3") { rows.push("<h4>Lotissements</h4>"); sw(COL.involved, "Avec chevauchement"); sw(COL.muted, "Sans chevauchement"); }
   else { rows.push("<h4>Combinaisons d'enjeux</h4>"); COMBOS.forEach(c => sw(c.color, `${c.n}. ${c.enjeu}`)); }
   if (S.showChev || S.showPromo) rows.push(`<div class="sep"></div>`);

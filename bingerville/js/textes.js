@@ -20,7 +20,7 @@ window.TEXTES = {
   p2_titre: `Catégorisation par arrêté d'approbation`,
 
   // Projet 2 — introduction
-  p2_intro: `Lotissements approuvés <strong>par voie normale</strong> et <strong>par voie de régularisation</strong>, avec leur conformité.`,
+  p2_intro: `Lotissements approuvés <strong>par voie normale</strong> et <strong>par voie de régularisation</strong>. Un lotissement est <strong>approuvé</strong> lorsque son arrêté d'approbation est <strong>reçu</strong>.`,
 
   // Projet 3 — titre
   p3_titre: `Lotissements ayant des chevauchements`,

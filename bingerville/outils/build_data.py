@@ -37,6 +37,29 @@ for nom, g in c.groupby("lotissement"):
         origine=clean(r["origine"]))
 print("lotissements (couche conformite):", len(attrs))
 
+# ------------------------------------------------ fichier stat.xlsx (STATS) : approbation = « reçu »
+STATX = os.path.join(SRC, "stat.xlsx")
+appro_diff = []
+if os.path.exists(STATX):
+    import difflib
+    x = pd.read_excel(STATX, "STATS")
+    keys = {norm(n): n for n in attrs}
+    used = set()
+    for _, r in x.iterrows():
+        nm = clean(r["ASSEMBLAGE (nom carte)"]); k = norm(nm)
+        if k not in keys:
+            best = difflib.get_close_matches(k, [kk for kk in keys if kk not in used], n=1, cutoff=0.5)
+            assert best, f"stat.xlsx : « {nm} » introuvable"
+            k = best[0]
+        used.add(k); n = keys[k]
+        recu = clean(r["Arrêté"]).lower() == "reçu"
+        if recu != attrs[n]["approuve"]: appro_diff.append(f"{n} : {'non reçu' if attrs[n]['approuve'] is False else 'reçu'} → {'reçu' if recu else 'non reçu'}")
+        an = r["Année"]
+        attrs[n].update(approuve=recu, plan_approuve="Approuvé (arrêté reçu)" if recu else "Non approuvé (arrêté non reçu)",
+                        arrete=clean(r["N° & date de l'arrêté"]), annee_arrete="" if pd.isna(an) else str(int(an)))
+    assert len(used) == len(attrs), f"stat.xlsx : {len(attrs) - len(used)} lotissements sans ligne"
+    print("approbation (stat.xlsx) :", sum(a["approuve"] for a in attrs.values()), "reçus ;", "différences avec la couche :", appro_diff)
+
 # ------------------------------------------------ assemblage : lots
 PLAT = os.path.join(SRC, "conformite_plateforme_maj.gpkg")
 USE_PLAT = os.path.exists(PLAT)
@@ -48,8 +71,9 @@ if USE_PLAT:
     for nom, g in a.groupby(a["lotissement"].map(clean)):
         cl, st, pa = (g[c].dropna().unique() for c in ["conf_lotissement", "statut_lotis", "plan_approuve"])
         assert len(cl) == 1 and len(st) == 1 and len(pa) == 1, (nom, cl, st, pa)
-        attrs[nom].update(conformite=CONF[clean(cl[0])], statut=STAT[clean(st[0])],
-                          plan_approuve=clean(pa[0]), approuve=clean(pa[0]).startswith("Approuvé"))
+        attrs[nom].update(conformite=CONF[clean(cl[0])], statut=STAT[clean(st[0])])
+        if not os.path.exists(STATX):
+            attrs[nom].update(plan_approuve=clean(pa[0]), approuve=clean(pa[0]).startswith("Approuvé"))
 a = a[a.geometry.notna() & ~a.geometry.is_empty].copy()
 if a.crs.to_epsg() != UTM: a = a.to_crs(UTM)
 from shapely.geometry import MultiPolygon, Polygon, GeometryCollection
