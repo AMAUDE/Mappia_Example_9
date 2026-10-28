@@ -11,7 +11,7 @@ const COL = {
   statut: { "Normale": "#2F6FD6", "Régularisation": "#8E4FC9" },
   lotc: ["#2E9E5B", "#D64545", "#A9B3B8"],           // classe lot : 0 conforme, 1 non conforme (non_conforme + modifié), 2 non renseigné
   appr: { "Arrêté reçu": "#0E7C86", "Arrêté non reçu": "#E0A030" },
-  chev: "#E0245E", promo2: "#8D5A3B", limite: "#D00000", promo: "#0B9A9A", muted: "#B9C2C6", involved: "#5B6B73"
+  chev: "#F28C28", promo2: "#8D5A3B", limite: "#D00000", promo: "#0B9A9A", muted: "#B9C2C6", involved: "#5B6B73"
 };
 const CONF_ORDER = ["Conforme", "Non conforme"];
 const STAT_ORDER = ["Normale", "Régularisation"];
@@ -33,6 +33,7 @@ const BASEMAP_LABEL = { light: "Plan", sat: "Satellite (Esri)", osm: "OpenStreet
 const S = { mode: "overview", visible: new Set(), confFilter: null, statFilter: null, apprFilter: null, lay: { limite: true, lots: true, noms: true, chev: false, prog: true, promo: true, s3i: true },
   selected: null, selChev: null, basemap: "light", bmErrors: 0 };
 const TX = window.TEXTES || {};
+let LABELS = [];
 let META, BY_ID, BY_K, ASM, CHEV, PROG, S3I, LIM, PROMO, map, popup;
 
 const $ = (s, el = document) => el.querySelector(s);
@@ -110,13 +111,16 @@ function initMap() {
         "circle-stroke-color": "#fff", "circle-stroke-width": 2.2 } });
     map.addLayer({ id: "lim-line", type: "line", source: "lim", layout: { "line-cap": "round" },
       paint: { "line-color": COL.limite, "line-width": ["interpolate", ["linear"], ["zoom"], 9, 1.6, 15, 3], "line-dasharray": [2, 1.5] } });
-    map.addLayer({ id: "labels", type: "symbol", source: "labels", minzoom: 12.2,
-      layout: { "text-field": ["get", "nom"], "text-font": ["Open Sans Semibold"], "text-size": ["interpolate", ["linear"], ["zoom"], 12, 10, 16, 13], "text-max-width": 9, "text-padding": 4 },
-      paint: { "text-color": "#14232A", "text-halo-color": "rgba(255,255,255,.92)", "text-halo-width": 1.6 } });
     map.addLayer({ id: "prog-lbl", type: "symbol", source: "prog", minzoom: 14,
       layout: { "text-field": ["get", "programme"], "text-font": ["Open Sans Semibold"], "text-size": 11, "text-offset": [0, 1.3], "text-anchor": "top" },
       paint: { "text-color": "#066", "text-halo-color": "#fff", "text-halo-width": 1.5 } });
 
+    LABELS = META.lotissements.map(l => {
+      const el = document.createElement("div"); el.className = "lot-label"; el.textContent = l.nom;
+      el.onclick = ev => { ev.stopPropagation(); select(l.id, false); };
+      return { l, el, m: new maplibregl.Marker({ element: el, anchor: "center" }).setLngLat(l.centre).addTo(map) };
+    });
+    map.on("moveend", updateLabels);
     bindMapEvents();
     setMode(S.mode);
     const done = () => $("#loading").classList.add("off");
@@ -175,14 +179,28 @@ function lotColorExpr() {
     return COL.asm;
   }
   if (S.mode === "p1") return ["match", ["get", "dc"], "Conforme", COL.conf["Conforme"], COL.conf["Non conforme"]];
-  if (S.mode === "p2") return ["match", ["get", "ap"], "Arrêté reçu", COL.appr["Arrêté reçu"], COL.appr["Arrêté non reçu"]];
+  if (S.mode === "p2") return ["match", ["get", "st"], "Normale", COL.statut["Normale"], COL.statut["Régularisation"]];
   if (S.mode === "p3") return ["case", [">", ["get", "nc"], 0], COL.involved, COL.muted];
   return COL.asm;
 }
 function planColor(l) {
-  if (S.mode === "p2") return COL.appr[apprOf(l)];
+  if (S.mode === "p2") return COL.statut[l.statut];
   if (S.mode === "p3") return l.chevauchements.length ? COL.involved : COL.muted;
   return COL.conf[l.conformite];
+}
+function updateLabels() {
+  if (!map) return;
+  const z = map.getZoom(), on = S.lay.noms && z >= 11;
+  const fs = z < 13 ? 10 : z < 15 ? 11.5 : 13;
+  // les plus grands lotissements d'abord ; un nom qui chevauche un nom déjà placé est masqué
+  const placed = [];
+  [...LABELS].sort((a, b) => b.l.nb_lots - a.l.nb_lots).forEach(({ l, el }) => {
+    if (!(on && S.visible.has(l.id))) { el.style.display = "none"; return; }
+    el.style.display = ""; el.style.fontSize = fs + "px";
+    const r = el.getBoundingClientRect(), pad = 3;
+    const hit = placed.some(q => r.left < q.right + pad && r.right > q.left - pad && r.top < q.bottom + pad && r.bottom > q.top - pad);
+    if (hit) el.style.display = "none"; else placed.push(r);
+  });
 }
 function applyFilters() {
   const ks = META.lotissements.filter(l => S.visible.has(l.id)).map(l => l.k);
@@ -190,12 +208,12 @@ function applyFilters() {
   let f = fk;
   if (S.mode === "overview" && S.confFilter) f = ["all", fk, ["==", ["get", "dc"], S.confFilter]];
   map.setFilter("lots-fill", f); map.setFilter("lots-line", f);
-  map.setFilter("labels", ["in", ["get", "id"], ["literal", [...S.visible]]]);
   map.setPaintProperty("lots-fill", "fill-color", lotColorExpr());
   const vis = b => b ? "visible" : "none";
-  const V = { lots: ["lots-fill", "lots-line", "sel-line"], noms: ["labels"], limite: ["lim-line"], chev: ["chev-fill", "chev-line", "chev-sel"],
+  const V = { lots: ["lots-fill", "lots-line", "sel-line"], limite: ["lim-line"], chev: ["chev-fill", "chev-line", "chev-sel"],
     prog: ["prog-pts", "prog-lbl"], promo: ["promo-fill", "promo-line"], s3i: ["s3i-fill", "s3i-line"] };
   Object.entries(V).forEach(([k, ls]) => ls.forEach(L => map.setLayoutProperty(L, "visibility", vis(S.lay[k]))));
+  updateLabels();
 }
 
 /* ================================================================ modes */
@@ -512,34 +530,38 @@ function download(name, text, type) {
 
 /* ================================================================ légende */
 function renderLegend() {
+  // boîte du haut : imagerie + limite administrative
+  $("#bm-body").innerHTML = `
+    ${Object.keys(BASEMAPS).map(k => `<label class="lb-item"><input type="radio" name="bm" value="${k}" ${S.basemap === k ? "checked" : ""}><span>${BASEMAP_LABEL[k]}</span></label>`).join("")}
+    <div class="lb-sep"></div>
+    <label class="lb-item"><input type="checkbox" data-lay="limite" ${S.lay.limite ? "checked" : ""}><span class="sw line-dash" style="border-color:${COL.limite}"></span><span>Limite administrative</span></label>`;
+  $("#bm-current").textContent = BASEMAP_LABEL[S.basemap];
+  $$('#bm-body input[name="bm"]').forEach(r => r.onchange = () => { setBasemap(r.value); $("#bm-current").textContent = BASEMAP_LABEL[r.value]; });
+  // boîte du bas : légende des lotissements selon la page
   const rows = [], sw = (c, t) => rows.push(`<div class="row"><span class="sw" style="background:${c}"></span>${t}</div>`);
+  let titre = "Lotissements";
   if (S.mode === "overview") {
     if (S.confFilter) sw(COL.conf[S.confFilter], `Lots ${S.confFilter === "Conforme" ? "conformes" : "non conformes"}`);
     else if (S.statFilter) sw(COL.statut[S.statFilter], STAT_LABEL[S.statFilter]);
     else if (S.apprFilter) sw(COL.appr[S.apprFilter], S.apprFilter === "Arrêté reçu" ? "Lotissements (arrêtés reçus)" : "Lotissements (non transmis)");
     else sw(COL.asm, "Assemblage des lotissements");
-  } else if (S.mode === "p1") CONF_ORDER.forEach(c => sw(COL.conf[c], c));
-  else if (S.mode === "p2") APPR_ORDER.forEach(a => sw(COL.appr[a], APPR_LABEL[a]));
-  else if (S.mode === "p3") { sw(COL.involved, "Avec chevauchement"); sw(COL.muted, "Sans chevauchement"); }
+  } else if (S.mode === "p1") { titre = "Conformité"; CONF_ORDER.forEach(c => sw(COL.conf[c], c)); }
+  else if (S.mode === "p2") { titre = "Approbation"; STAT_ORDER.forEach(st => sw(COL.statut[st], st === "Normale" ? "Voie normale" : "Voie de régularisation")); }
+  else if (S.mode === "p3") { titre = "Chevauchements"; rows.push(`<div class="row"><span class="sw hatch"></span>Zone de chevauchement</div>`); sw(COL.involved, "Lotissement avec chevauchement"); sw(COL.muted, "Lotissement sans chevauchement"); }
   const chk = (k, sym, label, indent = false) => `<label class="lb-item${indent ? " ind" : ""}"><input type="checkbox" data-lay="${k}" ${S.lay[k] ? "checked" : ""}>${sym}<span>${label}</span></label>`;
   const promoKeys = ["prog", "promo", "s3i"], promoOn = promoKeys.filter(k => S.lay[k]).length;
-  $("#lb-body").innerHTML = `
-    <div class="lb-sec">Fonds de carte</div>
-    ${Object.keys(BASEMAPS).map(k => `<label class="lb-item"><input type="radio" name="bm" value="${k}" ${S.basemap === k ? "checked" : ""}><span>${BASEMAP_LABEL[k]}</span></label>`).join("")}
+  $("#lg-body").innerHTML = `
+    <div class="lb-sec">${titre}</div>${rows.join("")}
     <div class="lb-sec">Couches</div>
-    ${chk("limite", `<span class="sw line-dash" style="border-color:${COL.limite}"></span>`, "Limite administrative (sous-préfecture)")}
-    ${chk("lots", `<span class="sw" style="background:${COL.asm}"></span>`, "Lotissements (lots)")}
-    <div class="lb-legend">${rows.join("")}</div>
     ${chk("noms", `<span class="sw txt">Aa</span>`, "Noms des lotissements")}
-    ${chk("chev", `<span class="sw hatch"></span>`, `Zones de chevauchement (${META.totaux.chevauchements})`)}
-    <label class="lb-item"><input type="checkbox" id="lb-promo-all" ${promoOn === 3 ? "checked" : ""}><span class="sw" style="background:${COL.promo2}"></span><span><b>PROMOTION IMMOBILIÈRE</b></span></label>
-    ${chk("prog", `<span class="sw pt" style="background:${COL.promo}"></span>`, `Programmes immobiliers agréés (${PROG.features.length})`, true)}
+    ${S.mode !== "p3" ? chk("chev", `<span class="sw hatch"></span>`, "Zones de chevauchement") : ""}
+    <label class="lb-item"><input type="checkbox" id="lb-promo-all" ${promoOn === 3 ? "checked" : ""}><span class="sw" style="background:${COL.promo2}"></span><span>Promotion immobilière</span></label>
+    ${chk("prog", `<span class="sw pt" style="background:${COL.promo}"></span>`, `Programmes agréés (${PROG.features.length})`, true)}
     ${chk("promo", `<span class="sw" style="background:${COL.promo2};opacity:.6"></span>`, `Promotions immobilières (${PROMO.features.length})`, true)}
-    ${chk("s3i", `<span class="sw line-dash" style="border-color:${COL.promo}"></span>`, `Promotion immobilière S3I (${S3I.features.length})`, true)}`;
+    ${chk("s3i", `<span class="sw line-dash" style="border-color:${COL.promo}"></span>`, `Promotion S3I (${S3I.features.length})`, true)}`;
   const pa = $("#lb-promo-all"); pa.indeterminate = promoOn > 0 && promoOn < 3;
   pa.onchange = () => { promoKeys.forEach(k => S.lay[k] = pa.checked); applyFilters(); renderLegend(); };
-  $$("#lb-body [data-lay]").forEach(i => i.onchange = () => { S.lay[i.dataset.lay] = i.checked; applyFilters(); renderLegend(); });
-  $$('#lb-body input[name="bm"]').forEach(r => r.onchange = () => setBasemap(r.value));
+  $$("#bm-body [data-lay], #lg-body [data-lay]").forEach(i => i.onchange = () => { S.lay[i.dataset.lay] = i.checked; applyFilters(); renderLegend(); });
 }
 function setBasemap(k) {
   if (map.getLayer("base")) map.removeLayer("base");
@@ -580,7 +602,8 @@ function toast(msg) {
 }
 function initUI() {
   $$(".tabs button").forEach(b => b.onclick = () => setMode(b.dataset.mode));
-  $("#lb-toggle").onclick = () => { const b = $("#lb-body"), open = b.hidden; b.hidden = !open; $("#lb-toggle").setAttribute("aria-expanded", open); $("#layers-box").classList.toggle("open", open); };
+  const toggle = (btn, body, box) => $(btn).onclick = () => { const b = $(body), open = b.hidden; b.hidden = !open; $(btn).setAttribute("aria-expanded", open); $(box).classList.toggle("open", open); };
+  toggle("#bm-toggle", "#bm-body", "#bm-box"); toggle("#lg-toggle", "#lg-body", "#lg-box");
   $("#sidebar-toggle").onclick = () => { $("#sidebar").classList.toggle("collapsed"); setTimeout(() => map.resize(), 250); };
   document.addEventListener("keydown", e => { if (e.key === "Escape") clearSelection(); });
   initSearch();

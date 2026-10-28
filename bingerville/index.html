@@ -43,9 +43,13 @@
 
   <section class="map-wrap">
     <div id="map"></div>
-    <div id="layers-box" class="layers-box">
-      <button class="lb-head" id="lb-toggle" aria-expanded="false"><span>Légende · fonds et couches</span><span class="lb-caret">▾</span></button>
-      <div class="lb-body" id="lb-body" hidden></div>
+    <div id="bm-box" class="layers-box bm-box">
+      <button class="lb-head" id="bm-toggle" aria-expanded="false"><span>Imagerie : <b id="bm-current">Plan</b></span><span class="lb-caret">▾</span></button>
+      <div class="lb-body" id="bm-body" hidden></div>
+    </div>
+    <div id="lg-box" class="layers-box lg-box open">
+      <button class="lb-head" id="lg-toggle" aria-expanded="true"><span>Légende</span><span class="lb-caret">▾</span></button>
+      <div class="lb-body" id="lg-body"></div>
     </div>
     <div id="loading" class="loading"><div class="spinner"></div><span>Chargement des données…</span></div>
   </section>

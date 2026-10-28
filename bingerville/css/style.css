@@ -4,7 +4,7 @@
   --brand:#0E3B43; --brand-2:#145560; --accent:#E9C46A;
   --c-conforme:#2E9E5B; --c-nonconforme:#D64545; --c-modifie:#E8902B; --c-semi:#B8A12A; --c-nonrens:#9AA5AB;
   --c-normale:#2F6FD6; --c-regul:#8E4FC9; --c-neutre:#7A8794;
-  --c-chev:#E0245E; --c-promo:#0B9A9A;
+  --c-chev:#F28C28; --c-promo:#0B9A9A;
   --radius:10px; --shadow:0 1px 2px rgba(20,35,42,.06),0 6px 20px rgba(20,35,42,.08);
   --sidebar:390px;
   font-family:"IBM Plex Sans",system-ui,sans-serif; color:var(--ink);
@@ -116,7 +116,7 @@ input[type=checkbox]{accent-color:var(--brand);width:15px;height:15px;margin:0;f
 /* chevauchement list */
 .chev{display:block;width:100%;text-align:left;border:1px solid var(--line);background:#fff;border-radius:9px;padding:9px 11px;margin-bottom:6px}
 .chev:hover{border-color:var(--c-chev)}
-.chev.sel{border-color:var(--c-chev);box-shadow:0 0 0 2px rgba(224,36,94,.15)}
+.chev.sel{border-color:var(--c-chev);box-shadow:0 0 0 2px rgba(242,140,40,.18)}
 .chev .top{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
 .chev .cid{font-weight:700;color:var(--c-chev);font-size:12.5px}
 .chev .area{font-size:12px;color:var(--ink-2);font-variant-numeric:tabular-nums}
@@ -136,7 +136,7 @@ input[type=checkbox]{accent-color:var(--brand);width:15px;height:15px;margin:0;f
 .legend .sw{width:14px;height:14px;border-radius:3px;flex:none}
 .legend .sw.line{height:4px;border-radius:2px}
 .legend .sw.pt{width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.2)}
-.legend .sw.hatch{background:repeating-linear-gradient(45deg,var(--c-chev) 0 2px,rgba(224,36,94,.18) 2px 5px);border:1.5px solid var(--c-chev)}
+.legend .sw.hatch{background:repeating-linear-gradient(45deg,var(--c-chev) 0 2px,rgba(242,140,40,.2) 2px 5px);border:1.5px solid var(--c-chev)}
 .legend .sep{height:1px;background:var(--line-2);margin:7px 0}
 .zoom-hint{position:absolute;top:56px;left:12px;background:rgba(14,59,67,.9);color:#fff;font-size:12px;padding:5px 10px;border-radius:6px;z-index:2;pointer-events:none;transition:opacity .2s}
 .zoom-hint.off{opacity:0}
@@ -175,7 +175,7 @@ input[type=checkbox]{accent-color:var(--brand);width:15px;height:15px;margin:0;f
 .fiche-actions{display:flex;gap:6px;flex-wrap:wrap;padding:10px 16px;border-top:1px solid var(--line-2)}
 .linkchip{display:inline-block;border:1px solid var(--line);border-radius:6px;padding:2px 7px;margin:2px 4px 2px 0;font-size:12px;background:#fff;cursor:pointer}
 .linkchip:hover{border-color:var(--ink-3)}
-.linkchip.chev{color:var(--c-chev);border-color:#F3C3D2;width:auto;display:inline-block;padding:2px 7px;margin:2px 4px 2px 0}
+.linkchip.chev{color:var(--c-chev);border-color:#F8D2A8;width:auto;display:inline-block;padding:2px 7px;margin:2px 4px 2px 0}
 
 /* ---------------- table dialog */
 .table-dialog{width:min(1100px,96vw);max-height:88vh;border:0;border-radius:14px;padding:0;box-shadow:0 20px 60px rgba(0,0,0,.3)}
@@ -269,7 +269,15 @@ input[type=checkbox]{accent-color:var(--brand);width:15px;height:15px;margin:0;f
 .lb-legend .row{display:flex;align-items:center;gap:7px;margin:2px 0;color:var(--ink-2)}
 .layers-box .sw{width:14px;height:14px;border-radius:3px;flex:none;display:inline-block}
 .layers-box .sw.pt{width:12px;height:12px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.25)}
-.layers-box .sw.hatch{background:repeating-linear-gradient(45deg,var(--c-chev) 0 2px,rgba(224,36,94,.18) 2px 5px);border:1.5px solid var(--c-chev)}
+.layers-box .sw.hatch{background:repeating-linear-gradient(45deg,var(--c-chev) 0 2px,rgba(242,140,40,.2) 2px 5px);border:1.5px solid var(--c-chev)}
 .layers-box .sw.line-dash{height:0;border-top:2.5px dashed;border-radius:0;width:16px}
 .layers-box .sw.txt{font-size:10px;font-weight:700;color:var(--ink-2);text-align:center;line-height:14px}
 @media (max-width:760px){.layers-box{top:8px;left:8px;width:250px}}
+
+.bm-box{width:240px}
+.lg-box{top:auto;bottom:28px;width:260px}
+.lg-box .lb-body{max-height:calc(100vh - 330px)}
+.lb-sep{height:1px;background:var(--line-2);margin:6px 0}
+.lg-box .row{display:flex;align-items:center;gap:7px;margin:3px 0;color:var(--ink-2)}
+.lot-label{font:600 10px/1.15 "IBM Plex Sans",sans-serif;color:#14232A;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 2px #fff;max-width:130px;text-align:center;pointer-events:auto;cursor:pointer;white-space:normal}
+@media (max-width:760px){.lg-box{bottom:8px;width:220px}}
