@@ -177,7 +177,7 @@ function showProgPopup(p, ll) {
 }
 function showChevPopup(p, ll) {
   popup.setLngLat(ll).setHTML(`<div class="pp"><h5 style="color:${COL.chev}">Chevauchement ${esc(p.id)}</h5>${kv([
-    ["Superficie", fmt(p.superficie_ha, 2) + " ha"], ["Plans concernés", p.nb_lotis], ["Synthèse", esc(p.synthese)]])}
+    ["Superficie", fmt(p.superficie_ha, 2) + " ha"], ["Plans concernés", p.nb_lotis], ["Synthèse", chevSynth(p)]])}
     <div style="font-size:12px;margin-top:4px">${p.lotissements.split(" / ").map(esc).join("<br>")}</div></div>`).addTo(map);
 }
 
@@ -381,7 +381,7 @@ function renderP3() {
     <div id="chev-list">${feats.map(f => { const p = f.properties; return `<button class="chev" data-chev="${p.id}">
       <div class="top"><span class="cid">${p.id} · ${p.nb_lotis} plans</span><span class="area">${fmt(p.superficie_ha, 2)} ha</span></div>
       <div class="names">${p.lotissements.split(" / ").map(n => `<span>${esc(n)}</span>`).join("")}</div>
-      ${p.synthese ? `<div class="synth">${esc(p.synthese)}</div>` : ""}</button>`; }).join("")}</div>
+      <div class="synth">${chevSynth(p)}</div></button>`; }).join("")}</div>
     <div class="section-title">Lotissements concernés</div>
     ${treeTools()}
     <div id="tree">${groupHTML("Avec chevauchement", COL.involved, inv, { open: true })}${groupHTML("Sans chevauchement", COL.muted, META.lotissements.filter(l => !l.chevauchements.length))}</div>`;
@@ -389,6 +389,11 @@ function renderP3() {
   bindPanel(); bindTree();
 }
 
+function chevSynth(p) {
+  let ids = p.idsArr || p.ids; if (typeof ids === "string") try { ids = JSON.parse(ids); } catch { ids = []; }
+  const ls = (ids || []).map(id => BY_ID[id]).filter(Boolean);
+  return `${ls.filter(l => l.approuve).length}/${ls.length} arrêtés reçus · ${ls.filter(l => l.conformite === "Non conforme").length}/${ls.length} non conformes`;
+}
 function renderChevDetail(cid) {
   const f = CHEV.features.find(x => x.properties.id === cid); if (!f) return;
   const p = f.properties, ids = p.idsArr.filter(Boolean), ls = ids.map(id => BY_ID[id]);

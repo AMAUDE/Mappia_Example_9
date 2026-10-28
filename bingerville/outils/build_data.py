@@ -133,7 +133,8 @@ lots.to_file(os.path.join(OUT, "assemblage.geojson"), driver="GeoJSON",
 
 # ------------------------------------------------ chevauchements
 by_norm = {norm(l["nom"]): l for l in lotissements}
-ch = gpd.read_file(os.path.join(SRC, "chevauchement.gpkg")).to_crs(UTM)
+_chj = os.path.join(SRC, "chevauchement_maj.geojson")
+ch = gpd.read_file(_chj if os.path.exists(_chj) else os.path.join(SRC, "chevauchement.gpkg")).to_crs(UTM)
 ch = ch[ch.geometry.notna() & ~ch.geometry.is_empty].reset_index(drop=True)
 feats, warns = [], []
 for i, r in ch.iterrows():
