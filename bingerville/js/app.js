@@ -65,7 +65,7 @@ async function load() {
   BY_ID = Object.fromEntries(META.lotissements.map(l => [l.id, l]));
   BY_K = Object.fromEntries(META.lotissements.map(l => [l.k, l]));
   // attributs du lotissement recopiés sur chaque lot (pour les styles par mode)
-  ASM.features.forEach(f => { const l = BY_K[f.properties.k]; f.properties.st = l.statut; f.properties.cb = l.combo; f.properties.nc = l.chevauchements.length; });
+  ASM.features.forEach(f => { const l = BY_K[f.properties.k]; f.properties.st = l.statut; f.properties.lc = l.conformite; f.properties.cb = l.combo; f.properties.nc = l.chevauchements.length; });
   CHEV.features.forEach(f => { let ids = f.properties.ids; if (typeof ids === "string") try { ids = JSON.parse(ids); } catch { ids = []; } f.properties.idsArr = ids || []; });
   S.visible = ALL();
 }
@@ -182,7 +182,7 @@ function lotColorExpr() {
     if (S.statFilter) return COL.statut[S.statFilter];
     return COL.asm;
   }
-  if (S.mode === "p1") return ["match", ["get", "c"], 0, COL.lotc[0], 1, COL.lotc[1], COL.lotc[2]];
+  if (S.mode === "p1") return ["match", ["get", "lc"], "Conforme", COL.conf["Conforme"], COL.conf["Non conforme"]];
   if (S.mode === "p2") return ["match", ["get", "st"], "Normale", COL.statut["Normale"], COL.statut["Régularisation"]];
   if (S.mode === "p3") return ["case", [">", ["get", "nc"], 0], COL.involved, COL.muted];
   return ["match", ["get", "cb"], ...COMBOS.flatMap(c => [c.n, c.color]), COL.muted];
@@ -197,7 +197,7 @@ function applyFilters() {
   const ks = META.lotissements.filter(l => S.visible.has(l.id)).map(l => l.k);
   const fk = ["in", ["get", "k"], ["literal", ks]];
   let f = fk;
-  if (S.mode === "overview" && S.confFilter) f = ["all", fk, ["==", ["get", "c"], S.confFilter === "Conforme" ? 0 : 1]];
+  if (S.mode === "overview" && S.confFilter) f = ["all", fk, ["==", ["get", "lc"], S.confFilter]];
   map.setFilter("lots-fill", f); map.setFilter("lots-line", f);
   map.setFilter("labels", ["in", ["get", "id"], ["literal", [...S.visible]]]);
   map.setPaintProperty("lots-fill", "fill-color", lotColorExpr());
@@ -259,14 +259,14 @@ function renderOverview() {
       <button class="btn" data-goto="p3" style="text-align:left"><b>3.</b> Lotissements ayant des chevauchements →</button>
       <button class="btn" data-goto="p4" style="text-align:left"><b>4.</b> Combinaisons et enjeux fonciers →</button>
     </div>
-    <p class="note" style="margin-top:18px">Statistiques : couche « conformité » (un statut par lotissement). Carte : couche « Assemblage BINGERVILLE », conformité lot par lot (non conforme = non conforme + modifié).</p>`;
+    <p class="note" style="margin-top:18px">Statistiques : couche « conformité » (un statut par lotissement). Carte : lots de la couche « Assemblage BINGERVILLE », colorés selon le statut de leur lotissement.</p>`;
   $$(".barrow").forEach(r => r.onclick = () => {
     const key = r.dataset.filter, v = r.dataset.value;
     if (key === "conformite") {
       S.statFilter = null; S.visible = ALL();
       S.confFilter = S.confFilter === v ? null : v;
       applyFilters(); renderLegend(); markActive();
-      if (S.confFilter) fitToLots(S.confFilter === "Conforme" ? 0 : 1); else fitAll();
+      if (S.confFilter) fitTo(META.lotissements.filter(l => l.conformite === S.confFilter).map(l => l.id)); else fitAll();
     } else {
       S.confFilter = null;
       S.statFilter = S.statFilter === v ? null : v;
@@ -316,7 +316,7 @@ function renderP1() {
   $("#panel").innerHTML = `
     <div class="section-title">Projet 1</div>
     <h2 class="ptitle">Présentation générale des lotissements</h2>
-    <p class="lead">Les ${META.lotissements.length} lotissements de Bingerville. <strong>Chaque plan est une couche</strong> que l'on peut afficher, masquer et consulter. Sur la carte, chaque lot est coloré selon sa conformité.</p>
+    <p class="lead">Les ${META.lotissements.length} lotissements de Bingerville. <strong>Chaque plan est une couche</strong> que l'on peut afficher, masquer et consulter. Sur la carte, chaque lotissement est coloré selon sa conformité.</p>
     <div class="kpis">
       <div class="kpi hero"><div class="v">${META.lotissements.length}</div><div><div class="l">lotissements existants dans la localité</div></div></div>
       <div class="kpi"><div class="v" style="color:${COL.conf["Conforme"]}">${by("Conforme").length}</div><div class="l">conformes</div></div>
@@ -538,10 +538,10 @@ function renderLegend() {
   const rows = [], sw = (c, t) => rows.push(`<div class="row"><span class="sw" style="background:${c}"></span>${t}</div>`);
   if (S.mode === "overview") {
     rows.push("<h4>Carte</h4>");
-    if (S.confFilter) sw(COL.conf[S.confFilter], `Lots ${S.confFilter === "Conforme" ? "conformes" : "non conformes (dont modifiés)"}`);
+    if (S.confFilter) sw(COL.conf[S.confFilter], `Lotissements ${S.confFilter === "Conforme" ? "conformes" : "non conformes"}`);
     else if (S.statFilter) sw(COL.statut[S.statFilter], STAT_LABEL[S.statFilter]);
     else sw(COL.asm, "Assemblage des lotissements");
-  } else if (S.mode === "p1") { rows.push("<h4>Conformité des lots</h4>"); sw(COL.lotc[0], "Conforme"); sw(COL.lotc[1], "Non conforme (dont modifié)"); }
+  } else if (S.mode === "p1") { rows.push("<h4>Conformité du lotissement</h4>"); CONF_ORDER.forEach(c => sw(COL.conf[c], c)); }
   else if (S.mode === "p2") { rows.push("<h4>Arrêté d'approbation</h4>"); STAT_ORDER.forEach(s => sw(COL.statut[s], STAT_LABEL[s])); }
   else if (S.mode === "p3") { rows.push("<h4>Lotissements</h4>"); sw(COL.involved, "Avec chevauchement"); sw(COL.muted, "Sans chevauchement"); }
   else { rows.push("<h4>Combinaisons d'enjeux</h4>"); COMBOS.forEach(c => sw(c.color, `${c.n}. ${c.enjeu}`)); }
