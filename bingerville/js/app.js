@@ -30,7 +30,7 @@ const BASEMAPS = {
 };
 const BASEMAP_LABEL = { light: "Plan", sat: "Satellite (Esri)", osm: "OpenStreetMap" };
 
-const S = { mode: "overview", visible: new Set(), confFilter: null, statFilter: null, apprFilter: null, lay: { limite: true, lots: true, noms: true, chev: false, prog: true, promo: true, s3i: true },
+const S = { mode: "overview", visible: new Set(), confFilter: null, statFilter: null, apprFilter: null, lay: { limite: true, lots: true, noms: true, chev: false, prog: true, promo: false, s3i: true },
   selected: null, selChev: null, basemap: "light", bmErrors: 0 };
 const TX = window.TEXTES || {};
 let LABELS = [];
@@ -222,7 +222,7 @@ function setMode(mode) {
   $$(".tabs button").forEach(b => b.classList.toggle("active", b.dataset.mode === mode));
   S.visible = ALL(); S.confFilter = null; S.statFilter = null; S.apprFilter = null;
   S.lay.chev = mode === "p3";
-  S.lay.prog = S.lay.promo = S.lay.s3i = mode === "overview" || mode === "p1";
+  S.lay.promo = false; S.lay.prog = S.lay.s3i = mode === "overview" || mode === "p1";
   S.selChev = null; map.setFilter("chev-sel", ["==", ["get", "id"], ""]);
   ({ overview: renderOverview, p1: renderP1, p2: renderP2, p3: renderP3 })[mode]();
   applyFilters(); renderLegend();
@@ -362,8 +362,7 @@ function renderP3() {
     <h2 class="ptitle">${TX.p3_titre}</h2>
     <p class="lead">${TX.p3_intro}</p>
     <div class="kpis">
-      <div class="kpi"><div class="v" style="color:${COL.chev}">${CHEV.features.length}</div><div class="l">zones de chevauchement</div></div>
-      <div class="kpi"><div class="v">${inv.length}</div><div class="l">lotissements concernés</div><div class="s">sur ${META.lotissements.length}</div></div>
+      <div class="kpi hero" style="background:${COL.chev};border-color:${COL.chev}"><div class="v">${inv.length}</div><div><div class="l" style="color:#fff">chevauchements (lotissements concernés)</div><div class="s" style="color:#FFE7D1">sur ${META.lotissements.length} lotissements · ${CHEV.features.length} zones</div></div></div>
     </div>
     <div class="section-title">Zones (par superficie décroissante)</div>
     <div id="chev-list">${feats.map(f => { const p = f.properties; return `<button class="chev" data-chev="${p.id}">
@@ -549,17 +548,16 @@ function renderLegend() {
   else if (S.mode === "p2") { titre = "Approbation"; STAT_ORDER.forEach(st => sw(COL.statut[st], st === "Normale" ? "Voie normale" : "Voie de régularisation")); }
   else if (S.mode === "p3") { titre = "Chevauchements"; rows.push(`<div class="row"><span class="sw hatch"></span>Zone de chevauchement</div>`); sw(COL.involved, "Lotissement avec chevauchement"); sw(COL.muted, "Lotissement sans chevauchement"); }
   const chk = (k, sym, label, indent = false) => `<label class="lb-item${indent ? " ind" : ""}"><input type="checkbox" data-lay="${k}" ${S.lay[k] ? "checked" : ""}>${sym}<span>${label}</span></label>`;
-  const promoKeys = ["prog", "promo", "s3i"], promoOn = promoKeys.filter(k => S.lay[k]).length;
+  const promoKeys = ["prog", "s3i"], promoOn = promoKeys.filter(k => S.lay[k]).length;
   $("#lg-body").innerHTML = `
     <div class="lb-sec">${titre}</div>${rows.join("")}
     <div class="lb-sec">Couches</div>
     ${chk("noms", `<span class="sw txt">Aa</span>`, "Noms des lotissements")}
     ${S.mode !== "p3" ? chk("chev", `<span class="sw hatch"></span>`, "Zones de chevauchement") : ""}
-    <label class="lb-item"><input type="checkbox" id="lb-promo-all" ${promoOn === 3 ? "checked" : ""}><span class="sw" style="background:${COL.promo2}"></span><span>Promotion immobilière</span></label>
+    <label class="lb-item"><input type="checkbox" id="lb-promo-all" ${promoOn === promoKeys.length ? "checked" : ""}><span class="sw" style="background:${COL.promo2}"></span><span>Promotion immobilière</span></label>
     ${chk("prog", `<span class="sw pt" style="background:${COL.promo}"></span>`, `Programmes agréés (${PROG.features.length})`, true)}
-    ${chk("promo", `<span class="sw" style="background:${COL.promo2};opacity:.6"></span>`, `Promotions immobilières (${PROMO.features.length})`, true)}
     ${chk("s3i", `<span class="sw line-dash" style="border-color:${COL.promo}"></span>`, `Promotion S3I (${S3I.features.length})`, true)}`;
-  const pa = $("#lb-promo-all"); pa.indeterminate = promoOn > 0 && promoOn < 3;
+  const pa = $("#lb-promo-all"); pa.indeterminate = promoOn > 0 && promoOn < promoKeys.length;
   pa.onchange = () => { promoKeys.forEach(k => S.lay[k] = pa.checked); applyFilters(); renderLegend(); };
   $$("#bm-body [data-lay], #lg-body [data-lay]").forEach(i => i.onchange = () => { S.lay[i.dataset.lay] = i.checked; applyFilters(); renderLegend(); });
 }
