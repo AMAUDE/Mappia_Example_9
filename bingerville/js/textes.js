@@ -26,9 +26,5 @@ window.TEXTES = {
   // Projet 3 — introduction
   p3_intro: `Zones où deux plans ou plus se superposent. Cliquez une zone pour la localiser.`,
 
-  // Projet 4 — titre
-  p4_titre: `Combinaisons et enjeux fonciers`,
 
-  // Projet 4 — introduction
-  p4_intro: `Chaque lotissement est classé selon trois critères — <strong>conformité</strong>, <strong>chevauchement</strong> et <strong>approbation</strong> — de la situation la plus régulière (1) à la plus critique (8). Cliquez une situation pour l'isoler.`,
 };

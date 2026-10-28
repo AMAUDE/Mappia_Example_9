@@ -217,10 +217,10 @@ function setMode(mode) {
   S.mode = mode;
   $$(".tabs button").forEach(b => b.classList.toggle("active", b.dataset.mode === mode));
   S.visible = ALL(); S.confFilter = null; S.statFilter = null; S.apprFilter = null;
-  S.lay.chev = mode === "p3" || mode === "p4";
+  S.lay.chev = mode === "p3";
   S.lay.prog = S.lay.promo = S.lay.s3i = mode === "overview" || mode === "p1";
   S.selChev = null; map.setFilter("chev-sel", ["==", ["get", "id"], ""]);
-  ({ overview: renderOverview, p1: renderP1, p2: renderP2, p3: renderP3, p4: renderP4 })[mode]();
+  ({ overview: renderOverview, p1: renderP1, p2: renderP2, p3: renderP3 })[mode]();
   applyFilters(); renderLegend();
   if (S.selected) renderFiche(S.selected);
   $("#panel").scrollTop = 0;
@@ -406,36 +406,6 @@ function renderChevDetail(cid) {
   $("#panel").scrollTop = 0;
 }
 
-function renderP4() {
-  const of = n => META.lotissements.filter(l => l.combo === n);
-  $("#panel").innerHTML = `
-    <div class="section-title">Projet 4</div>
-    <h2 class="ptitle">${TX.p4_titre}</h2>
-    <p class="lead">${TX.p4_intro}</p>
-    <div class="card" style="padding:4px 6px">
-      <table class="matrix combo-table"><thead><tr><th>N°</th><th>Conf.</th><th>Chev.</th><th>Appr.</th><th style="text-align:left">Enjeu</th><th>Plans</th></tr></thead><tbody>
-      ${COMBOS.map(c => `<tr class="combo-row" data-combo="${c.n}" title="${comboLabel(c)}">
-        <td><span class="cnum" style="background:${c.color}">${c.n}</span></td>
-        <td class="${c.conf === "C" ? "ok" : "ko"}">${c.conf}</td><td class="${c.chev ? "ko" : "ok"}">${c.chev ? "Oui" : "Non"}</td>
-        <td class="${c.app ? "ok" : "ko"}">${c.app ? "✔" : "✖"}</td><td style="text-align:left">${c.enjeu}</td><td><b>${of(c.n).length}</b></td></tr>`).join("")}
-      </tbody><tfoot><tr><td colspan="5">Total</td><td>${META.lotissements.length}</td></tr></tfoot></table></div>
-    <div class="combo-bar">${COMBOS.map(c => { const n = of(c.n).length; return n ? `<span style="flex:${n};background:${c.color}" title="${c.n} : ${n}">${n}</span>` : ""; }).join("")}</div>
-    <details class="note" style="margin-top:10px"><summary><b>Règles de classement</b></summary><ul>
-      <li><b>Conformité</b> : statut du lotissement dans la couche « conformité » (C = conforme, NC = non conforme).</li>
-      <li><b>Chevauchement</b> : le plan figure dans au moins une des ${CHEV.features.length} zones de la couche Chevauchement.</li>
-      <li><b>Approuvé</b> : arrêté d'approbation reçu ; <b>non approuvé</b> : arrêté non reçu.</li></ul></details>
-    <div class="section-title">Couches par situation</div>
-    ${treeTools()}
-    <div id="tree">${COMBOS.map(c => groupHTML(`${c.n}. ${comboLabel(c)}`, c.color, of(c.n), { note: c.enjeu })).join("")}</div>`;
-  $$(".combo-row").forEach(r => r.onclick = () => {
-    const only = of(+r.dataset.combo).map(l => l.id);
-    const same = r.classList.contains("sel") || !only.length;
-    S.visible = same ? ALL() : new Set(only);
-    $$(".combo-row").forEach(x => x.classList.toggle("sel", !same && x === r));
-    applyFilters(); syncTree(); same ? fitAll() : fitTo(only);
-  });
-  bindPanel(); bindTree();
-}
 
 /* --------------------------- interactions panneau */
 function bindPanel() {
