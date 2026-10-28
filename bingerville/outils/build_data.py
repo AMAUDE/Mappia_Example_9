@@ -55,6 +55,17 @@ a = a[a.geometry.notna()].copy()
 a["lotissement"] = a["lotissement"].map(clean)
 assert set(a["lotissement"]) == set(attrs), (set(a["lotissement"]) ^ set(attrs))
 CL = {"conforme": 0, "non_conforme": 1, "modifie": 1}
+# Lotissements déclarés conformes par l'utilisateur (28/10/2026) : tous leurs lots passent en « conforme » sur la carte.
+FORCE_CONFORME = ["DJONDOUMIN RESIDENTIEL", "BEAU ROCHER", "AKOYATE", "AKAKRO RESIDENTIEL", "AKOYATE BELLE-VILLE",
+    "SAFH-CI BEL HORIZON", "M'PATE RESIDENTIEL 1", "M'PATE RESIDENTIEL 2", "ELOKA SUD-EST",
+    "M'PATE CITE DES MERVEILLES 1", "M'PATE CITE DES MERVEILLES 2", "CITE DES LAGUNES"]
+_fc = {norm(x) for x in FORCE_CONFORME}
+assert _fc <= {norm(n) for n in attrs}, "nom introuvable dans FORCE_CONFORME"
+for n in attrs:
+    if norm(n) in _fc: attrs[n]["conformite"] = "Conforme"
+_mask = a["lotissement"].map(lambda n: norm(n) in _fc)
+print("lots passés en conforme :", int((_mask & (a["classe"] != "conforme")).sum()))
+a.loc[_mask, "classe"] = "conforme"
 noms = sorted(attrs)
 idx = {n: i for i, n in enumerate(noms)}
 slugs, lotissements, emprises = set(), [], []

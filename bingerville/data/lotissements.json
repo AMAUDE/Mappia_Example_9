@@ -118,8 +118,8 @@
  "totaux": {
   "lotissements": 105,
   "lots": 62397,
-  "lots_conformes": 42050,
-  "lots_non_conformes": 20253,
+  "lots_conformes": 49989,
+  "lots_non_conformes": 12314,
   "lots_non_renseignes": 94,
   "chevauchements": 29,
   "superficie_chevauchements_ha": 229.74,
@@ -1072,7 +1072,7 @@
    "superficie_lots_ha": 20.01,
    "superficie_ha": 28.16,
    "classes_lots": {
-    "Non conforme": 398
+    "Conforme": 398
    },
    "usages": {
     "NON RENSEIGNÉ": 398
@@ -1681,7 +1681,7 @@
    "superficie_lots_ha": 12.18,
    "superficie_ha": 13.75,
    "classes_lots": {
-    "Non conforme": 107
+    "Conforme": 107
    },
    "usages": {
     "RESIDENTIEL": 85,
@@ -1721,7 +1721,7 @@
    "superficie_lots_ha": 7.91,
    "superficie_ha": 10.68,
    "classes_lots": {
-    "Non conforme": 190
+    "Conforme": 190
    },
    "usages": {
     "RESIDENTIEL": 189,
@@ -2187,7 +2187,7 @@
    "superficie_lots_ha": 29.14,
    "superficie_ha": 38.22,
    "classes_lots": {
-    "Non conforme": 510
+    "Conforme": 510
    },
    "usages": {
     "RESIDENTIEL": 497,
@@ -2849,7 +2849,7 @@
    "superficie_lots_ha": 49.15,
    "superficie_ha": 65.92,
    "classes_lots": {
-    "Non conforme": 1228
+    "Conforme": 1228
    },
    "usages": {
     "NON RENSEIGNÉ": 1228
@@ -3037,7 +3037,7 @@
    "superficie_lots_ha": 172.26,
    "superficie_ha": 173.23,
    "classes_lots": {
-    "Non conforme": 5
+    "Conforme": 5
    },
    "usages": {
     "AUTRE": 4,
@@ -3072,7 +3072,7 @@
    "superficie_lots_ha": 100.96,
    "superficie_ha": 129.28,
    "classes_lots": {
-    "Non conforme": 1344
+    "Conforme": 1344
    },
    "usages": {
     "RESIDENTIEL": 1320,
@@ -3310,7 +3310,7 @@
    "superficie_lots_ha": 69.2,
    "superficie_ha": 91.07,
    "classes_lots": {
-    "Non conforme": 987
+    "Conforme": 987
    },
    "usages": {
     "RESIDENTIEL": 975,
@@ -3353,7 +3353,7 @@
    "superficie_lots_ha": 28.28,
    "superficie_ha": 37.24,
    "classes_lots": {
-    "Non conforme": 547
+    "Conforme": 547
    },
    "usages": {
     "RESIDENTIEL": 542,
@@ -3390,7 +3390,7 @@
    "superficie_lots_ha": 28.7,
    "superficie_ha": 37.63,
    "classes_lots": {
-    "Non conforme": 511
+    "Conforme": 511
    },
    "usages": {
     "RESIDENTIEL": 502,
@@ -3430,7 +3430,7 @@
    "superficie_lots_ha": 86.64,
    "superficie_ha": 114.21,
    "classes_lots": {
-    "Non conforme": 1350
+    "Conforme": 1350
    },
    "usages": {
     "RESIDENTIEL": 1330,
@@ -4124,7 +4124,7 @@
    "superficie_lots_ha": 49.46,
    "superficie_ha": 65.9,
    "classes_lots": {
-    "Non conforme": 762
+    "Conforme": 762
    },
    "usages": {
     "RESIDENTIEL": 750,
