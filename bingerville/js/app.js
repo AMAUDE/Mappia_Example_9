@@ -167,7 +167,7 @@ function showProgPopup(p, ll) {
 function showChevPopup(p, ll) {
   popup.setLngLat(ll).setHTML(`<div class="pp"><h5 style="color:${COL.chev}">Chevauchement ${esc(p.id)}</h5>${kv([
     ["Superficie", fmt(p.superficie_ha, 2) + " ha"], ["Plans concernés", p.nb_lotis], ["Synthèse", chevSynth(p)]])}
-    <div style="font-size:12px;margin-top:4px">${p.lotissements.split(" / ").map(esc).join("<br>")}</div></div>`).addTo(map);
+    <div style="font-size:12px;margin-top:4px">${p.lotissements ? p.lotissements.split(" / ").map(esc).join("<br>") : "<i>Lotissements non renseignés</i>"}</div></div>`).addTo(map);
 }
 
 /* ---------------------------------------------- styles par mode */
@@ -367,9 +367,9 @@ function renderP3() {
     </div>
     <div class="section-title">Zones (par superficie décroissante)</div>
     <div id="chev-list">${feats.map(f => { const p = f.properties; return `<button class="chev" data-chev="${p.id}">
-      <div class="top"><span class="cid">${p.id} · ${p.nb_lotis} plans</span><span class="area">${fmt(p.superficie_ha, 2)} ha</span></div>
-      <div class="names">${p.lotissements.split(" / ").map(n => `<span>${esc(n)}</span>`).join("")}</div>
-      <div class="synth">${chevSynth(p)}</div></button>`; }).join("")}</div>
+      <div class="top"><span class="cid">${p.id}${p.nb_lotis ? ` · ${p.nb_lotis} plans` : ""}</span><span class="area">${fmt(p.superficie_ha, 2)} ha</span></div>
+      <div class="names">${p.lotissements ? p.lotissements.split(" / ").map(n => `<span>${esc(n)}</span>`).join("") : "<i>Lotissements non renseignés</i>"}</div>
+      ${p.lotissements ? `<div class="synth">${chevSynth(p)}</div>` : ""}</button>`; }).join("")}</div>
     <div class="section-title">Lotissements concernés</div>
     ${treeTools()}
     <div id="tree">${groupHTML("Avec chevauchement", COL.involved, inv, { open: true })}${groupHTML("Sans chevauchement", COL.muted, META.lotissements.filter(l => !l.chevauchements.length))}</div>`;
@@ -404,7 +404,7 @@ function renderChevDetail(cid) {
       <div style="font-weight:600;margin-bottom:6px">${esc(l.nom)}</div>
       <div class="badges">${badge(COL.conf[l.conformite], l.conformite)}${badge(COL.statut[l.statut], "Voie " + (l.statut === "Normale" ? "normale" : "de régularisation"))}${l.approuve ? badge(COL.appr["Arrêté reçu"], "Arrêté transmis") : badge("#8A5A00", "Arrêté non transmis")}</div>
 </div>`).join("")}
-    ${p.lotissements.split(" / ").length > ls.length ? `<p class="note">Certains noms de cette zone ne figurent pas dans la couche « conformité » : ${esc(p.lotissements)}</p>` : ""}`;
+    ${!p.lotissements ? `<p class="note">Les lotissements de cette zone ne sont pas renseignés dans la couche Chevauchement.</p>` : p.lotissements.split(" / ").length > ls.length ? `<p class="note">Certains noms de cette zone ne figurent pas dans la couche « conformité » : ${esc(p.lotissements)}</p>` : ""}`;
   $("#chev-back").onclick = () => { S.selChev = null; map.setFilter("chev-sel", ["==", ["get", "id"], ""]); S.visible = ALL(); renderP3(); applyFilters(); fitAll(); };
   $$("[data-fiche]").forEach(b => b.onclick = () => select(b.dataset.fiche, false));
   $("#panel").scrollTop = 0;

@@ -258,8 +258,7 @@
     5.354458
    ],
    "chevauchements": [
-    "CH-27",
-    "CH-30"
+    "CH-27"
    ]
   },
   {
@@ -389,8 +388,7 @@
     "CH-21",
     "CH-22",
     "CH-23",
-    "CH-27",
-    "CH-30"
+    "CH-27"
    ]
   },
   {
@@ -954,8 +952,7 @@
     5.391571
    ],
    "chevauchements": [
-    "CH-18",
-    "CH-29"
+    "CH-18"
    ]
   },
   {
@@ -2570,9 +2567,7 @@
     -3.871768,
     5.383607
    ],
-   "chevauchements": [
-    "CH-29"
-   ]
+   "chevauchements": []
   },
   {
    "id": "bingerville-quartier-esie",
@@ -3093,9 +3088,7 @@
     -3.871833,
     5.383524
    ],
-   "chevauchements": [
-    "CH-29"
-   ]
+   "chevauchements": []
   },
   {
    "id": "djondoumin-residentiel",
