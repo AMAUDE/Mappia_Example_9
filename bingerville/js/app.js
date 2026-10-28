@@ -16,8 +16,8 @@ const COL = {
 const CONF_ORDER = ["Conforme", "Non conforme"];
 const STAT_ORDER = ["Normale", "Régularisation"];
 const APPR_ORDER = ["Arrêté reçu", "Arrêté non reçu"];
-const APPR_LABEL = { "Arrêté reçu": "Lotissements (arrêtés reçus)", "Arrêté non reçu": "Lotissements (arrêtés non reçus)" };
-const APPR_SHORT = { "Arrêté reçu": "Reçu", "Arrêté non reçu": "Non reçu" };
+const APPR_LABEL = { "Arrêté reçu": "Lotissements (arrêtés reçus)", "Arrêté non reçu": "Lotissements (arrêtés en cours de transmission)" };
+const APPR_SHORT = { "Arrêté reçu": "Reçu", "Arrêté non reçu": "En cours de transmission" };
 const APPR_KPI = { "Arrêté reçu": "lotissements dont nous avons reçu les arrêtés", "Arrêté non reçu": "lotissements dont nous n'avons pas reçu les arrêtés" };
 const apprOf = l => l.approuve ? "Arrêté reçu" : "Arrêté non reçu";
 const STAT_LABEL = { "Normale": "Approbation par voie normale", "Régularisation": "Approbation par voie de régularisation" };
