@@ -118,8 +118,8 @@
  "totaux": {
   "lotissements": 105,
   "lots": 62397,
-  "lots_conformes": 50305,
-  "lots_non_conformes": 12092,
+  "lots_conformes": 50653,
+  "lots_non_conformes": 11744,
   "lots_non_renseignes": 0,
   "chevauchements": 30,
   "superficie_chevauchements_ha": 229.92,
@@ -1336,7 +1336,7 @@
    "superficie_lots_ha": 4.77,
    "superficie_ha": 6.16,
    "classes_lots": {
-    "Non conforme": 103
+    "Conforme": 103
    },
    "usages": {
     "NON RENSEIGNÉ": 103
@@ -3787,7 +3787,7 @@
    "superficie_lots_ha": 6.12,
    "superficie_ha": 7.9,
    "classes_lots": {
-    "Non conforme": 122
+    "Conforme": 122
    },
    "usages": {
     "NON RENSEIGNÉ": 122
@@ -4164,8 +4164,7 @@
    "superficie_lots_ha": 23.39,
    "superficie_ha": 29.25,
    "classes_lots": {
-    "Conforme": 225,
-    "Non conforme": 123
+    "Conforme": 348
    },
    "usages": {
     "RESIDENTIEL": 343,
