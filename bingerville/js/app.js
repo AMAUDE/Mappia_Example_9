@@ -65,7 +65,7 @@ async function load() {
   BY_ID = Object.fromEntries(META.lotissements.map(l => [l.id, l]));
   BY_K = Object.fromEntries(META.lotissements.map(l => [l.k, l]));
   // attributs du lotissement recopiés sur chaque lot (pour les styles par mode)
-  ASM.features.forEach(f => { const l = BY_K[f.properties.k]; f.properties.st = l.statut; f.properties.lc = l.conformite; f.properties.dc = l.conformite === "Conforme" || f.properties.c === 0 ? "Conforme" : "Non conforme"; f.properties.cb = l.combo; f.properties.nc = l.chevauchements.length; });
+  ASM.features.forEach(f => { const l = BY_K[f.properties.k]; f.properties.st = l.statut; f.properties.lc = l.conformite; f.properties.dc = f.properties.c === 0 ? "Conforme" : f.properties.c === 1 ? "Non conforme" : l.conformite; /* classe du lot dans l'assemblage QGIS */ f.properties.cb = l.combo; f.properties.nc = l.chevauchements.length; });
   CHEV.features.forEach(f => { let ids = f.properties.ids; if (typeof ids === "string") try { ids = JSON.parse(ids); } catch { ids = []; } f.properties.idsArr = ids || []; });
   S.visible = ALL();
 }
@@ -259,7 +259,7 @@ function renderOverview() {
       <button class="btn" data-goto="p3" style="text-align:left"><b>3.</b> Lotissements ayant des chevauchements →</button>
       <button class="btn" data-goto="p4" style="text-align:left"><b>4.</b> Combinaisons et enjeux fonciers →</button>
     </div>
-    <p class="note" style="margin-top:18px">Statistiques : couche « conformité » (un statut par lotissement). Carte : lots de la couche « Assemblage BINGERVILLE ». Un lot est vert si son lotissement est conforme ou si le lot lui-même est conforme ; sinon il est rouge.</p>`;
+    <p class="note" style="margin-top:18px">Statistiques : couche « conformité » (un statut par lotissement). Carte : lots de la couche « Assemblage BINGERVILLE ». Chaque lot garde sa classe QGIS : vert = conforme, rouge = non conforme ou modifié (y compris les lots conformes situés dans un lotissement non conforme).</p>`;
   $$(".barrow").forEach(r => r.onclick = () => {
     const key = r.dataset.filter, v = r.dataset.value;
     if (key === "conformite") {
