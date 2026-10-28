@@ -65,7 +65,7 @@ async function load() {
   BY_ID = Object.fromEntries(META.lotissements.map(l => [l.id, l]));
   BY_K = Object.fromEntries(META.lotissements.map(l => [l.k, l]));
   // attributs du lotissement recopiés sur chaque lot (pour les styles par mode)
-  ASM.features.forEach(f => { const l = BY_K[f.properties.k]; f.properties.st = l.statut; f.properties.lc = l.conformite; f.properties.cb = l.combo; f.properties.nc = l.chevauchements.length; });
+  ASM.features.forEach(f => { const l = BY_K[f.properties.k]; f.properties.st = l.statut; f.properties.lc = l.conformite; f.properties.dc = l.conformite === "Conforme" || f.properties.c === 0 ? "Conforme" : "Non conforme"; f.properties.cb = l.combo; f.properties.nc = l.chevauchements.length; });
   CHEV.features.forEach(f => { let ids = f.properties.ids; if (typeof ids === "string") try { ids = JSON.parse(ids); } catch { ids = []; } f.properties.idsArr = ids || []; });
   S.visible = ALL();
 }
@@ -146,7 +146,7 @@ function bindMapEvents() {
     const f = map.queryRenderedFeatures(e.point, { layers })[0];
     if (!f) return;
     if (f.layer.id === "prog-pts") return showProgPopup(f.properties, e.lngLat);
-    if (f.layer.id === "chev-fill") { selectChev(f.properties.id, false); return showChevPopup(f.properties, e.lngLat); }
+    if (f.layer.id === "chev-fill") { if (S.mode === "p3") { popup.remove(); return selectChev(f.properties.id, true); } selectChev(f.properties.id, false); return showChevPopup(f.properties, e.lngLat); }
     const l = BY_K[f.properties.k]; select(l.id, false);
     if (map.getZoom() >= 15) showLotPopup(f.properties, l, e.lngLat);
   });
@@ -182,7 +182,7 @@ function lotColorExpr() {
     if (S.statFilter) return COL.statut[S.statFilter];
     return COL.asm;
   }
-  if (S.mode === "p1") return ["match", ["get", "lc"], "Conforme", COL.conf["Conforme"], COL.conf["Non conforme"]];
+  if (S.mode === "p1") return ["match", ["get", "dc"], "Conforme", COL.conf["Conforme"], COL.conf["Non conforme"]];
   if (S.mode === "p2") return ["match", ["get", "st"], "Normale", COL.statut["Normale"], COL.statut["Régularisation"]];
   if (S.mode === "p3") return ["case", [">", ["get", "nc"], 0], COL.involved, COL.muted];
   return ["match", ["get", "cb"], ...COMBOS.flatMap(c => [c.n, c.color]), COL.muted];
@@ -197,7 +197,7 @@ function applyFilters() {
   const ks = META.lotissements.filter(l => S.visible.has(l.id)).map(l => l.k);
   const fk = ["in", ["get", "k"], ["literal", ks]];
   let f = fk;
-  if (S.mode === "overview" && S.confFilter) f = ["all", fk, ["==", ["get", "lc"], S.confFilter]];
+  if (S.mode === "overview" && S.confFilter) f = ["all", fk, ["==", ["get", "dc"], S.confFilter]];
   map.setFilter("lots-fill", f); map.setFilter("lots-line", f);
   map.setFilter("labels", ["in", ["get", "id"], ["literal", [...S.visible]]]);
   map.setPaintProperty("lots-fill", "fill-color", lotColorExpr());
@@ -259,14 +259,14 @@ function renderOverview() {
       <button class="btn" data-goto="p3" style="text-align:left"><b>3.</b> Lotissements ayant des chevauchements →</button>
       <button class="btn" data-goto="p4" style="text-align:left"><b>4.</b> Combinaisons et enjeux fonciers →</button>
     </div>
-    <p class="note" style="margin-top:18px">Statistiques : couche « conformité » (un statut par lotissement). Carte : lots de la couche « Assemblage BINGERVILLE », colorés selon le statut de leur lotissement.</p>`;
+    <p class="note" style="margin-top:18px">Statistiques : couche « conformité » (un statut par lotissement). Carte : lots de la couche « Assemblage BINGERVILLE ». Un lot est vert si son lotissement est conforme ou si le lot lui-même est conforme ; sinon il est rouge.</p>`;
   $$(".barrow").forEach(r => r.onclick = () => {
     const key = r.dataset.filter, v = r.dataset.value;
     if (key === "conformite") {
       S.statFilter = null; S.visible = ALL();
       S.confFilter = S.confFilter === v ? null : v;
       applyFilters(); renderLegend(); markActive();
-      if (S.confFilter) fitTo(META.lotissements.filter(l => l.conformite === S.confFilter).map(l => l.id)); else fitAll();
+      if (S.confFilter) fitToLots(S.confFilter); else fitAll();
     } else {
       S.confFilter = null;
       S.statFilter = S.statFilter === v ? null : v;
@@ -370,6 +370,35 @@ function renderP3() {
   bindPanel(); bindTree();
 }
 
+function renderChevDetail(cid) {
+  const f = CHEV.features.find(x => x.properties.id === cid); if (!f) return;
+  const p = f.properties, ids = p.idsArr.filter(Boolean), ls = ids.map(id => BY_ID[id]);
+  const badge = (c, t) => `<span class="badge" style="background:${c}">${esc(t)}</span>`;
+  $("#panel").innerHTML = `
+    <button class="btn small" id="chev-back">← Toutes les zones de chevauchement</button>
+    <div class="section-title" style="margin-top:14px">Projet 3 · Chevauchement</div>
+    <h2 class="ptitle" style="color:${COL.chev}">${esc(p.id)}</h2>
+    <div class="kpis">
+      <div class="kpi"><div class="v">${fmt(p.superficie_ha, 2)}</div><div class="l">hectares en chevauchement</div></div>
+      <div class="kpi"><div class="v">${p.nb_lotis}</div><div class="l">lotissements concernés</div></div>
+    </div>
+    <div class="section-title">Synthèse</div>
+    <div class="card" style="font-size:13px">
+      <div>${ls.filter(l => l.approuve).length}/${ls.length} arrêtés reçus · ${ls.filter(l => l.conformite === "Non conforme").length}/${ls.length} non conformes</div>
+      ${p.type ? `<div style="color:var(--ink-3);font-size:12px;margin-top:3px">${esc(p.type)}</div>` : ""}
+    </div>
+    <div class="section-title">Lotissements qui se superposent</div>
+    ${ls.map(l => `<div class="card chev-lot" style="margin-bottom:8px">
+      <div style="font-weight:600;margin-bottom:6px">${esc(l.nom)}</div>
+      <div class="badges">${badge(COL.conf[l.conformite], l.conformite)}${badge(COL.statut[l.statut], "Voie " + (l.statut === "Normale" ? "normale" : "de régularisation"))}${l.approuve ? `<span class="badge soft">Arrêté reçu</span>` : badge("#8A5A00", "Arrêté non reçu")}</div>
+      <div style="font-size:12px;color:var(--ink-2);margin-top:6px"><b>Arrêté :</b> ${esc(l.arrete) || "<i>non renseigné</i>"}</div>
+      <button class="btn small" data-fiche="${l.id}" style="margin-top:8px">Voir la fiche du lotissement</button></div>`).join("")}
+    ${p.lotissements.split(" / ").length > ls.length ? `<p class="note">Certains noms de cette zone ne figurent pas dans la couche « conformité » : ${esc(p.lotissements)}</p>` : ""}`;
+  $("#chev-back").onclick = () => { S.selChev = null; map.setFilter("chev-sel", ["==", ["get", "id"], ""]); S.visible = ALL(); renderP3(); applyFilters(); fitAll(); };
+  $$("[data-fiche]").forEach(b => b.onclick = () => select(b.dataset.fiche, false));
+  $("#panel").scrollTop = 0;
+}
+
 function renderP4() {
   const of = n => META.lotissements.filter(l => l.combo === n);
   $("#panel").innerHTML = `
@@ -456,7 +485,7 @@ function fitTo(ids) {
 const fitAll = () => fitBox(META.bbox);
 function fitToLots(c) {
   const b = [180, 90, -180, -90];
-  ASM.features.forEach(f => { if (f.properties.c === c) walkGeom(f.geometry, b); });
+  ASM.features.forEach(f => { if (f.properties.dc === c) walkGeom(f.geometry, b); });
   fitBox(b);
 }
 function walkGeom(g, b) { if (!g) return; if (g.type === "GeometryCollection") g.geometries.forEach(x => walkGeom(x, b)); else walk(g.coordinates, b); }
@@ -478,7 +507,8 @@ function selectChev(cid, zoom) {
   $$("#chev-list .chev").forEach(b => b.classList.toggle("sel", b.dataset.chev === cid));
   const el = $(`#chev-list .chev[data-chev="${cid}"]`); if (el && !zoom) el.scrollIntoView({ block: "nearest", behavior: "smooth" });
   const f = CHEV.features.find(f => f.properties.id === cid);
-  if (zoom && f) { f.properties.idsArr.forEach(id => S.visible.add(id)); applyFilters(); syncTree(); const b = [180, 90, -180, -90]; walkGeom(f.geometry, b); fitBox(b, 16.5); }
+  if (S.mode === "p3" && zoom) { clearSelection(); renderChevDetail(cid); S.visible = new Set(f.properties.idsArr.filter(Boolean)); applyFilters(); }
+  if (zoom && f) { if (S.mode !== "p3") { f.properties.idsArr.forEach(id => S.visible.add(id)); applyFilters(); syncTree(); } const b = [180, 90, -180, -90]; walkGeom(f.geometry, b); fitBox(b, 16.5); }
 }
 
 function stackBar(obj, colors) {
@@ -538,10 +568,10 @@ function renderLegend() {
   const rows = [], sw = (c, t) => rows.push(`<div class="row"><span class="sw" style="background:${c}"></span>${t}</div>`);
   if (S.mode === "overview") {
     rows.push("<h4>Carte</h4>");
-    if (S.confFilter) sw(COL.conf[S.confFilter], `Lotissements ${S.confFilter === "Conforme" ? "conformes" : "non conformes"}`);
+    if (S.confFilter) sw(COL.conf[S.confFilter], `Lots ${S.confFilter === "Conforme" ? "conformes" : "non conformes"}`);
     else if (S.statFilter) sw(COL.statut[S.statFilter], STAT_LABEL[S.statFilter]);
     else sw(COL.asm, "Assemblage des lotissements");
-  } else if (S.mode === "p1") { rows.push("<h4>Conformité du lotissement</h4>"); CONF_ORDER.forEach(c => sw(COL.conf[c], c)); }
+  } else if (S.mode === "p1") { rows.push("<h4>Conformité</h4>"); CONF_ORDER.forEach(c => sw(COL.conf[c], c)); }
   else if (S.mode === "p2") { rows.push("<h4>Arrêté d'approbation</h4>"); STAT_ORDER.forEach(s => sw(COL.statut[s], STAT_LABEL[s])); }
   else if (S.mode === "p3") { rows.push("<h4>Lotissements</h4>"); sw(COL.involved, "Avec chevauchement"); sw(COL.muted, "Sans chevauchement"); }
   else { rows.push("<h4>Combinaisons d'enjeux</h4>"); COMBOS.forEach(c => sw(c.color, `${c.n}. ${c.enjeu}`)); }
