@@ -9,8 +9,6 @@ window.TEXTES = {
   // Vue d'ensemble — paragraphe d'introduction
   accueil_intro: `Cette plateforme présente la <strong>cartographie des lotissements de la localité de Bingerville</strong>, issue des travaux réalisés sous QGIS. La carte affiche l'assemblage de tous les plans ; cliquez une catégorie pour la faire apparaître.`,
 
-  // Vue d'ensemble — note en bas du panneau
-  accueil_note: `Statistiques : couche « conformité » (un statut par lotissement). Carte : lots de la couche « Assemblage BINGERVILLE ». Chaque lot garde sa classe QGIS : vert = conforme (même dans un lotissement non conforme), rouge = non conforme ou modifié.`,
 
   // Projet 1 — titre
   p1_titre: `Présentation générale des lotissements`,

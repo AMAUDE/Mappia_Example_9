@@ -38,7 +38,18 @@ for nom, g in c.groupby("lotissement"):
 print("lotissements (couche conformite):", len(attrs))
 
 # ------------------------------------------------ assemblage : lots
-a = gpd.read_file(os.path.join(SRC, "assemblage.gpkg"))
+PLAT = os.path.join(SRC, "conformite_plateforme_maj.gpkg")
+USE_PLAT = os.path.exists(PLAT)
+a = gpd.read_file(PLAT if USE_PLAT else os.path.join(SRC, "assemblage.gpkg"))
+if USE_PLAT:
+    # couche « Conformité (plateforme) » mise à jour dans QGIS : elle fait foi
+    print("source des lots : Conformité (plateforme) —", dict(a["classe_plateforme"].value_counts(dropna=False)))
+    a["classe"] = a["classe_plateforme"]
+    for nom, g in a.groupby(a["lotissement"].map(clean)):
+        cl, st, pa = (g[c].dropna().unique() for c in ["conf_lotissement", "statut_lotis", "plan_approuve"])
+        assert len(cl) == 1 and len(st) == 1 and len(pa) == 1, (nom, cl, st, pa)
+        attrs[nom].update(conformite=CONF[clean(cl[0])], statut=STAT[clean(st[0])],
+                          plan_approuve=clean(pa[0]), approuve=clean(pa[0]).startswith("Approuvé"))
 a = a[a.geometry.notna() & ~a.geometry.is_empty].copy()
 if a.crs.to_epsg() != UTM: a = a.to_crs(UTM)
 from shapely.geometry import MultiPolygon, Polygon, GeometryCollection
@@ -59,7 +70,7 @@ CL = {"conforme": 0, "non_conforme": 1, "modifie": 1}
 FORCE_CONFORME = ["DJONDOUMIN RESIDENTIEL", "BEAU ROCHER", "AKOYATE", "AKAKRO RESIDENTIEL", "AKOYATE BELLE-VILLE",
     "SAFH-CI BEL HORIZON", "M'PATE RESIDENTIEL 1", "M'PATE RESIDENTIEL 2", "ELOKA SUD-EST",
     "M'PATE CITE DES MERVEILLES 1", "M'PATE CITE DES MERVEILLES 2", "CITE DES LAGUNES"]
-_fc = {norm(x) for x in FORCE_CONFORME}
+_fc = set() if USE_PLAT else {norm(x) for x in FORCE_CONFORME}  # déjà intégré dans la couche plateforme
 assert _fc <= {norm(n) for n in attrs}, "nom introuvable dans FORCE_CONFORME"
 for n in attrs:
     if norm(n) in _fc: attrs[n]["conformite"] = "Conforme"

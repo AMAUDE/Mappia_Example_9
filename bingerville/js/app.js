@@ -113,8 +113,8 @@ function initMap() {
     map.addLayer({ id: "chev-sel", type: "line", source: "chev", filter: ["==", ["get", "id"], ""], paint: { "line-color": "#14232A", "line-width": 3.5 } });
     map.addLayer({ id: "sel-line", type: "line", source: "asm", filter: ["==", ["get", "k"], -1], paint: { "line-color": "#14232A", "line-width": ["interpolate", ["linear"], ["zoom"], 12, 1, 17, 2.2] } });
     map.addLayer({ id: "prog-pts", type: "circle", source: "prog",
-      paint: { "circle-color": ["case", ["==", ["get", "dans_commune"], "oui"], COL.promo, "#fff"], "circle-radius": ["interpolate", ["linear"], ["zoom"], 10, 5, 15, 8.5],
-        "circle-stroke-color": ["case", ["==", ["get", "dans_commune"], "oui"], "#fff", COL.promo], "circle-stroke-width": 2.2 } });
+      paint: { "circle-color": COL.promo, "circle-radius": ["interpolate", ["linear"], ["zoom"], 10, 5, 15, 8.5],
+        "circle-stroke-color": "#fff", "circle-stroke-width": 2.2 } });
     map.addLayer({ id: "labels", type: "symbol", source: "labels", minzoom: 12.2,
       layout: { "text-field": ["get", "nom"], "text-font": ["Open Sans Semibold"], "text-size": ["interpolate", ["linear"], ["zoom"], 12, 10, 16, 13], "text-max-width": 9, "text-padding": 4 },
       paint: { "text-color": "#14232A", "text-halo-color": "rgba(255,255,255,.92)", "text-halo-width": 1.6 } });
@@ -167,8 +167,7 @@ function showLotPopup(p, l, ll) {
 function showProgPopup(p, ll) {
   popup.setLngLat(ll).setHTML(`<div class="pp"><h5><span class="dot" style="background:${COL.promo}"></span> ${esc(p.programme)}</h5>${kv([
     ["Promoteur", esc(p.entreprise)], ["Logements", p.nb_logts ? fmt(p.nb_logts) : "—"], ["Agrément", esc(p.annee) || "—"],
-    ["Superficie", p.superficie_ha ? fmt(p.superficie_ha, 2) + " ha" : "—"], ["Localisation", esc(p.precision)],
-    ["Dans la commune", p.dans_commune === "oui" ? "Oui" : "Non (hors emprise)"]])}</div>`).addTo(map);
+    ["Superficie", p.superficie_ha ? fmt(p.superficie_ha, 2) + " ha" : "—"], ["Localisation", esc(p.precision)]])}</div>`).addTo(map);
 }
 function showChevPopup(p, ll) {
   popup.setLngLat(ll).setHTML(`<div class="pp"><h5 style="color:${COL.chev}">Chevauchement ${esc(p.id)}</h5>${kv([
@@ -244,7 +243,7 @@ function renderOverview() {
     <div class="kpis">
       <div class="kpi hero"><div class="v">${T.lotissements}</div><div><div class="l">lotissements à Bingerville</div></div></div>
       <div class="kpi"><div class="v" style="color:${COL.chev}">${T.chevauchements}</div><div class="l">zones de chevauchement</div></div>
-      <div class="kpi"><div class="v" style="color:${COL.promo}">${T.programmes}</div><div class="l">programmes immobiliers agréés</div><div class="s">${T.programmes_dans_commune} dans la commune</div></div>
+      <div class="kpi"><div class="v" style="color:${COL.promo}">${T.programmes}</div><div class="l">programmes immobiliers agréés</div></div>
     </div>
     <div class="section-title">Conformité</div>
     <div class="card">${barRows(CONF_ORDER, COL.conf, "conformite")}</div>
@@ -259,8 +258,7 @@ function renderOverview() {
       <button class="btn" data-goto="p2" style="text-align:left"><b>2.</b> Catégorisation par arrêté d'approbation →</button>
       <button class="btn" data-goto="p3" style="text-align:left"><b>3.</b> Lotissements ayant des chevauchements →</button>
       <button class="btn" data-goto="p4" style="text-align:left"><b>4.</b> Combinaisons et enjeux fonciers →</button>
-    </div>
-    <p class="note" style="margin-top:18px">${TX.accueil_note}</p>`;
+    </div>`;
   $$(".barrow").forEach(r => r.onclick = () => {
     const key = r.dataset.filter, v = r.dataset.value;
     if (key === "conformite") {
@@ -578,7 +576,7 @@ function renderLegend() {
   else { rows.push("<h4>Combinaisons d'enjeux</h4>"); COMBOS.forEach(c => sw(c.color, `${c.n}. ${c.enjeu}`)); }
   if (S.showChev || S.showPromo) rows.push(`<div class="sep"></div>`);
   if (S.showChev) rows.push(`<div class="row"><span class="sw hatch"></span>Zone de chevauchement</div>`);
-  if (S.showPromo) rows.push(`<div class="row"><span class="sw pt" style="background:${COL.promo}"></span>Programme immobilier agréé</div>`, `<div class="row"><span class="sw pt" style="background:#fff;box-shadow:0 0 0 2px ${COL.promo}"></span>Programme hors commune</div>`);
+  if (S.showPromo) rows.push(`<div class="row"><span class="sw pt" style="background:${COL.promo}"></span>Programme immobilier agréé</div>`);
   $("#legend").innerHTML = rows.join("");
 }
 

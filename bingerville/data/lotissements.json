@@ -118,11 +118,11 @@
  "totaux": {
   "lotissements": 105,
   "lots": 62397,
-  "lots_conformes": 49989,
-  "lots_non_conformes": 12314,
-  "lots_non_renseignes": 94,
-  "chevauchements": 29,
-  "superficie_chevauchements_ha": 229.74,
+  "lots_conformes": 50305,
+  "lots_non_conformes": 12092,
+  "lots_non_renseignes": 0,
+  "chevauchements": 30,
+  "superficie_chevauchements_ha": 229.92,
   "programmes": 30,
   "programmes_dans_commune": 25
  },
@@ -229,8 +229,8 @@
    "origine": "Reprise",
    "nb_lots": 332,
    "nb_ilots": 46,
-   "superficie_lots_ha": 35.8,
-   "superficie_ha": 44.65,
+   "superficie_lots_ha": 35.62,
+   "superficie_ha": 44.41,
    "classes_lots": {
     "Conforme": 312,
     "Non conforme": 20
@@ -988,7 +988,8 @@
    "superficie_lots_ha": 66.64,
    "superficie_ha": 84.44,
    "classes_lots": {
-    "Non conforme": 1256
+    "Non conforme": 1175,
+    "Conforme": 81
    },
    "usages": {
     "RESIDENTIEL": 1240,
@@ -2025,10 +2026,9 @@
    "nb_lots": 443,
    "nb_ilots": 46,
    "superficie_lots_ha": 24.03,
-   "superficie_ha": 30.76,
+   "superficie_ha": 30.78,
    "classes_lots": {
-    "Conforme": 432,
-    "Non conforme": 11
+    "Conforme": 443
    },
    "usages": {
     "NON RENSEIGNÉ": 443
@@ -2041,7 +2041,7 @@
     -3.880226,
     5.342624,
     -3.873933,
-    5.3494
+    5.3495
    ],
    "chevauchements": [
     "CH-23",
@@ -2810,8 +2810,8 @@
    "superficie_lots_ha": 35.46,
    "superficie_ha": 46.4,
    "classes_lots": {
-    "Conforme": 438,
-    "Non conforme": 131
+    "Conforme": 568,
+    "Non conforme": 1
    },
    "usages": {
     "RESIDENTIEL": 528,
@@ -2883,8 +2883,7 @@
    "superficie_lots_ha": 7.73,
    "superficie_ha": 4.65,
    "classes_lots": {
-    "Non renseigné": 94,
-    "Conforme": 94
+    "Conforme": 188
    },
    "usages": {
     "NON RENSEIGNÉ": 188
