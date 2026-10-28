@@ -279,5 +279,6 @@ input[type=checkbox]{accent-color:var(--brand);width:15px;height:15px;margin:0;f
 .lg-box .lb-body{max-height:calc(100vh - 330px)}
 .lb-sep{height:1px;background:var(--line-2);margin:6px 0}
 .lg-box .row{display:flex;align-items:center;gap:7px;margin:3px 0;color:var(--ink-2)}
-.lot-label{font:600 10px/1.15 "IBM Plex Sans",sans-serif;color:#14232A;text-shadow:0 0 3px #fff,0 0 3px #fff,0 0 2px #fff;max-width:130px;text-align:center;pointer-events:auto;cursor:pointer;white-space:normal}
+.lot-label{font:600 10px/1.15 "IBM Plex Sans Condensed","IBM Plex Sans",sans-serif;letter-spacing:.04em;text-transform:uppercase;color:#fff;text-shadow:0 0 1px #0b1d24,0 0 2px #0b1d24,0 0 3px rgba(11,29,36,.95),0 0 6px rgba(11,29,36,.7);max-width:140px;text-align:center;pointer-events:auto;cursor:pointer;white-space:normal;-webkit-font-smoothing:antialiased}
+.lot-label:hover{color:#FFE7A3}
 @media (max-width:760px){.lg-box{bottom:8px;width:220px}}

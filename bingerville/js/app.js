@@ -33,6 +33,12 @@ const BASEMAP_LABEL = { light: "Plan", sat: "Satellite (Esri)", osm: "OpenStreet
 const S = { mode: "overview", visible: new Set(), confFilter: null, statFilter: null, apprFilter: null, lay: { limite: true, lots: true, noms: true, chev: false, prog: true, promo: false, s3i: true },
   selected: null, selChev: null, basemap: "light", bmErrors: 0 };
 const TX = window.TEXTES || {};
+const RG = window.REGLAGES || {};
+const on = (grp, k) => !(RG[grp] && RG[grp][k] === false);
+const LAY_KEY = { limite: "limite_administrative", noms: "noms_lotissements", chev: "zones_chevauchement", prog: "programmes_agrees", s3i: "promotion_s3i" };
+const layOn = k => !LAY_KEY[k] || on("couches", LAY_KEY[k]);
+const BM_KEY = { light: "plan", sat: "satellite", osm: "openstreetmap" };
+const bmOn = k => on("fonds", BM_KEY[k]);
 let LABELS = [];
 let META, BY_ID, BY_K, ASM, CHEV, PROG, S3I, LIM, PROMO, map, popup;
 
@@ -122,6 +128,7 @@ function initMap() {
       return { l, el, m: new maplibregl.Marker({ element: el, anchor: "center" }).setLngLat(l.centre).addTo(map) };
     });
     map.on("moveend", updateLabels);
+    if (!bmOn(S.basemap)) { const k = Object.keys(BASEMAPS).find(bmOn); if (k) setBasemap(k); }
     bindMapEvents();
     setMode(S.mode);
     const done = () => $("#loading").classList.add("off");
@@ -204,6 +211,7 @@ function updateLabels() {
   });
 }
 function applyFilters() {
+  Object.keys(LAY_KEY).forEach(k => { if (!layOn(k)) S.lay[k] = false; });
   const ks = META.lotissements.filter(l => S.visible.has(l.id)).map(l => l.k);
   const fk = ["in", ["get", "k"], ["literal", ks]];
   let f = fk;
@@ -250,17 +258,17 @@ function renderOverview() {
   const T = META.totaux;
   $("#panel").innerHTML = `
     <div class="kpis">
-      <div class="kpi hero"><div class="v">${T.lotissements}</div><div><div class="l">lotissements à Bingerville</div></div></div>
-      <div class="kpi"><div class="v" style="color:${COL.chev}">${T.chevauchements}</div><div class="l">zones de chevauchement</div></div>
-      <div class="kpi"><div class="v" style="color:${COL.promo}">${T.programmes}</div><div class="l">programmes immobiliers agréés</div></div>
+      ${on("vue_ensemble", "chiffre_lotissements") ? `<div class="kpi hero"><div class="v">${T.lotissements}</div><div><div class="l">lotissements à Bingerville</div></div></div>` : ""}
+      ${on("vue_ensemble", "chiffre_chevauchements") ? `<div class="kpi"><div class="v" style="color:${COL.chev}">${T.chevauchements}</div><div class="l">zones de chevauchement</div></div>` : ""}
+      ${on("vue_ensemble", "chiffre_programmes") ? `<div class="kpi"><div class="v" style="color:${COL.promo}">${T.programmes}</div><div class="l">programmes immobiliers agréés</div></div>` : ""}
     </div>
-    <div class="section-title">Conformité</div>
-    <div class="card">${barRows(CONF_ORDER, COL.conf, "conformite")}</div>
-    <div class="section-title">Arrêtés d'approbation</div>
-    <div class="card">${barRows(STAT_ORDER, COL.statut, "statut")}</div>
-    <div class="section-title">Approbation</div>
-    <div class="card wide-bars">${barRows(APPR_ORDER, COL.appr, "appr", { ...APPR_LABEL, "Arrêté non reçu": "Lotissements (non transmis)" })}</div>
-    <button class="btn" id="btn-reset" style="margin-top:10px;width:100%">Revenir à l'assemblage (tout en bleu)</button>`;
+    ${on("vue_ensemble", "bloc_conformite") ? `<div class="section-title">Conformité</div>
+    <div class="card">${barRows(CONF_ORDER, COL.conf, "conformite")}</div>` : ""}
+    ${on("vue_ensemble", "bloc_arretes") ? `<div class="section-title">Arrêtés d'approbation</div>
+    <div class="card">${barRows(STAT_ORDER, COL.statut, "statut")}</div>` : ""}
+    ${on("vue_ensemble", "bloc_approbation") ? `<div class="section-title">Approbation</div>
+    <div class="card wide-bars">${barRows(APPR_ORDER, COL.appr, "appr", { ...APPR_LABEL, "Arrêté non reçu": "Lotissements (non transmis)" })}</div>` : ""}
+    ${on("vue_ensemble", "bouton_revenir") ? `<button class="btn" id="btn-reset" style="margin-top:10px;width:100%">Revenir à l'assemblage (tout en bleu)</button>` : ""}`;
 
   $$(".barrow").forEach(r => r.onclick = () => {
     const key = r.dataset.filter, v = r.dataset.value;
@@ -288,7 +296,7 @@ function renderOverview() {
     S.visible = new Set(META.lotissements.filter(l => l.statut === td.dataset.s && l.conformite === td.dataset.c).map(l => l.id));
     applyFilters(); renderLegend(); markActive(); fitTo([...S.visible]);
   });
-  $("#btn-reset").onclick = () => { S.confFilter = null; S.statFilter = null; S.apprFilter = null; S.visible = ALL(); applyFilters(); renderLegend(); markActive(); fitAll(); };
+  if ($("#btn-reset")) $("#btn-reset").onclick = () => { S.confFilter = null; S.statFilter = null; S.apprFilter = null; S.visible = ALL(); applyFilters(); renderLegend(); markActive(); fitAll(); };
   $$("[data-goto]").forEach(b => b.onclick = () => setMode(b.dataset.goto));
 }
 function markActive() {
@@ -532,9 +540,9 @@ function download(name, text, type) {
 function renderLegend() {
   // boîte du haut : imagerie + limite administrative
   $("#bm-body").innerHTML = `
-    ${Object.keys(BASEMAPS).map(k => `<label class="lb-item"><input type="radio" name="bm" value="${k}" ${S.basemap === k ? "checked" : ""}><span>${BASEMAP_LABEL[k]}</span></label>`).join("")}
-    <div class="lb-sep"></div>
-    <label class="lb-item"><input type="checkbox" data-lay="limite" ${S.lay.limite ? "checked" : ""}><span class="sw line-dash" style="border-color:${COL.limite}"></span><span>Limite administrative</span></label>`;
+    ${Object.keys(BASEMAPS).filter(bmOn).map(k => `<label class="lb-item"><input type="radio" name="bm" value="${k}" ${S.basemap === k ? "checked" : ""}><span>${BASEMAP_LABEL[k]}</span></label>`).join("")}
+    ${layOn("limite") ? `<div class="lb-sep"></div>` : ""}
+    ${layOn("limite") ? `<label class="lb-item"><input type="checkbox" data-lay="limite" ${S.lay.limite ? "checked" : ""}><span class="sw line-dash" style="border-color:${COL.limite}"></span><span>Limite administrative</span></label>` : ""}`;
   $("#bm-current").textContent = BASEMAP_LABEL[S.basemap];
   $$('#bm-body input[name="bm"]').forEach(r => r.onchange = () => { setBasemap(r.value); $("#bm-current").textContent = BASEMAP_LABEL[r.value]; });
   // boîte du bas : légende des lotissements selon la page
@@ -548,18 +556,18 @@ function renderLegend() {
   } else if (S.mode === "p1") { titre = "Conformité"; CONF_ORDER.forEach(c => sw(COL.conf[c], c)); }
   else if (S.mode === "p2") { titre = "Approbation"; STAT_ORDER.forEach(st => sw(COL.statut[st], st === "Normale" ? "Voie normale" : "Voie de régularisation")); }
   else if (S.mode === "p3") { titre = "Chevauchements"; rows.push(`<div class="row"><span class="sw hatch"></span>Zone de chevauchement</div>`); sw(COL.involved, "Lotissement avec chevauchement"); sw(COL.muted, "Lotissement sans chevauchement"); }
-  const chk = (k, sym, label, indent = false) => `<label class="lb-item${indent ? " ind" : ""}"><input type="checkbox" data-lay="${k}" ${S.lay[k] ? "checked" : ""}>${sym}<span>${label}</span></label>`;
-  const promoKeys = ["prog", "s3i"], promoOn = promoKeys.filter(k => S.lay[k]).length;
+  const chk = (k, sym, label, indent = false) => !layOn(k) ? "" : `<label class="lb-item${indent ? " ind" : ""}"><input type="checkbox" data-lay="${k}" ${S.lay[k] ? "checked" : ""}>${sym}<span>${label}</span></label>`;
+  const promoKeys = ["prog", "s3i"].filter(layOn), promoOn = promoKeys.filter(k => S.lay[k]).length;
   $("#lg-body").innerHTML = `
     <div class="lb-sec">${titre}</div>${rows.join("")}
     <div class="lb-sec">Couches</div>
     ${chk("noms", `<span class="sw txt">Aa</span>`, "Noms des lotissements")}
     ${S.mode !== "p3" ? chk("chev", `<span class="sw hatch"></span>`, "Zones de chevauchement") : ""}
-    <label class="lb-item"><input type="checkbox" id="lb-promo-all" ${promoOn === promoKeys.length ? "checked" : ""}><span class="sw" style="background:${COL.promo2}"></span><span>Promotion immobilière</span></label>
+    ${promoKeys.length ? `<label class="lb-item"><input type="checkbox" id="lb-promo-all" ${promoOn === promoKeys.length ? "checked" : ""}><span class="sw" style="background:${COL.promo2}"></span><span>Promotion immobilière</span></label>` : ""}
     ${chk("prog", `<span class="sw pt" style="background:${COL.promo}"></span>`, `Programmes agréés (${PROG.features.length})`, true)}
     ${chk("s3i", `<span class="sw line-dash" style="border-color:${COL.promo}"></span>`, `Promotion S3I (${S3I.features.length})`, true)}`;
-  const pa = $("#lb-promo-all"); pa.indeterminate = promoOn > 0 && promoOn < promoKeys.length;
-  pa.onchange = () => { promoKeys.forEach(k => S.lay[k] = pa.checked); applyFilters(); renderLegend(); };
+  const pa = $("#lb-promo-all"); if (pa) { pa.indeterminate = promoOn > 0 && promoOn < promoKeys.length;
+  pa.onchange = () => { promoKeys.forEach(k => S.lay[k] = pa.checked); applyFilters(); renderLegend(); }; }
   $$("#bm-body [data-lay], #lg-body [data-lay]").forEach(i => i.onchange = () => { S.lay[i.dataset.lay] = i.checked; applyFilters(); renderLegend(); });
 }
 function setBasemap(k) {
@@ -600,6 +608,10 @@ function toast(msg) {
   $(".map-wrap").appendChild(t); setTimeout(() => t.remove(), 7000);
 }
 function initUI() {
+  if (!on("boites", "imagerie")) $("#bm-box").style.display = "none";
+  if (!on("boites", "legende")) $("#lg-box").style.display = "none";
+  if (!on("boites", "recherche")) $(".search").style.display = "none";
+  [["presentation", "p1"], ["approbation", "p2"], ["chevauchements", "p3"]].forEach(([k, m]) => { if (!on("pages", k)) $(`.tabs button[data-mode=${m}]`).style.display = "none"; });
   $$(".tabs button").forEach(b => b.onclick = () => setMode(b.dataset.mode));
   const toggle = (btn, body, box) => $(btn).onclick = () => { const b = $(body), open = b.hidden; b.hidden = !open; $(btn).setAttribute("aria-expanded", open); $(box).classList.toggle("open", open); };
   toggle("#bm-toggle", "#bm-body", "#bm-box"); toggle("#lg-toggle", "#lg-body", "#lg-box");

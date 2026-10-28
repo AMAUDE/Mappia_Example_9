@@ -26,6 +26,12 @@ Interactions : arbre de couches (afficher / masquer chaque plan ou groupe), rech
 - Titre du site, sous-titre, noms des onglets et boutons fixes : `index.html`.
 - Sur GitHub : ouvrir le fichier, cliquer sur le crayon (« Edit »), modifier, puis « Commit changes ». Le site se met à jour en une à deux minutes.
 
+## Afficher / masquer des éléments
+
+`js/reglages.js` : pages, boîtes de la carte (Imagerie, Légende, Recherche), couches, fonds de carte et blocs de la Vue d'ensemble. Mettre `false` pour masquer, `true` pour afficher.
+
+Après toute modification : changer le numéro `?v=` dans `index.html` (lignes des fichiers css/js), puis recharger avec Ctrl + F5.
+
 ## Mettre à jour
 
 ```bash
