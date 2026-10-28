@@ -170,11 +170,11 @@ function showLotPopup(p, l, ll) {
 function showProgPopup(p, ll) {
   popup.setLngLat(ll).setHTML(`<div class="pp"><h5><span class="dot" style="background:${COL.promo}"></span> ${esc(p.programme)}</h5>${kv([
     ["Promoteur", esc(p.entreprise)], ["Logements", p.nb_logts ? fmt(p.nb_logts) : "—"], ["Agrément", esc(p.annee) || "—"],
-    ["Superficie", p.superficie_ha ? fmt(p.superficie_ha, 2) + " ha" : "—"], ["Localisation", esc(p.precision)]])}</div>`).addTo(map);
+    ["Localisation", esc(p.precision)]])}</div>`).addTo(map);
 }
 function showChevPopup(p, ll) {
   popup.setLngLat(ll).setHTML(`<div class="pp"><h5 style="color:${COL.chev}">Chevauchement ${esc(p.id)}</h5>${kv([
-    ["Superficie", fmt(p.superficie_ha, 2) + " ha"], ["Plans concernés", p.nb_lotis], ["Synthèse", chevSynth(p)]])}
+    ["Plans concernés", p.nb_lotis], ["Synthèse", chevSynth(p)]])}
     <div style="font-size:12px;margin-top:4px">${p.lotissements ? p.lotissements.split(" / ").map(esc).join("<br>") : "<i>Lotissements non renseignés</i>"}</div></div>`).addTo(map);
 }
 
@@ -348,10 +348,6 @@ function renderP2() {
       ${APPR_ORDER.map(a => `<div class="kpi"><div class="v" style="color:${COL.appr[a]}">${count(l => l.appr === a)}</div><div class="l">${APPR_KPI[a]}</div></div>`).join("")}
       ${STAT_ORDER.map(s => `<div class="kpi"><div class="v" style="color:${COL.statut[s]}">${count(l => l.statut === s)}</div><div class="l">${s === "Normale" ? "voie normale" : "voie de régularisation"}</div></div>`).join("")}
     </div>
-    <div class="section-title">Voie × arrêté</div>
-    <div class="card" style="padding:6px 8px"><table class="matrix"><thead><tr><th></th>${APPR_ORDER.map(a => `<th><span class="dot" style="background:${COL.appr[a]}"></span> ${APPR_SHORT[a]}</th>`).join("")}<th>Total</th></tr></thead>
-      <tbody>${STAT_ORDER.map(st => `<tr><td><span class="dot" style="background:${COL.statut[st]}"></span> ${st}</td>${APPR_ORDER.map(a => `<td class="clk" data-s="${st}" data-a="${a}">${cell(st, a)}</td>`).join("")}<td><b>${count(l => l.statut === st)}</b></td></tr>`).join("")}</tbody>
-      <tfoot><tr><td>Total</td>${APPR_ORDER.map(a => `<td>${count(l => l.appr === a)}</td>`).join("")}<td>${META.lotissements.length}</td></tr></tfoot></table></div>
     <div class="section-title">Couches</div>
     ${treeTools()}
     <div id="tree">${STAT_ORDER.map(st => { const list = META.lotissements.filter(l => l.statut === st);
@@ -365,7 +361,7 @@ function renderP2() {
 
 function renderP3() {
   const inv = META.lotissements.filter(l => l.chevauchements.length).sort((a, b) => b.chevauchements.length - a.chevauchements.length || a.nom.localeCompare(b.nom));
-  const feats = [...CHEV.features].sort((a, b) => b.properties.superficie_ha - a.properties.superficie_ha);
+  const feats = [...CHEV.features].sort((a, b) => (+a.properties.id.slice(3)) - (+b.properties.id.slice(3)));
   $("#panel").innerHTML = `
     <div class="section-title">Projet 3</div>
     <h2 class="ptitle">${TX.p3_titre}</h2>
@@ -373,9 +369,9 @@ function renderP3() {
     <div class="kpis">
       <div class="kpi hero" style="background:${COL.chev};border-color:${COL.chev}"><div class="v">${inv.length}</div><div><div class="l" style="color:#fff">chevauchements (lotissements concernés)</div><div class="s" style="color:#FFE7D1">sur ${META.lotissements.length} lotissements · ${CHEV.features.length} zones</div></div></div>
     </div>
-    <div class="section-title">Zones (par superficie décroissante)</div>
+    <div class="section-title">Zones de chevauchement</div>
     <div id="chev-list">${feats.map(f => { const p = f.properties; return `<button class="chev" data-chev="${p.id}">
-      <div class="top"><span class="cid">${p.id}${p.nb_lotis ? ` · ${p.nb_lotis} plans` : ""}</span><span class="area">${fmt(p.superficie_ha, 2)} ha</span></div>
+      <div class="top"><span class="cid">${p.id}${p.nb_lotis ? ` · ${p.nb_lotis} plans` : ""}</span></div>
       <div class="names">${p.lotissements ? p.lotissements.split(" / ").map(n => `<span>${esc(n)}</span>`).join("") : "<i>Lotissements non renseignés</i>"}</div>
       ${p.lotissements ? `<div class="synth">${chevSynth(p)}</div>` : ""}</button>`; }).join("")}</div>
     <div class="section-title">Lotissements concernés</div>
@@ -399,7 +395,6 @@ function renderChevDetail(cid) {
     <div class="section-title" style="margin-top:14px">Projet 3 · Chevauchement</div>
     <h2 class="ptitle" style="color:${COL.chev}">${esc(p.id)}</h2>
     <div class="kpis">
-      <div class="kpi"><div class="v">${fmt(p.superficie_ha, 2)}</div><div class="l">hectares en chevauchement</div></div>
       <div class="kpi"><div class="v">${p.nb_lotis}</div><div class="l">lotissements concernés</div></div>
     </div>
     <div class="section-title">Synthèse</div>
@@ -525,7 +520,7 @@ function renderFiche(id) {
       </div>
       <div class="section-title">Arrêté d'approbation</div>
       <div style="font-size:12.5px">${l.approuve ? "Arrêté transmis" : "<b>Arrêté non transmis</b>"}${l.annee_arrete ? ` · ${l.annee_arrete}` : ""}${l.arrete ? `<br>${esc(l.arrete)}` : ""}</div>
-      ${l.chevauchements.length ? `<div class="section-title">Chevauchements</div>${l.chevauchements.map(cid => { const f = CHEV.features.find(x => x.properties.id === cid); return `<div class="linkchip chev" data-chev="${cid}">${cid} · ${fmt(f.properties.superficie_ha, 2)} ha — avec ${esc(f.properties.lotissements.split(" / ").filter(n => n !== l.nom).join(", "))}</div>`; }).join("")}` : ""}
+      ${l.chevauchements.length ? `<div class="section-title">Chevauchements</div>${l.chevauchements.map(cid => { const f = CHEV.features.find(x => x.properties.id === cid); return `<div class="linkchip chev" data-chev="${cid}">${cid} — avec ${esc(f.properties.lotissements.split(" / ").filter(n => n !== l.nom).join(", "))}</div>`; }).join("")}` : ""}
     </div>`;
   el.hidden = false;
   $(".fiche-close", el).onclick = clearSelection;
