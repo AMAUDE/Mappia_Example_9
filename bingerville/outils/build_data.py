@@ -167,6 +167,15 @@ s3 = gpd.read_file(os.path.join(SRC, "promotion_s3i.gpkg")).to_crs(4326)
 s3 = gpd.GeoDataFrame(dict(nom=s3["Lotissment"].map(clean)), geometry=s3.geometry, crs=4326)
 s3.to_file(os.path.join(OUT, "promotions_s3i.geojson"), driver="GeoJSON", layer_options={"COORDINATE_PRECISION": 6, "RFC7946": "YES"})
 
+# ------------------------------------------------ couches d'habillage exportées de QGIS (GeoJSON WGS84)
+for src, dst, keep in [("sous_prefecture.geojson", "limite_admin.geojson", ["nmspref", "nmdept"]),
+                       ("promotion_immobilier.geojson", "promotion_immobilier.geojson", ["Lotissment"])]:
+    fp = os.path.join(SRC, src)
+    if os.path.exists(fp):
+        g = gpd.read_file(fp)[keep + ["geometry"]]
+        g.to_file(os.path.join(OUT, dst), driver="GeoJSON", layer_options={"COORDINATE_PRECISION": 6, "RFC7946": "YES"})
+        print(dst, len(g))
+
 emp_all = unary_union(list(emp_gdf.geometry))
 classes = collections.Counter(int(x) for x in lots["c"])
 meta = dict(

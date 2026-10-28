@@ -33,7 +33,6 @@
       <input id="search" type="search" placeholder="Rechercher un lotissement…" autocomplete="off" aria-label="Rechercher un lotissement">
       <ul id="search-results" class="search-results" hidden></ul>
     </div>
-    <button id="btn-table" class="btn ghost" title="Tableau des lotissements">Tableau</button>
   </div>
 </header>
 
@@ -45,36 +44,17 @@
 
   <section class="map-wrap">
     <div id="map"></div>
-    <div class="map-tools">
-      <div class="basemaps" role="group" aria-label="Fond de carte">
-        <button data-bm="light" class="active">Plan</button>
-        <button data-bm="sat">Satellite</button>
-        <button data-bm="osm">OSM</button>
-        <button data-bm="mq" title="Imagerie satellite MapQuest">MapQuest</button>
-        <button data-bm="mqhyb" title="Imagerie MapQuest avec routes et noms">MapQuest hybride</button>
-      </div>
-      <label class="switch">
-        <input type="checkbox" id="labels" checked> <span>Noms</span>
-      </label>
+    <div id="layers-box" class="layers-box">
+      <button class="lb-head" id="lb-toggle" aria-expanded="false"><span>Légende · fonds et couches</span><span class="lb-caret">▾</span></button>
+      <div class="lb-body" id="lb-body" hidden></div>
     </div>
-    <div id="legend" class="legend"></div>
     <div id="loading" class="loading"><div class="spinner"></div><span>Chargement des données…</span></div>
   </section>
 
   <aside id="fiche" class="fiche" hidden aria-live="polite"></aside>
 </main>
 
-<dialog id="table-dialog" class="table-dialog">
-  <div class="dlg-head">
-    <h2>Liste des lotissements</h2>
-    <div class="dlg-actions">
-      <input id="table-filter" type="search" placeholder="Filtrer…">
-      <button id="btn-csv" class="btn">Exporter CSV</button>
-      <button class="btn ghost" data-close>Fermer</button>
-    </div>
-  </div>
-  <div class="table-scroll"><table id="table"></table></div>
-</dialog>
+
 
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <script src="js/textes.js"></script>
