@@ -370,7 +370,6 @@ function renderP3() {
     </div>
     <div class="section-title">Zones de chevauchement</div>
     <div id="chev-list">${feats.map(f => { const p = f.properties; return `<button class="chev" data-chev="${p.id}">
-      <div class="top"><span class="cid">${p.id}${p.nb_lotis ? ` · ${p.nb_lotis} plans` : ""}</span></div>
       <div class="names">${p.lotissements ? p.lotissements.split(" / ").map(n => `<span>${esc(n)}</span>`).join("") : "<i>Lotissements non renseignés</i>"}</div>
       ${p.lotissements ? `<div class="synth">${chevSynth(p)}</div>` : ""}</button>`; }).join("")}</div>
     <div class="section-title">Lotissements concernés</div>
