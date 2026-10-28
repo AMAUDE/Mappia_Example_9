@@ -169,8 +169,7 @@ function showLotPopup(p, l, ll) {
 }
 function showProgPopup(p, ll) {
   popup.setLngLat(ll).setHTML(`<div class="pp"><h5><span class="dot" style="background:${COL.promo}"></span> ${esc(p.programme)}</h5>${kv([
-    ["Promoteur", esc(p.entreprise)], ["Logements", p.nb_logts ? fmt(p.nb_logts) : "—"], ["Agrément", esc(p.annee) || "—"],
-    ["Localisation", esc(p.precision)]])}</div>`).addTo(map);
+    ["Promoteur", esc(p.entreprise)], ["Logements", p.nb_logts ? fmt(p.nb_logts) : "—"], ["Agrément", esc(p.annee) || "—"]])}</div>`).addTo(map);
 }
 function showChevPopup(p, ll) {
   popup.setLngLat(ll).setHTML(`<div class="pp"><h5 style="color:${COL.chev}">Chevauchement ${esc(p.id)}</h5>${kv([

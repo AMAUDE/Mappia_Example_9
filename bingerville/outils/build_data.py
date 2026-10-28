@@ -156,12 +156,14 @@ ch_gdf.to_crs(4326).to_file(os.path.join(OUT, "chevauchements.geojson"), driver=
 # ------------------------------------------------ programmes immobiliers
 p = gpd.read_file(os.path.join(SRC, "programmes_agrees.gpkg")).to_crs(4326)
 p = p[p.geometry.notna()].reset_index(drop=True)
+# seuls les programmes à localisation exacte sont publiés
+p = p[p["precision"].map(clean).str.lower() == "exacte"].reset_index(drop=True)
+print("programmes à localisation exacte :", len(p))
 pp = gpd.GeoDataFrame(dict(
     id=[f"PI-{int(n):02d}" if pd.notna(n) else f"PI-{i+1:02d}" for i, n in enumerate(p["num"])],
     entreprise=p["entreprise"].map(clean), programme=p["programme"].map(clean),
     nb_logts=p["nb_logts"].fillna(0).astype(int), annee=p["annee_agr"].map(lambda v: "" if pd.isna(v) else str(int(v))),
-    superficie_ha=(p["superf_m2"].fillna(0) / 1e4).round(2), lieu=p["lieu_ref"].map(clean),
-    precision=p["precision"].map(clean), dans_commune=p["dans_commune"].map(clean)), geometry=p.geometry, crs=4326)
+    lieu=p["lieu_ref"].map(clean), dans_commune=p["dans_commune"].map(clean)), geometry=p.geometry, crs=4326)
 pp.to_file(os.path.join(OUT, "programmes.geojson"), driver="GeoJSON", layer_options={"COORDINATE_PRECISION": 6, "RFC7946": "YES"})
 s3 = gpd.read_file(os.path.join(SRC, "promotion_s3i.gpkg")).to_crs(4326)
 s3 = gpd.GeoDataFrame(dict(nom=s3["Lotissment"].map(clean)), geometry=s3.geometry, crs=4326)
