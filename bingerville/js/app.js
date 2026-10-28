@@ -10,14 +10,14 @@ const COL = {
   conf: { "Conforme": "#2E9E5B", "Non conforme": "#D64545" },
   statut: { "Normale": "#2F6FD6", "Régularisation": "#8E4FC9" },
   lotc: ["#2E9E5B", "#D64545", "#A9B3B8"],           // classe lot : 0 conforme, 1 non conforme (non_conforme + modifié), 2 non renseigné
-  appr: { "Approuvé": "#0E7C86", "Non approuvé": "#E0A030" },
+  appr: { "Arrêté reçu": "#0E7C86", "Arrêté non reçu": "#E0A030" },
   chev: "#E0245E", promo: "#0B9A9A", muted: "#B9C2C6", involved: "#5B6B73"
 };
 const CONF_ORDER = ["Conforme", "Non conforme"];
 const STAT_ORDER = ["Normale", "Régularisation"];
-const APPR_ORDER = ["Approuvé", "Non approuvé"];
-const APPR_LABEL = { "Approuvé": "Approuvé (arrêté reçu)", "Non approuvé": "Non approuvé (arrêté non reçu)" };
-const apprOf = l => l.approuve ? "Approuvé" : "Non approuvé";
+const APPR_ORDER = ["Arrêté reçu", "Arrêté non reçu"];
+const APPR_LABEL = { "Arrêté reçu": "Arrêté reçu", "Arrêté non reçu": "Arrêté non reçu" };
+const apprOf = l => l.approuve ? "Arrêté reçu" : "Arrêté non reçu";
 const STAT_LABEL = { "Normale": "Approbation par voie normale", "Régularisation": "Approbation par voie de régularisation" };
 
 /* Projet 4 — combinaisons : conformité (couche conformite) × chevauchement × approbation (arrêté reçu) */
@@ -188,7 +188,7 @@ function lotColorExpr() {
     return COL.asm;
   }
   if (S.mode === "p1") return ["match", ["get", "dc"], "Conforme", COL.conf["Conforme"], COL.conf["Non conforme"]];
-  if (S.mode === "p2") return ["match", ["get", "ap"], "Approuvé", COL.appr["Approuvé"], COL.appr["Non approuvé"]];
+  if (S.mode === "p2") return ["match", ["get", "ap"], "Arrêté reçu", COL.appr["Arrêté reçu"], COL.appr["Arrêté non reçu"]];
   if (S.mode === "p3") return ["case", [">", ["get", "nc"], 0], COL.involved, COL.muted];
   return ["match", ["get", "cb"], ...COMBOS.flatMap(c => [c.n, c.color]), COL.muted];
 }
@@ -256,7 +256,6 @@ function renderOverview() {
     <div class="card">${barRows(STAT_ORDER, COL.statut, "statut")}</div>
     <div class="section-title">Approbation</div>
     <div class="card">${barRows(APPR_ORDER, COL.appr, "appr")}</div>
-    <div style="font-size:11.5px;color:var(--ink-3);margin-top:4px">Approuvé = arrêté d'approbation reçu.</div>
     <div class="section-title">Arrêté × conformité</div>
     <div class="card" style="padding:6px 8px">${matrixTable()}</div>
     <button class="btn" id="btn-reset" style="margin-top:10px;width:100%">Revenir à l'assemblage (tout en bleu)</button>
@@ -348,17 +347,17 @@ function renderP2() {
     <h2 class="ptitle">${TX.p2_titre}</h2>
     <p class="lead">${TX.p2_intro}</p>
     <div class="kpis">
-      ${APPR_ORDER.map(a => `<div class="kpi"><div class="v" style="color:${COL.appr[a]}">${count(l => l.appr === a)}</div><div class="l">${a === "Approuvé" ? "approuvés" : "non approuvés"}</div><div class="s">${a === "Approuvé" ? "arrêté reçu" : "arrêté non reçu"}</div></div>`).join("")}
+      ${APPR_ORDER.map(a => `<div class="kpi"><div class="v" style="color:${COL.appr[a]}">${count(l => l.appr === a)}</div><div class="l">${a.toLowerCase()}</div></div>`).join("")}
       ${STAT_ORDER.map(s => `<div class="kpi"><div class="v" style="color:${COL.statut[s]}">${count(l => l.statut === s)}</div><div class="l">${s === "Normale" ? "voie normale" : "voie de régularisation"}</div></div>`).join("")}
     </div>
-    <div class="section-title">Voie × approbation</div>
+    <div class="section-title">Voie × arrêté</div>
     <div class="card" style="padding:6px 8px"><table class="matrix"><thead><tr><th></th>${APPR_ORDER.map(a => `<th><span class="dot" style="background:${COL.appr[a]}"></span> ${a}</th>`).join("")}<th>Total</th></tr></thead>
       <tbody>${STAT_ORDER.map(st => `<tr><td><span class="dot" style="background:${COL.statut[st]}"></span> ${st}</td>${APPR_ORDER.map(a => `<td class="clk" data-s="${st}" data-a="${a}">${cell(st, a)}</td>`).join("")}<td><b>${count(l => l.statut === st)}</b></td></tr>`).join("")}</tbody>
       <tfoot><tr><td>Total</td>${APPR_ORDER.map(a => `<td>${count(l => l.appr === a)}</td>`).join("")}<td>${META.lotissements.length}</td></tr></tfoot></table></div>
     <div class="section-title">Couches</div>
     ${treeTools()}
     <div id="tree">${STAT_ORDER.map(st => { const list = META.lotissements.filter(l => l.statut === st);
-      return groupHTML(STAT_LABEL[st], COL.statut[st], list, { open: true, body: APPR_ORDER.map(a => groupHTML(APPR_LABEL[a], COL.appr[a], list.filter(l => l.appr === a), { open: a === "Non approuvé" })).join("") }); }).join("")}</div>`;
+      return groupHTML(STAT_LABEL[st], COL.statut[st], list, { open: true, body: APPR_ORDER.map(a => groupHTML(APPR_LABEL[a], COL.appr[a], list.filter(l => l.appr === a), { open: a === "Arrêté non reçu" })).join("") }); }).join("")}</div>`;
   $$(".matrix td.clk").forEach(td => td.onclick = () => {
     S.visible = new Set(META.lotissements.filter(l => l.statut === td.dataset.s && l.appr === td.dataset.a).map(l => l.id));
     applyFilters(); syncTree(); fitTo([...S.visible]);
@@ -545,7 +544,7 @@ function renderFiche(id) {
       <div class="badges">
         <span class="badge" style="background:${COL.conf[l.conformite]}">${l.conformite}</span>
         <span class="badge" style="background:${COL.statut[l.statut]}">Voie ${l.statut === "Normale" ? "normale" : "de régularisation"}</span>
-        <span class="badge ${l.approuve ? "soft" : ""}" style="${l.approuve ? "" : "background:#8A5A00"}">${esc(l.plan_approuve)}</span>
+        <span class="badge ${l.approuve ? "soft" : ""}" style="${l.approuve ? "" : "background:#8A5A00"}">${l.approuve ? "Arrêté reçu" : "Arrêté non reçu"}</span>
         <span class="badge" style="background:${c.color}" title="${comboLabel(c)}">Situation ${c.n} · ${c.enjeu}</span>
         ${l.chevauchements.length ? `<span class="badge" style="background:${COL.chev}">${l.chevauchements.length} chevauchement${l.chevauchements.length > 1 ? "s" : ""}</span>` : ""}
       </div>
@@ -624,13 +623,13 @@ function initSearch() {
   inp.addEventListener("blur", () => setTimeout(() => ul.hidden = true, 150));
 }
 
-const COLS = [["num", "N°", true], ["nom", "Lotissement"], ["statut", "Arrêté"], ["conformite", "Conformité"], ["plan_approuve", "Approbation"],
+const COLS = [["num", "N°", true], ["nom", "Lotissement"], ["statut", "Voie"], ["conformite", "Conformité"], ["appr", "Arrêté"],
   ["nb_ilots", "Îlots", true], ["nb_lots", "Lots", true], ["nchev", "Chevauch.", true], ["combo", "Situation", true]];
 let sortKey = "num", sortDir = 1;
 function renderTable() {
   const q = norm($("#table-filter").value);
   const rows = META.lotissements.map(l => ({ ...l, nchev: l.chevauchements.length }))
-    .filter(l => !q || norm(`${l.nom} ${l.statut} ${l.conformite} ${l.plan_approuve}`).includes(q))
+    .filter(l => !q || norm(`${l.nom} ${l.statut} ${l.conformite} ${l.appr}`).includes(q))
     .sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : a[sortKey] < b[sortKey] ? -1 : 0) * sortDir);
   const pill = (c, t) => `<span class="pill"><span class="dot" style="background:${c}"></span>${t}</span>`;
   const cell = (l, k) => k === "conformite" ? pill(COL.conf[l.conformite], l.conformite) : k === "statut" ? pill(COL.statut[l.statut], l.statut)
@@ -642,9 +641,9 @@ function renderTable() {
   $$("#table tbody tr[data-id]").forEach(tr => tr.onclick = () => { $("#table-dialog").close(); select(tr.dataset.id, true); });
 }
 function exportCSV() {
-  const head = ["N°", "Lotissement", "Arrêté (voie)", "Conformité", "Approbation", "Arrêté d'approbation", "Îlots", "Lots", "Chevauchements", "Situation", "Enjeu", "À vérifier"];
+  const head = ["N°", "Lotissement", "Voie", "Conformité", "Arrêté", "N° et date de l'arrêté", "Îlots", "Lots", "Chevauchements", "Situation", "Enjeu", "À vérifier"];
   const q = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
-  const lines = META.lotissements.map(l => { const c = COMBOS[l.combo - 1]; return [l.num, l.nom, l.statut, l.conformite, l.plan_approuve, l.arrete, l.nb_ilots, l.nb_lots, l.chevauchements.join(" "), `${c.n}. ${comboLabel(c)}`, c.enjeu, l.a_verifier].map(q).join(";"); });
+  const lines = META.lotissements.map(l => { const c = COMBOS[l.combo - 1]; return [l.num, l.nom, l.statut, l.conformite, l.appr, l.arrete, l.nb_ilots, l.nb_lots, l.chevauchements.join(" "), `${c.n}. ${comboLabel(c)}`, c.enjeu, l.a_verifier].map(q).join(";"); });
   download("lotissements_bingerville.csv", "﻿" + [head.map(q).join(";"), ...lines].join("\r\n"), "text/csv;charset=utf-8");
 }
 
