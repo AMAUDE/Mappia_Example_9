@@ -22,19 +22,6 @@ const APPR_KPI = { "Arrêté reçu": "lotissements dont nous avons reçu les arr
 const apprOf = l => l.approuve ? "Arrêté reçu" : "Arrêté non reçu";
 const STAT_LABEL = { "Normale": "Approbation par voie normale", "Régularisation": "Approbation par voie de régularisation" };
 
-/* Projet 4 — combinaisons : conformité (couche conformite) × chevauchement × approbation (arrêté reçu) */
-const COMBOS = [
-  { n: 1, conf: "C", chev: false, app: true, enjeu: "Situation régulière", color: "#1B7F4B" },
-  { n: 2, conf: "C", chev: false, app: false, enjeu: "Régularisation administrative", color: "#86C77F" },
-  { n: 3, conf: "C", chev: true, app: true, enjeu: "Conflit de limites entre plans", color: "#E9C93F" },
-  { n: 4, conf: "C", chev: true, app: false, enjeu: "Conflit de limites, arrêté non reçu", color: "#F2A541" },
-  { n: 5, conf: "NC", chev: false, app: true, enjeu: "Écart terrain / plan approuvé", color: "#E8743B" },
-  { n: 6, conf: "NC", chev: false, app: false, enjeu: "Écart terrain, arrêté non reçu", color: "#D1492B" },
-  { n: 7, conf: "NC", chev: true, app: true, enjeu: "Écart terrain et conflit de limites", color: "#B0202E" },
-  { n: 8, conf: "NC", chev: true, app: false, enjeu: "Enjeu critique", color: "#6B0D22" }
-];
-const comboLabel = c => `${c.conf === "C" ? "Conforme" : "Non conforme"} · ${c.chev ? "chevauchement" : "sans chevauchement"} · ${c.app ? "approuvé" : "non approuvé"}`;
-const comboOf = l => COMBOS.find(c => c.conf === (l.conformite === "Conforme" ? "C" : "NC") && c.chev === (l.chevauchements.length > 0) && c.app === l.approuve).n;
 
 const BASEMAPS = {
   light: { tiles: ["https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png", "https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png"], attribution: "© OpenStreetMap © CARTO", maxzoom: 20 },
@@ -64,11 +51,11 @@ async function load() {
     j("data/chevauchements.geojson"), j("data/programmes.geojson"), j("data/promotions_s3i.geojson"),
     j("data/limite_admin.geojson").catch(() => empty), j("data/promotion_immobilier.geojson").catch(() => empty)]);
   META.lotissements.sort((a, b) => a.nom.localeCompare(b.nom, "fr"));
-  META.lotissements.forEach((l, i) => { l.num = i + 1; l.combo = comboOf(l); l.appr = apprOf(l); });
+  META.lotissements.forEach((l, i) => { l.num = i + 1; l.appr = apprOf(l); });
   BY_ID = Object.fromEntries(META.lotissements.map(l => [l.id, l]));
   BY_K = Object.fromEntries(META.lotissements.map(l => [l.k, l]));
   // attributs du lotissement recopiés sur chaque lot (pour les styles par mode)
-  ASM.features.forEach(f => { const l = BY_K[f.properties.k]; f.properties.st = l.statut; f.properties.ap = apprOf(l); f.properties.lc = l.conformite; f.properties.dc = f.properties.c === 0 ? "Conforme" : f.properties.c === 1 ? "Non conforme" : l.conformite; /* classe du lot dans l'assemblage QGIS */ f.properties.cb = l.combo; f.properties.nc = l.chevauchements.length; });
+  ASM.features.forEach(f => { const l = BY_K[f.properties.k]; f.properties.st = l.statut; f.properties.ap = apprOf(l); f.properties.lc = l.conformite; f.properties.dc = f.properties.c === 0 ? "Conforme" : f.properties.c === 1 ? "Non conforme" : l.conformite; /* classe du lot dans l'assemblage QGIS */ f.properties.nc = l.chevauchements.length; });
   CHEV.features.forEach(f => { let ids = f.properties.ids; if (typeof ids === "string") try { ids = JSON.parse(ids); } catch { ids = []; } f.properties.idsArr = ids || []; });
   S.visible = ALL();
 }
@@ -190,12 +177,11 @@ function lotColorExpr() {
   if (S.mode === "p1") return ["match", ["get", "dc"], "Conforme", COL.conf["Conforme"], COL.conf["Non conforme"]];
   if (S.mode === "p2") return ["match", ["get", "ap"], "Arrêté reçu", COL.appr["Arrêté reçu"], COL.appr["Arrêté non reçu"]];
   if (S.mode === "p3") return ["case", [">", ["get", "nc"], 0], COL.involved, COL.muted];
-  return ["match", ["get", "cb"], ...COMBOS.flatMap(c => [c.n, c.color]), COL.muted];
+  return COL.asm;
 }
 function planColor(l) {
   if (S.mode === "p2") return COL.appr[apprOf(l)];
   if (S.mode === "p3") return l.chevauchements.length ? COL.involved : COL.muted;
-  if (S.mode === "p4") return COMBOS[l.combo - 1].color;
   return COL.conf[l.conformite];
 }
 function applyFilters() {
@@ -535,7 +521,6 @@ function renderLegend() {
   } else if (S.mode === "p1") CONF_ORDER.forEach(c => sw(COL.conf[c], c));
   else if (S.mode === "p2") APPR_ORDER.forEach(a => sw(COL.appr[a], APPR_LABEL[a]));
   else if (S.mode === "p3") { sw(COL.involved, "Avec chevauchement"); sw(COL.muted, "Sans chevauchement"); }
-  else COMBOS.forEach(c => sw(c.color, `${c.n}. ${c.enjeu}`));
   const chk = (k, sym, label, indent = false) => `<label class="lb-item${indent ? " ind" : ""}"><input type="checkbox" data-lay="${k}" ${S.lay[k] ? "checked" : ""}>${sym}<span>${label}</span></label>`;
   const promoKeys = ["prog", "promo", "s3i"], promoOn = promoKeys.filter(k => S.lay[k]).length;
   $("#lb-body").innerHTML = `
@@ -587,29 +572,6 @@ function initSearch() {
   inp.addEventListener("blur", () => setTimeout(() => ul.hidden = true, 150));
 }
 
-const COLS = [["num", "N°", true], ["nom", "Lotissement"], ["statut", "Voie"], ["conformite", "Conformité"], ["appr", "Arrêté"],
-  ["nb_ilots", "Îlots", true], ["nb_lots", "Lots", true], ["nchev", "Chevauch.", true], ["combo", "Situation", true]];
-let sortKey = "num", sortDir = 1;
-function renderTable() {
-  const q = norm($("#table-filter").value);
-  const rows = META.lotissements.map(l => ({ ...l, nchev: l.chevauchements.length }))
-    .filter(l => !q || norm(`${l.nom} ${l.statut} ${l.conformite} ${l.appr}`).includes(q))
-    .sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : a[sortKey] < b[sortKey] ? -1 : 0) * sortDir);
-  const pill = (c, t) => `<span class="pill"><span class="dot" style="background:${c}"></span>${t}</span>`;
-  const cell = (l, k) => k === "conformite" ? pill(COL.conf[l.conformite], l.conformite) : k === "statut" ? pill(COL.statut[l.statut], l.statut)
-    : k === "combo" ? pill(COMBOS[l.combo - 1].color, l.combo) : typeof l[k] === "number" ? fmt(l[k]) : esc(l[k]);
-  $("#table").innerHTML = `<thead><tr>${COLS.map(([k, t, n]) => `<th data-k="${k}" class="${n ? "num" : ""}">${t}${sortKey === k ? (sortDir > 0 ? " ▲" : " ▼") : ""}</th>`).join("")}</tr></thead>
-  <tbody>${rows.map(l => `<tr data-id="${l.id}">${COLS.map(([k, , n]) => `<td class="${n ? "num" : ""}">${cell(l, k)}</td>`).join("")}</tr>`).join("")}</tbody>
-  <tfoot><tr style="font-weight:700"><td></td><td>${rows.length} lotissements</td><td colspan="7"></td></tr></tfoot>`;
-  $$("#table th").forEach(th => th.onclick = () => { const k = th.dataset.k; sortDir = sortKey === k ? -sortDir : 1; sortKey = k; renderTable(); });
-  $$("#table tbody tr[data-id]").forEach(tr => tr.onclick = () => { $("#table-dialog").close(); select(tr.dataset.id, true); });
-}
-function exportCSV() {
-  const head = ["N°", "Lotissement", "Voie", "Conformité", "Arrêté", "N° et date de l'arrêté", "Îlots", "Lots", "Chevauchements", "Situation", "Enjeu", "À vérifier"];
-  const q = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
-  const lines = META.lotissements.map(l => { const c = COMBOS[l.combo - 1]; return [l.num, l.nom, l.statut, l.conformite, l.appr, l.arrete, l.nb_ilots, l.nb_lots, l.chevauchements.join(" "), `${c.n}. ${comboLabel(c)}`, c.enjeu, l.a_verifier].map(q).join(";"); });
-  download("lotissements_bingerville.csv", "﻿" + [head.map(q).join(";"), ...lines].join("\r\n"), "text/csv;charset=utf-8");
-}
 
 /* ================================================================ UI globale */
 function toast(msg) {
