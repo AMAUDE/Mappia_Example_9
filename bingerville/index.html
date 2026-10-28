@@ -18,7 +18,7 @@
     <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 7h10v8H5zM17 7h10v13H17zM5 17h10v8H5zM17 22h10v3H17z"/></svg></div>
     <div>
       <h1>Cartographie foncière : lotissements de Bingerville</h1>
-      <p class="subtitle">Présentation des travaux SIG — conformité, arrêtés d'approbation, chevauchements</p>
+      <p class="subtitle">Présentation des travaux SIG — conformité, arrêtés d'approbation, chevauchements, enjeux</p>
     </div>
   </div>
   <nav class="tabs" role="tablist" aria-label="Projets">
@@ -53,15 +53,11 @@
         <button data-bm="mq" title="Imagerie satellite MapQuest">MapQuest</button>
         <button data-bm="mqhyb" title="Imagerie MapQuest avec routes et noms">MapQuest hybride</button>
       </div>
-      <label class="switch" title="Colorer chaque lot selon sa conformité (lot par lot)">
-        <input type="checkbox" id="lot-classe"> <span>Conformité lot par lot</span>
-      </label>
       <label class="switch">
         <input type="checkbox" id="labels" checked> <span>Noms</span>
       </label>
     </div>
     <div id="legend" class="legend"></div>
-    <div id="zoom-hint" class="zoom-hint">Zoomez pour afficher les lots de chaque plan</div>
     <div id="loading" class="loading"><div class="spinner"></div><span>Chargement des données…</span></div>
   </section>
 
