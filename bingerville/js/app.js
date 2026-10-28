@@ -46,7 +46,8 @@ const ALL = () => new Set(META.lotissements.map(l => l.id));
 
 /* ================================================================ chargement */
 async function load() {
-  const j = u => fetch(u).then(r => { if (!r.ok) throw new Error(u); return r.json(); });
+  const DATA_V = "202610281332";
+  const j = u => fetch(u + "?v=" + DATA_V, { cache: "no-cache" }).then(r => { if (!r.ok) throw new Error(u); return r.json(); });
   const empty = { type: "FeatureCollection", features: [] };
   [META, ASM, CHEV, PROG, S3I, LIM, PROMO] = await Promise.all([j("data/lotissements.json"), j("data/assemblage.geojson"),
     j("data/chevauchements.geojson"), j("data/programmes.geojson"), j("data/promotions_s3i.geojson"),
