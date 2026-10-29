@@ -544,7 +544,7 @@ function renderLegend() {
   if (S.mode === "overview") {
     if (S.confFilter) sw(COL.conf[S.confFilter], `Lots ${S.confFilter === "Conforme" ? "conformes" : "non conformes"}`);
     else if (S.statFilter) sw(COL.statut[S.statFilter], STAT_LABEL[S.statFilter]);
-    else if (S.apprFilter) sw(COL.appr[S.apprFilter], S.apprFilter === "Arrêté reçu" ? "Lotissements (arrêtés reçus)" : "Lotissements (non transmis)");
+    else if (S.apprFilter) sw(COL.appr[S.apprFilter], S.apprFilter === "Arrêté reçu" ? "Lotissements (arrêtés reçus)" : "Lotissements (arrêtés non transmis)");
     else sw(COL.asm, "Assemblage des lotissements");
   } else if (S.mode === "p1") { titre = "Conformité"; CONF_ORDER.forEach(c => sw(COL.conf[c], c)); }
   else if (S.mode === "p2") { titre = "Approbation"; STAT_ORDER.forEach(st => sw(COL.statut[st], st === "Normale" ? "Voie normale" : "Voie de régularisation")); }
